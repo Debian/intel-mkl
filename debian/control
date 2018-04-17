@@ -52,3 +52,51 @@ Description: Intel® Math Kernel Library (Intel® MKL) (Headers)
   * Extended Eigensolver, a shared memory programming (SMP) version of an
     eigensolver based on the Feast Eigenvalue Solver.
   * Deep Neural Network (DNN) primitive functions with C language interface.
+ .
+ This package contains header files for development.
+
+Package: libmkl
+Section: non-free/libs
+Architecture: amd64
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+# Copied from here: https://software.intel.com/en-us/mkl-linux-developer-guide-2019-beta
+# Upstream revision: 062
+Description: Intel® Math Kernel Library (Intel® MKL) (Shared Objects)
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance. The library provides Fortran and C programming language
+ interfaces. Intel MKL C language interfaces can be called from applications
+ written in either C or C++, as well as in any other language that can
+ reference a C interface.
+ .
+ Intel MKL provides comprehensive functionality support in these major areas
+ of computation:
+ .
+  * BLAS (level 1, 2, and 3) and LAPACK linear algebra routines, offering
+    vector, vector-matrix, and matrix-matrix operations.
+  * ScaLAPACK distributed processing linear algebra routines, as well as the
+    Basic Linear Algebra Communications Subprograms (BLACS) and the Parallel
+    Basic Linear Algebra Subprograms (PBLAS).
+  * Intel MKL PARDISO (a direct sparse solver based on Parallel Direct Sparse
+    Solver PARDISO*), an iterative sparse solver, and supporting sparse BLAS
+    (level 1, 2, and 3) routines for solving sparse systems of equations, as
+    well as a distributed version of Intel MKL PARDISO solver provided for
+    use on clusters.
+  * Fast Fourier transform (FFT) functions in one, two, or three dimensions
+    with support for mixed radices (not limited to sizes that are powers of 2),
+    as well as distributed versions of these functions provided for use on
+    clusters.
+  * Vector Mathematics (VM) routines for optimized mathematical operations
+    on vectors.
+  * Vector Statistics (VS) routines, which offer high-performance vectorized
+    random number generators (RNG) for several probability distributions,
+    convolution and correlation routines, and summary statistics functions.
+  * Data Fitting Library, which provides capabilities for spline-based
+    approximation of functions, derivatives and integrals of functions, and
+    search.
+  * Extended Eigensolver, a shared memory programming (SMP) version of an
+    eigensolver based on the Feast Eigenvalue Solver.
+  * Deep Neural Network (DNN) primitive functions with C language interface.
+ .
+ This package contains shared objects.
