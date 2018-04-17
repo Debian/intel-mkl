@@ -1,0 +1,5 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: mkl
+Source: https://software.intel.com/en-us/mkl
+#
+# Please double check copyright with the licensecheck(1) command.
