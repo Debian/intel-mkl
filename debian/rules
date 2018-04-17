@@ -25,12 +25,13 @@ extract-upstream-rpms:
 
 override_dh_auto_configure: extract-upstream-rpms
 	find $(MKL_INCS) -type f -exec \
-		echo '{}' $(INST_INCS) >> debian/libmkl-dev.install
+		echo '{}' $(INST_INCS) \; >> debian/libmkl-dev.install
 	find $(MKL_LIBS_amd64) -type f -name '*.so' -exec \
-		echo '{}' $(INST_LIBS_amd64) >> debian/libmkl.install
+		echo '{}' $(INST_LIBS_amd64) \; >> debian/libmkl.install
 	find $(MKL_LIBS_amd64) -type f -name '*.a' -exec \
-		echo '{}' $(INST_LIBS_amd64) >> debian/libmkl-dev.install
+		echo '{}' $(INST_LIBS_amd64) \; >> debian/libmkl-dev.install
 	dh_auto_configure
 
 override_dh_auto_clean:
-	-$(RM) debian/*.install
+	-$(RM) debian/*.install  # auto-generated install files
+	-$(RM) -rf opt  # extracted from upstream rpm packages
