@@ -9,14 +9,46 @@ Homepage: https://software.intel.com/en-us/mkl
 Vcs-Browser: https://salsa.debian.org/science-team/intel-mkl
 Vcs-Git: https://salsa.debian.org/science-team/intel-mkl.git
 
+# [ Binary Package Index ]
+#   * Meta Packages
+#   * Development Packages
+#   * Shared Object Packages
+#     + Interface Layer
+#     + Threading Layer
+#     + Computational Layer
+
+# [ References ]
+# 1. https://github.com/intel/mkl-dnn/issues/206
+# 2. https://software.intel.com/en-us/mkl-linux-developer-guide-dynamic-libraries-in-the-lib-intel64-lin-directory
+
+# [ Meta Packages ]
+
+Package: intel-mkl
+Section: non-free/metapackages
+Architecture: amd64 i386
+Depends: ${misc:Depends},
+Description: Intel® Math Kernel Library (Intel® MKL) (Base set)
+ Here is a linking helper:
+ https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor
+
+Package: intel-mkl-full
+Section: non-free/metapackages
+Architecture: amd64 i386
+Depends: ${misc:Depends},
+Description: Intel® Math Kernel Library (Intel® MKL) (Base set)
+ Here is a linking helper:
+ https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor
+
+# [ Development Packages ]
+
 Package: libmkl-dev
 Section: non-free/libdevel
-Architecture: amd64
+Architecture: amd64 i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 # Copied from here: https://software.intel.com/en-us/mkl-linux-developer-guide-2019-beta
 # Upstream revision: 062
-Description: Intel® Math Kernel Library (Intel® MKL) (Headers)
+Description: Intel® Math Kernel Library (Intel® MKL) (Dev)
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
  maximum performance. The library provides Fortran and C programming language
@@ -53,16 +85,16 @@ Description: Intel® Math Kernel Library (Intel® MKL) (Headers)
     eigensolver based on the Feast Eigenvalue Solver.
   * Deep Neural Network (DNN) primitive functions with C language interface.
  .
- This package contains header files for development.
+ This package contains the header files and static libraries for development.
 
-Package: libmkl
-Section: non-free/libs
-Architecture: amd64
+Package: libmkl-full-dev
+Section: non-free/libdevel
+Architecture: amd64 i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 # Copied from here: https://software.intel.com/en-us/mkl-linux-developer-guide-2019-beta
 # Upstream revision: 062
-Description: Intel® Math Kernel Library (Intel® MKL) (Shared Objects)
+Description: Intel® Math Kernel Library (Intel® MKL) (Full Dev)
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
  maximum performance. The library provides Fortran and C programming language
@@ -70,33 +102,47 @@ Description: Intel® Math Kernel Library (Intel® MKL) (Shared Objects)
  written in either C or C++, as well as in any other language that can
  reference a C interface.
  .
- Intel MKL provides comprehensive functionality support in these major areas
- of computation:
+ This package contains the static libraries not included in libmkl-dev.
+
+# [ Shared Object Packages ]
+
+Package: libmkl-rt
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : Single Dynamic Library
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
  .
-  * BLAS (level 1, 2, and 3) and LAPACK linear algebra routines, offering
-    vector, vector-matrix, and matrix-matrix operations.
-  * ScaLAPACK distributed processing linear algebra routines, as well as the
-    Basic Linear Algebra Communications Subprograms (BLACS) and the Parallel
-    Basic Linear Algebra Subprograms (PBLAS).
-  * Intel MKL PARDISO (a direct sparse solver based on Parallel Direct Sparse
-    Solver PARDISO*), an iterative sparse solver, and supporting sparse BLAS
-    (level 1, 2, and 3) routines for solving sparse systems of equations, as
-    well as a distributed version of Intel MKL PARDISO solver provided for
-    use on clusters.
-  * Fast Fourier transform (FFT) functions in one, two, or three dimensions
-    with support for mixed radices (not limited to sizes that are powers of 2),
-    as well as distributed versions of these functions provided for use on
-    clusters.
-  * Vector Mathematics (VM) routines for optimized mathematical operations
-    on vectors.
-  * Vector Statistics (VS) routines, which offer high-performance vectorized
-    random number generators (RNG) for several probability distributions,
-    convolution and correlation routines, and summary statistics functions.
-  * Data Fitting Library, which provides capabilities for spline-based
-    approximation of functions, derivatives and integrals of functions, and
-    search.
-  * Extended Eigensolver, a shared memory programming (SMP) version of an
-    eigensolver based on the Feast Eigenvalue Solver.
-  * Deep Neural Network (DNN) primitive functions with C language interface.
+ This package contains the Single Dynamic Library.
+
+# [ Shared Object Packages ] -- Computational Layer
+
+Package: libmkl-core
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : Library dispatcher of Computational Layer
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
  .
- This package contains shared objects.
+ This package contains the Library dispatcher for dynamic load of
+ processor-specific kernel.
+ It belongs to the Computational Computational Layer of MKL.
+
+Package: libmkl-def
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : Default kernel library
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains the Default kernel library.
+ It belongs to the Computational Computational Layer of MKL.
