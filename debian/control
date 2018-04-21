@@ -9,17 +9,21 @@ Homepage: https://software.intel.com/en-us/mkl
 Vcs-Browser: https://salsa.debian.org/science-team/intel-mkl
 Vcs-Git: https://salsa.debian.org/science-team/intel-mkl.git
 
+# [ References ]
+# 1. https://github.com/intel/mkl-dnn/issues/206
+# 2. https://software.intel.com/en-us/mkl-linux-developer-guide-dynamic-libraries-in-the-lib-intel64-lin-directory
+
 # [ Binary Package Index ]
 #   * Meta Packages
 #   * Development Packages
 #   * Shared Object Packages
+#     + SDL
+#       - libmkl_rt
 #     + Interface Layer
 #     + Threading Layer
 #     + Computational Layer
-
-# [ References ]
-# 1. https://github.com/intel/mkl-dnn/issues/206
-# 2. https://software.intel.com/en-us/mkl-linux-developer-guide-dynamic-libraries-in-the-lib-intel64-lin-directory
+#       - libmkl_{core,def,mc*,avx*,vml*}
+#     + Cluster Libraries
 
 # [ Meta Packages ]
 
@@ -111,7 +115,7 @@ Section: non-free/libs
 Architecture: amd64 i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
-Description: Intel® MKL : Single Dynamic Library
+Description: Intel® MKL: Single Dynamic Library
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
  maximum performance.
@@ -125,7 +129,7 @@ Section: non-free/libs
 Architecture: amd64 i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
-Description: Intel® MKL : Library dispatcher of Computational Layer
+Description: Intel® MKL: Library dispatcher of Computational Layer
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
  maximum performance.
@@ -139,10 +143,217 @@ Section: non-free/libs
 Architecture: amd64 i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
-Description: Intel® MKL : Default kernel library
+Description: Intel® MKL: Default kernel library
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
  maximum performance.
  .
  This package contains the Default kernel library.
+ It belongs to the Computational Computational Layer of MKL.
+
+Package: libmkl-mc
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL: Kernel library for Intel® SSSE3 enabled processors
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains the Kernel library for Intel® Supplemental Streaming
+ SIMD Extensions 3 (Intel® SSSE3) enabled processors.
+ It belongs to the Computational Computational Layer of MKL.
+
+Package: libmkl-mc3
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL: Kernel library for Intel® SSE4.2 enabled processors
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains the Kernel library for Intel® Streaming SIMD
+ Extensions 4.2 (Intel® SSE4.2) enabled processors.
+ It belongs to the Computational Computational Layer of MKL.
+
+Package: libmkl-avx
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL: Kernel library for Intel® AVX enabled processors
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains the Kernel library for Intel® Advanced Vector
+ Extensions (Intel® AVX) enabled processors.
+ It belongs to the Computational Computational Layer of MKL.
+
+Package: libmkl-avx2
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL: Kernel library for Intel® AVX2 enabled processors
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains the Kernel library for Intel® Advanced Vector
+ Extensions 2 (Intel® AVX2) enabled processors.
+ It belongs to the Computational Computational Layer of MKL.
+
+Package: libmkl-avx512
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL: Kernel library for Intel® AVX-512 enabled processors
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains the Kernel library for dispatching Intel® Advanced
+ Vector Extensions 512 (Intel® AVX-512) on Intel® Xeon® processors.
+ It belongs to the Computational Computational Layer of MKL.
+
+Package: libmkl-avx512-mic
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : Kernel library for Intel® AVX-512 Xeon Phi processors
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains the Kernel library for dispatching Intel® Advanced
+ Vector Extensions 512 (Intel® AVX-512) on Intel® Xeon Phi™ processors.
+ It belongs to the Computational Computational Layer of MKL.
+
+Package: libmkl-vml-def
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : VM/VS/DF part of default kernels
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains the Vector Mathematics (VM)/Vector Statistics (VS)/Data
+ Fitting (DF) part of default kernels.
+ It belongs to the Computational Computational Layer of MKL.
+
+Package: libmkl-vml-mc
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : VM/VS/DF for Intel® SSSE3 enabled processors
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains the VM/VS/DF for Intel® SSSE3 enabled processors.
+ It belongs to the Computational Computational Layer of MKL.
+
+
+Package: libmkl-vml-mc2
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : VM/VS/DF for 45nm Hi-k Core2 and Xeon processor
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains the VM/VS/DF for 45nm Hi-k Intel® Core™2 and
+ Intel® Xeon® processor families.
+ It belongs to the Computational Computational Layer of MKL.
+
+Package: libmkl-vml-mc3
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : VM/VS/DF for Intel® SSE4.2 enabled processors
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains the VM/VS/DF for Intel® SSE4.2 enabled processors.
+ It belongs to the Computational Computational Layer of MKL.
+
+Package: libmkl-vml-avx
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : VM/VS/DF optimized for Intel® AVX enabled processors
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains the VM/VS/DF optimized for Intel® AVX enabled processors.
+ It belongs to the Computational Computational Layer of MKL.
+
+Package: libmkl-vml-avx2
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : VM/VS/DF optimized for Intel® AVX2 enabled processors
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains the VM/VS/DF optimized for Intel® AVX2 enabled processors
+ It belongs to the Computational Computational Layer of MKL.
+
+Package: libmkl-vml-avx512
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : VM/VS/DF optimized for AVX-512 on Xeon® processors
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains the VM/VS/DF optimized for Intel® AVX-512 on
+ Intel® Xeon® processors.
+ It belongs to the Computational Computational Layer of MKL.
+
+Package: libmkl-vml-avx512-mic
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : VM/VS/DF optimized for AVX-512 on Xeon Phi™ processors
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains the VM/VS/DF optimized for Intel® AVX-512 on
+ Intel® Xeon Phi™ processors.
+ It belongs to the Computational Computational Layer of MKL.
+
+Package: libmkl-vml-cmpt
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains the VM/VS/DF library for conditional numerical
+ reproducibility.
  It belongs to the Computational Computational Layer of MKL.
