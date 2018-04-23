@@ -12,6 +12,7 @@ Vcs-Git: https://salsa.debian.org/science-team/intel-mkl.git
 # [ References ]
 # 1. https://github.com/intel/mkl-dnn/issues/206
 # 2. https://software.intel.com/en-us/mkl-linux-developer-guide-dynamic-libraries-in-the-lib-intel64-lin-directory
+# 3. https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor
 
 # [ Binary Package Index ]
 #   * Meta Packages
@@ -31,17 +32,32 @@ Package: intel-mkl
 Section: non-free/metapackages
 Architecture: amd64 i386
 Depends: ${misc:Depends},
-Description: Intel® Math Kernel Library (Intel® MKL) (Base set)
- Here is a linking helper:
- https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor
+         intel-mkl-base (= ${binary:Version}),
+Description: Intel® Math Kernel Library (Intel® MKL)
+ FIXME
+
+Package: intel-mkl-base
+Section: non-free/metapackages
+Architecture: amd64 i386
+Depends: ${misc:Depends},
+Description: Intel® Math Kernel Library (Intel® MKL) (Base)
+ FIXME
+
+Package: intel-mkl-cluster
+Section: non-free/metapackages
+Architecture: amd64 i386
+Depends: ${misc:Depends},
+Description: Intel® Math Kernel Library (Intel® MKL) (Cluster)
+ FIXME
 
 Package: intel-mkl-full
 Section: non-free/metapackages
 Architecture: amd64 i386
 Depends: ${misc:Depends},
-Description: Intel® Math Kernel Library (Intel® MKL) (Base set)
- Here is a linking helper:
- https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor
+         intel-mkl-base (= ${binary:Version}),
+         intel-mkl-cluster (= ${binary:Version}),
+Description: Intel® Math Kernel Library (Intel® MKL) (Full)
+ FIXME
 
 # [ Development Packages ]
 
@@ -96,6 +112,7 @@ Section: non-free/libdevel
 Architecture: amd64 i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-dev (= ${binary:Version}),
 # Copied from here: https://software.intel.com/en-us/mkl-linux-developer-guide-2019-beta
 # Upstream revision: 062
 Description: Intel® Math Kernel Library (Intel® MKL) (Full Dev)
@@ -115,12 +132,12 @@ Section: non-free/libs
 Architecture: amd64 i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
-Description: Intel® MKL: Single Dynamic Library
+Description: Intel® MKL: Single Dynamic Library (SDL)
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
  maximum performance.
  .
- This package contains the Single Dynamic Library.
+ This package contains the Single Dynamic Library (SDL).
 
 # [ Shared Object Packages ] -- Computational Layer
 
@@ -357,3 +374,124 @@ Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
  This package contains the VM/VS/DF library for conditional numerical
  reproducibility.
  It belongs to the Computational Computational Layer of MKL.
+
+# [ Shared Object Packages ] -- Cluster Libraries
+
+Package: libmkl-scalapack-lp64
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : ScaLAPACK routine library supporting LP64 interface
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains ScaLAPACK routine library supporting the LP64 interface.
+ It belongs to the Cluster Libraries of MKL.
+
+Package: libmkl-scalapack-ilp64
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : ScaLAPACK routine library supporting ILP64 interface
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains ScaLAPACK routine library supporting ILP64 interface.
+ It belongs to the Cluster Libraries of MKL.
+
+Package: libmkl-cdft-core
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : Cluster version of FFT functions
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains Cluster version of FFT functions.
+ It belongs to the Cluster Libraries of MKL.
+
+Package: libmkl-blacs-intelmpi-lp64
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : LP64 BLACS routines for Intel® MPI and MPICH2+
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains LP64 version of BLACS routines for Intel® MPI Library
+ and MPICH2 or higher.
+ It belongs to the Cluster Libraries of MKL.
+
+Package: libmkl-blacs-intelmpi-ilp64
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : ILP64 BLACS routines for Intel® MPI and MPICH2+
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains ILP64 version of BLACS routines for Intel® MPI Library
+ and MPICH2 or higher.
+ It belongs to the Cluster Libraries of MKL.
+
+Package: libmkl-blacs-openmpi-lp64
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : LP64 version of BLACS routines for Open MPI
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains LP64 version of BLACS routines for Open MPI.
+ It belongs to the Cluster Libraries of MKL.
+
+Package: libmkl-blacs-openmpi-lp64
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : ILP64 version of BLACS routines for Open MPI
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains ILP64 version of BLACS routines for Open MPI.
+ It belongs to the Cluster Libraries of MKL.
+
+Package: libmkl-blacs-sgimpt-lp64
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : LP64 version of BLACS routines for SGI MPI Toolkit
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains LP64 version of BLACS routines for SGI MPI Toolkit.
+ It belongs to the Cluster Libraries of MKL.
+
+Package: libmkl-blacs-sgimpt-ilp64
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : ILP64 version of BLACS routines for SGI MPT
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains ILP64 version of BLACS routines for SGI MPT.
+ It belongs to the Cluster Libraries of MKL.
