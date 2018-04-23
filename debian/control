@@ -140,7 +140,7 @@ Description: Intel® MKL: Single Dynamic Library (SDL)
  optimized, extensively threaded routines for applications that require
  maximum performance.
  .
- This package contains the Single Dynamic Library (SDL).
+ This package contains the Single Dynamic Library (SDL) of MKL.
 
 # [ Shared Object Packages ] -- Interface Layer ###############################
 
@@ -157,7 +157,7 @@ Description: Intel® MKL: LP64 interface library for the Intel compilers
  This package contains LP64 interface library for the Intel compilers. Also
  use for other supported compilers that do not have a specialized Intel MKL
  interface library.
- It belongs to the Computational Computational Layer of MKL.
+ It belongs to the Interface Layer of MKL.
 
 Package: libmkl-intel-ilp64
 Section: non-free/libs
@@ -172,7 +172,7 @@ Description: Intel® MKL: ILP64 interface library for the Intel compilers
  This package contains ILP64 interface library for the Intel compilers. Also
  use for other supported compilers that do not have a specialized Intel MKL
  interface library.
- It belongs to the Computational Computational Layer of MKL.
+ It belongs to the Interface Layer of MKL.
 
 Package: libmkl-gf-lp64
 Section: non-free/libs
@@ -185,7 +185,7 @@ Description: Intel® MKL: LP64 interface library for the GNU Fortran compilers
  maximum performance.
  .
  This package contains LP64 interface library for the GNU Fortran compilers.
- It belongs to the Computational Computational Layer of MKL.
+ It belongs to the Interface Layer of MKL.
 
 Package: libmkl-gf-lp64
 Section: non-free/libs
@@ -198,7 +198,74 @@ Description: Intel® MKL: ILP64 interface library for the GNU Fortran compilers
  maximum performance.
  .
  This package contains ILP64 interface library for the GNU Fortran compilers.
- It belongs to the Computational Computational Layer of MKL.
+ It belongs to the Interface Layer of MKL.
+
+# [ Shared Object Packages ] -- Threading Layer ###############################
+
+Package: libmkl-intel-thread
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL: OpenMP threading library for the Intel compilers
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains OpenMP threading library for the Intel compilers.
+ It belongs to the Threading Layer of MKL.
+
+Package: libmkl-tbb-thread
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL: Intel TBB threading library for the Intel compilers
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains Intel TBB threading library for the Intel compilers.
+ It belongs to the Threading Layer of MKL.
+
+Package: libmkl-gnu-thread
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL: OpenMP threading library for GNU Fortran/C compilers
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains OpenMP threading library for the GNU Fortran/C compilers.
+ It belongs to the Threading Layer of MKL.
+
+Package: libmkl-pgi-thread
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL: OpenMP threading library for the PGI compiler
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains OpenMP threading library for the PGI compiler.
+ It belongs to the Threading Layer of MKL.
+
+Package: libmkl-sequential
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL: Sequential library
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains Sequential library.
+ It belongs to the Threading Layer of MKL.
 
 # [ Shared Object Packages ] -- Computational Layer ###########################
 
