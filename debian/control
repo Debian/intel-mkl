@@ -21,12 +21,15 @@ Vcs-Git: https://salsa.debian.org/science-team/intel-mkl.git
 #     + SDL
 #       - libmkl_rt
 #     + Interface Layer
+#       - libmkl_{intel*,gf*}
 #     + Threading Layer
+#       - libmkl_{intel,tbb,gnu,pgi}_thread
 #     + Computational Layer
 #       - libmkl_{core,def,mc*,avx*,vml*}
 #     + Cluster Libraries
+#       - libmkl_{scalapack*,cdft*,blacs*}
 
-# [ Meta Packages ]
+# [ Meta Packages ] ###########################################################
 
 Package: intel-mkl
 Section: non-free/metapackages
@@ -59,7 +62,7 @@ Depends: ${misc:Depends},
 Description: Intel® Math Kernel Library (Intel® MKL) (Full)
  FIXME
 
-# [ Development Packages ]
+# [ Development Packages ] ####################################################
 
 Package: libmkl-dev
 Section: non-free/libdevel
@@ -125,7 +128,7 @@ Description: Intel® Math Kernel Library (Intel® MKL) (Full Dev)
  .
  This package contains the static libraries not included in libmkl-dev.
 
-# [ Shared Object Packages ]
+# [ Shared Object Packages ] ##################################################
 
 Package: libmkl-rt
 Section: non-free/libs
@@ -139,7 +142,65 @@ Description: Intel® MKL: Single Dynamic Library (SDL)
  .
  This package contains the Single Dynamic Library (SDL).
 
-# [ Shared Object Packages ] -- Computational Layer
+# [ Shared Object Packages ] -- Interface Layer ###############################
+
+Package: libmkl-intel-lp64
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL: LP64 interface library for the Intel compilers
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains LP64 interface library for the Intel compilers. Also
+ use for other supported compilers that do not have a specialized Intel MKL
+ interface library.
+ It belongs to the Computational Computational Layer of MKL.
+
+Package: libmkl-intel-ilp64
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL: ILP64 interface library for the Intel compilers
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains ILP64 interface library for the Intel compilers. Also
+ use for other supported compilers that do not have a specialized Intel MKL
+ interface library.
+ It belongs to the Computational Computational Layer of MKL.
+
+Package: libmkl-gf-lp64
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL: LP64 interface library for the GNU Fortran compilers
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains LP64 interface library for the GNU Fortran compilers.
+ It belongs to the Computational Computational Layer of MKL.
+
+Package: libmkl-gf-lp64
+Section: non-free/libs
+Architecture: amd64 i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL: ILP64 interface library for the GNU Fortran compilers
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains ILP64 interface library for the GNU Fortran compilers.
+ It belongs to the Computational Computational Layer of MKL.
+
+# [ Shared Object Packages ] -- Computational Layer ###########################
 
 Package: libmkl-core
 Section: non-free/libs
@@ -375,7 +436,7 @@ Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
  reproducibility.
  It belongs to the Computational Computational Layer of MKL.
 
-# [ Shared Object Packages ] -- Cluster Libraries
+# [ Shared Object Packages ] -- Cluster Libraries #############################
 
 Package: libmkl-scalapack-lp64
 Section: non-free/libs
