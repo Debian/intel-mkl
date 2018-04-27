@@ -134,6 +134,7 @@ def generate_install_files(packages: List[str], multiarch: str) -> None:
 
 if __name__ == '__main__':
 
+    installSharedObjects()
     installStaticLibs()
     exit()
 

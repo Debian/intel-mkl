@@ -63,7 +63,7 @@ Package: intel-mkl-full
 Section: non-free/metapackages
 Architecture: amd64 i386
 Depends: ${misc:Depends},
-         intel-mkl-base (= ${binary:Version}),
+         intel-mkl (= ${binary:Version}),
          intel-mkl-cluster (= ${binary:Version}),
 Description: Intel® Math Kernel Library (Intel® MKL) (Full)
  FIXME
@@ -87,7 +87,7 @@ Section: non-free/libdevel
 Architecture: amd64 i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
-         libmkl-dev (= ${bianry:Version}),
+         libmkl-dev (= ${binary:Version}),
 # Copied from here: https://software.intel.com/en-us/mkl-linux-developer-guide-2019-beta
 # Upstream revision: 062
 Description: Intel® Math Kernel Library (Intel® MKL) (Full Version Dev)
