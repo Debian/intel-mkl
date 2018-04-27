@@ -256,7 +256,7 @@ Description: Intel® MKL: LP64 interface library for the GNU Fortran compilers
  This package contains LP64 interface library for the GNU Fortran compilers.
  It belongs to the Interface Layer of MKL.
 
-Package: libmkl-gf-lp64
+Package: libmkl-gf-ilp64
 Section: non-free/libs
 Architecture: amd64 i386
 Depends: ${shlibs:Depends},
@@ -622,7 +622,7 @@ Depends: ${misc:Depends},
          libmkl-blacs-intelmpi-lp64  (= ${binary:Version}),
          libmkl-blacs-intelmpi-ilp64 (= ${binary:Version}),
          libmkl-blacs-openmpi-lp64   (= ${binary:Version}),
-         libmkl-blacs-openmpi-lp64   (= ${binary:Version}),
+         libmkl-blacs-openmpi-ilp64   (= ${binary:Version}),
          libmkl-blacs-sgimpt-lp64    (= ${binary:Version}),
          libmkl-blacs-sgimpt-ilp64   (= ${binary:Version}),
 # cluster libraries are built upon interface, threading and computational layers
@@ -712,7 +712,7 @@ Description: Intel® MKL : LP64 version of BLACS routines for Open MPI
  This package contains LP64 version of BLACS routines for Open MPI.
  It belongs to the Cluster Libraries of MKL.
 
-Package: libmkl-blacs-openmpi-lp64
+Package: libmkl-blacs-openmpi-ilp64
 Section: non-free/libs
 Architecture: amd64 i386
 Depends: ${shlibs:Depends},
