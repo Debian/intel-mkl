@@ -15,8 +15,22 @@ Vcs-Git: https://salsa.debian.org/science-team/intel-mkl.git
 # 3. https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor
 
 # [ Binary Package Index ]
-#   * Meta Packages
+#   * Root Meta Packages
+#   * Tool Packages
+#     + MKL Link Tool (Advisor) and MKL Custom .so Builder
+#       - intel-mkl-common-2018.2-199-2018.2-199.noarch.rpm
 #   * Development Packages
+#     + Common Development Files (C/Fortran)
+#       + intel-mkl-common-c-2018.2-199-2018.2-199.noarch.rpm
+#       + intel-mkl-common-f-2018.2-199-2018.2-199.noarch.rpm
+#     + Static Libs
+#       - intel-mkl-core-2018.2-199-2018.2-199.x86_64.rpm
+#       - intel-mkl-f95-2018.2-199-2018.2-199.x86_64.rpm
+#     + Cluster Libraries
+#       - libmkl_{scalapack*,cdft,blacs*}.a
+#       - intel-mkl-cluster-2018.2-199-2018.2-199.x86_64.rpm
+#     + Benchmark Files
+#       - intel-mkl-common-ps-2018.2-199-2018.2-199.noarch.rpm
 #   * Shared Object Packages
 #     + SDL
 #       - libmkl_rt
@@ -26,8 +40,14 @@ Vcs-Git: https://salsa.debian.org/science-team/intel-mkl.git
 #       - libmkl_{intel,tbb,gnu,pgi}_thread
 #     + Computational Layer
 #       - libmkl_{core,def,mc*,avx*,vml*}
+#       - intel-mkl-core-rt-2018.2-199-2018.2-199.x86_64.rpm
 #     + Cluster Libraries
-#       - libmkl_{scalapack*,cdft*,blacs*}
+#       - libmkl_{scalapack*,cdft*,blacs*}.so
+#       - intel-mkl-cluster-rt-2018.2-199-2018.2-199.x86_64.rpm
+#   * TODO: What are they?
+#       - "mkl/interfaces" intel-mkl-cluster-common-2018.2-199-2018.2-199.noarch.rpm
+#       - "mkl/interfaces" intel-mkl-common-c-2018.2-199-2018.2-199.noarch.rpm
+#       - mkl_msg.cat
 
 # [ Meta Packages ] ###########################################################
 
@@ -60,6 +80,18 @@ Depends: ${misc:Depends},
          intel-mkl-base (= ${binary:Version}),
          intel-mkl-cluster (= ${binary:Version}),
 Description: Intel® Math Kernel Library (Intel® MKL) (Full)
+ FIXME
+
+# [ Tool Packages ] ###########################################################
+
+Package: intel-mkl-linktool
+Section: non-free/utils
+Architecture: i386
+# Multi-Arch: This tool (pre-built binary) can be used on amd64 too.
+Multi-Arch: foreign
+Depends: ${misc:Depends},
+         ${shlibs:Depends},
+Description: Intel(R) Math Kernel Library (Intel(R) MKL) Link Tool v4.7
  FIXME
 
 # [ Development Packages ] ####################################################
@@ -268,6 +300,30 @@ Description: Intel® MKL: Sequential library
  It belongs to the Threading Layer of MKL.
 
 # [ Shared Object Packages ] -- Computational Layer ###########################
+
+Package: libmkl-meta-computational
+Section: non-free/metapackages
+Architecture: amd64 i386
+Depends: ${misc:Depends},
+         libmkl-core              (= ${binary:Version}),
+         libmkl-def               (= ${binary:Version}),
+         libmkl-mc                (= ${binary:Version}),
+         libmkl-mc3               (= ${binary:Version}),
+         libmkl-avx               (= ${binary:Version}),
+         libmkl-avx2              (= ${binary:Version}),
+         libmkl-avx512            (= ${binary:Version}),
+         libmkl-avx512-mic        (= ${binary:Version}),
+         libmkl-vml-def           (= ${binary:Version}),
+         libmkl-vml-mc            (= ${binary:Version}),
+         libmkl-vml-mc2           (= ${binary:Version}),
+         libmkl-vml-mc3           (= ${binary:Version}),
+         libmkl-vml-avx           (= ${binary:Version}),
+         libmkl-vml-avx2          (= ${binary:Version}),
+         libmkl-vml-avx512        (= ${binary:Version}),
+         libmkl-vml-avx512-mic    (= ${binary:Version}),
+         libmkl-vml-cmpt          (= ${binary:Version}),
+Description: Metapackage of intel-MKL: Shared Objects for Computaional Layer
+ FIXME
 
 Package: libmkl-core
 Section: non-free/libs
@@ -504,6 +560,22 @@ Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
  It belongs to the Computational Computational Layer of MKL.
 
 # [ Shared Object Packages ] -- Cluster Libraries #############################
+
+Package: libmkl-meta-cluster
+Section: non-free/metapackages
+Architecture: amd64 i386
+Depends: ${misc:Depends},
+         libmkl-scalapack-lp64       (= ${binary:Version}),
+         libmkl-scalapack-ilp64      (= ${binary:Version}),
+         libmkl-cdft-core            (= ${binary:Version}),
+         libmkl-blacs-intelmpi-lp64  (= ${binary:Version}),
+         libmkl-blacs-intelmpi-ilp64 (= ${binary:Version}),
+         libmkl-blacs-openmpi-lp64   (= ${binary:Version}),
+         libmkl-blacs-openmpi-lp64   (= ${binary:Version}),
+         libmkl-blacs-sgimpt-lp64    (= ${binary:Version}),
+         libmkl-blacs-sgimpt-ilp64   (= ${binary:Version}),
+Description: Metapackage for Intel-MKL: Shared Object for Cluster
+ FIXME
 
 Package: libmkl-scalapack-lp64
 Section: non-free/libs
