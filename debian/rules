@@ -34,7 +34,7 @@ override_dh_auto_configure: extract-upstream-rpms
 
 override_dh_auto_clean:
 	-$(RM) debian/*.install  # auto-generated install files
-	-$(RM) -rf opt  # extracted from upstream rpm packages
+	#-$(RM) -rf opt  # extracted from upstream rpm packages
 
 # don't strip any of these binary blobs as agreed in intel's license.
 override_dh_strip:

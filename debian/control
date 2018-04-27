@@ -150,6 +150,7 @@ Description: Intel® Math Kernel Library (Intel® MKL) (Full Dev)
 
 Package: libmkl-interface-dev
 Section: non-free/libdevel
+Architecture: amd64 i386
 Depends: ${misc:Depends},
          libmkl-meta-interface (= ${binary:Version}),
 Description: Static libs of intel-MKL: Interface Layer
@@ -157,6 +158,7 @@ Description: Static libs of intel-MKL: Interface Layer
 
 Package: libmkl-threading-dev
 Section: non-free/libdevel
+Architecture: amd64 i386
 Depends: ${misc:Depends},
          libmkl-meta-threading (= ${binary:Version}),
 Description: Static libs of intel-MKL: Threading Layer
@@ -164,6 +166,7 @@ Description: Static libs of intel-MKL: Threading Layer
 
 Package: libmkl-computational-dev
 Section: non-free/libdevel
+Architecture: amd64 i386
 Depends: ${misc:Depends},
          libkml-meta-computational (= ${binary:Version}),
 Description: Static libs of intel-MKL: Computational Layer
@@ -171,6 +174,7 @@ Description: Static libs of intel-MKL: Computational Layer
 
 Package: libmkl-cluster-dev
 Section: non-free/libdevel
+Architecture: amd64 i386
 Depends: ${misc:Depends},
          libmkl-meta-cluster (= ${binary:Version}),
 Description: Static libs of intel-MKL: Cluster

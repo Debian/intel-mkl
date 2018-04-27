@@ -24,42 +24,6 @@ def installFile(fpath: str, package: str, dest: str = '') -> None:
         f.write(f'{fpath}\t{dest}\n' if dest else f'{fpath}')
 
 
-def installSharedObjects() -> None:
-    '''
-    Glob all the shared object and write install entries for them
-    '''
-    # Glob libs
-    shlibs = glob.glob('opt/**/**.so', recursive=True)
-    # filter the lib list by architecture
-    deb_host_arch = getDpkgArchitecture('DEB_HOST_ARCH')
-    deb_host_multiarch = getDpkgArchitecture('DEB_HOST_MULTIARCH')
-    if deb_host_arch == 'amd64':
-        shlibs = [x for x in shlibs if 'ia32' not in x]
-        # dedup
-        shlibs = [x for x in shlibs if 'intel64_lin' not in x]
-    else:
-        shlibs = [x for x in shlibs if 'intel64' not in x]
-        shlibs = [x for x in shlibs if 'ia32_lin' not in x]
-    # don't care about the libs used by intel's installer
-    shlibs = [x for x in shlibs if 'uninstall' not in x]
-    # tbb and iomp5 are already provided by other packages
-    shlibs = [x for x in shlibs if 'iomp' not in x]
-    shlibs = [x for x in shlibs if 'tbb/' not in x]
-    # get package names in control file
-    packages = parsePackages()
-    # now let's install them !
-    for so in shlibs:
-        path, fname = os.path.dirname(so), os.path.basename(so)
-        package = re.sub('\.so$', '', fname).replace('_', '-')
-        #print(path, fname, package)
-        if package in packages:
-            print(f'installing {fname} ➜ {package}')
-            installFile(os.path.join(path, fname), package,
-                    f'usr/lib/{deb_host_multiarch}/')
-        else:
-            print(f'Warning: Which package should ship {fname} ??')
-
-
 def parsePackages() -> List[str]:
     '''
     Parse debian/control and return a list of Package names
@@ -69,6 +33,82 @@ def parsePackages() -> List[str]:
     packages = re.findall('Package:\s*(.*)', control)
     return packages
 
+
+def installSharedObjects() -> None:
+    '''
+    Glob all the shared object and write install entries for them
+    '''
+    # Glob libs
+    libs = glob.glob('opt/**/**.so', recursive=True)
+    # get package names in control file
+    packages = parsePackages()
+    # filter the lib list by architecture
+    deb_host_arch = getDpkgArchitecture('DEB_HOST_ARCH')
+    deb_host_multiarch = getDpkgArchitecture('DEB_HOST_MULTIARCH')
+    if deb_host_arch == 'amd64':
+        libs = [x for x in libs if 'ia32' not in x]
+        # dedup
+        libs = [x for x in libs if 'intel64_lin' not in x]
+    else:
+        libs = [x for x in libs if 'intel64' not in x]
+        libs = [x for x in libs if 'ia32_lin' not in x]
+    # don't care about the libs used by intel's installer
+    libs = [x for x in libs if 'uninstall' not in x]
+    # tbb and iomp5 are already provided by other packages
+    libs = [x for x in libs if 'iomp' not in x]
+    libs = [x for x in libs if 'tbb/' not in x]
+    # now let's install them !
+    for so in libs:
+        path, fname = os.path.dirname(so), os.path.basename(so)
+        package = re.sub('\.so$', '', fname).replace('_', '-')
+        #print(path, fname, package)
+        if package in packages:
+            print(f'installing {fname} ➜ {package}')
+            installFile(os.path.join(path, fname), package,
+                    f'usr/lib/{deb_host_multiarch}/')
+        else:
+            raise Exception(f'Warning: Which package should ship {fname} ??')
+
+
+def installStaticLibs() -> None:
+    '''
+    Glob all the static libraries and add them into .install files
+    '''
+    # Glob libs
+    libs = glob.glob('opt/**/**.a', recursive=True)
+    # get package names in control file
+    packages = parsePackages()
+    # filter the lib list by architecture
+    deb_host_arch = getDpkgArchitecture('DEB_HOST_ARCH')
+    deb_host_multiarch = getDpkgArchitecture('DEB_HOST_MULTIARCH')
+    if deb_host_arch == 'amd64':
+        libs = [x for x in libs if 'ia32' not in x]
+        # dedup
+        libs = [x for x in libs if 'intel64_lin' not in x]
+    else:
+        libs = [x for x in libs if 'intel64' not in x]
+        libs = [x for x in libs if 'ia32_lin' not in x]
+    libs = [x for x in libs if 'benchmarks' not in x]
+    libs = [x for x in libs if 'iomp' not in x]
+    # now let's install them !
+    for so in libs:
+        path, fname = os.path.dirname(so), os.path.basename(so)
+        if any(x in fname for x in ('thread', 'sequential')):
+            package = 'libmkl-threading-dev'
+        elif any(x in fname for x in ('blacs', 'scalapack', 'cdft')):
+            package = 'libmkl-cluster-dev'
+        elif any(x in fname for x in ('intel_', 'gf_')):
+            package = 'libmkl-interface-dev'
+        elif any(x in fname for x in ('core', 'lapack', 'blas')):
+            package = 'libmkl-computational-dev'
+        else:
+            package = 'no-such-package'
+        if package in packages:
+            print(f'installing {fname} ➜ {package}')
+            installFile(os.path.join(path, fname), package,
+                    f'usr/lib/{deb_host_multiarch}/')
+        else:
+            raise Exception(f'Warning: Which package should ship {fname} ??')
 
 def parse_binary_packages(control: str) -> List[Tuple[str,str]]:
     '''
@@ -94,7 +134,7 @@ def generate_install_files(packages: List[str], multiarch: str) -> None:
 
 if __name__ == '__main__':
 
-    installSharedObjects()
+    installStaticLibs()
     exit()
 
     # Read control file and parse
