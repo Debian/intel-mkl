@@ -2,19 +2,15 @@
 #export DH_VERBOSE=1
 
 # [ Maintainer Notes ]
+#
 # Unlike the nvidia-cuda-toolkit packaging, I wouldn't like to maintain a
 # bunch of *.install files. Here all the *.install files are auto-generated
-# from rules.
+# from python script debian/control.py .
+#
 # Apart from that, I'd strongly suggest you build this package under /dev/shm!
 
+# This variable is used as a memo.
 MKL_ORIG_TARBALL = l_mkl_2018.2.199.tgz
-MKL_INCS = \
-	opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/include
-MKL_LIBS_amd64 = \
-	opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/lib/intel64_lin
-
-INST_INCS = usr/include/mkl/
-INST_LIBS_amd64 = usr/lib/x86_64-linux-gnu/
 
 %:
 	dh $@
