@@ -203,10 +203,31 @@ def installDocs(filelist: List[str], *, verbose: bool = False) -> None:
     return rest
 
 
-def installMisc() -> None:
+def installMisc(filelist: List[str], *, verbose: bool = False) -> None:
     '''
+    similar to previous functions.
     '''
-    pass
+    miscs = [x for x in filelist if '/linux/mkl/benchmarks/' in x]
+    miscs += [x for x in filelist if '/linux/mkl/examples/' in x]
+    miscs += [x for x in filelist if '/linux/mkl/interfaces/' in x]
+    rest = [x for x in filelist if x not in miscs]
+    # let's install the misc stuff!
+    installFile(
+        'opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/benchmarks',
+        'libmkl-full-dev', 'usr/share/intel-mkl/')
+    miscs = [x for x in miscs if 'mkl/benchmarks' not in x]
+    installFile(
+        'opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/examples',
+        'libmkl-full-dev', 'usr/share/intel-mkl/')
+    miscs = [x for x in miscs if 'mkl/examples' not in x]
+    installFile(
+        'opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/interfaces',
+        'libmkl-full-dev', 'usr/share/intel-mkl/')
+    miscs = [x for x in miscs if 'mkl/interfaces' not in x]
+    for misc in miscs:
+        if verbose:
+            print('Ignoring', misc)
+    return rest
 
 
 def parse_binary_packages(control: str) -> List[Tuple[str,str]]:
@@ -259,15 +280,21 @@ if __name__ == '__main__':
     # install docs and filter the list
     allfiles = installDocs(allfiles, verbose=dh_verbose)
 
+    # install misc files and filter the list
+    allfiles = installMisc(allfiles, verbose=dh_verbose)
+
+    # filter the files that we don't want
+    allfiles = [x for x in allfiles if 'opt/intel/parallel_studio_xe' not in x]
+    allfiles = [x for x in allfiles if 'iomp' not in x]
+
     print(f'{len(allfiles)} / {num_allfiles} Files left uninstalled.')
+
+    # just like what dh-missing --list-missing does.
+    if dh_verbose:
+        for f in allfiles: print(f)
+
     exit()
 
-
-
-    installMisc()
-    allfiles = [x for x in allfiles if not '/linux/mkl/benchmarks/' in x]
-    allfiles = [x for x in allfiles if not '/linux/mkl/examples/' in x]
-    allfiles = [x for x in allfiles if not '/linux/bin/' in x]
 
     pass  # FIXME: how to deal with the interfaces
     allfiles = [x for x in allfiles if '/linux/mkl/interfaces/' not in x]
@@ -276,8 +303,6 @@ if __name__ == '__main__':
     allfiles = [x for x in allfiles if 'opt/intel/parallel_studio_xe' not in x]
     allfiles = [x for x in allfiles if 'iomp' not in x]
 
-    # just like dh-missing --list-missing
-    for f in allfiles: print(f)
 
     exit()
 
