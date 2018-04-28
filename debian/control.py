@@ -6,7 +6,7 @@
 #        python3.6 features (format string, i.g. f''). That means this script
 #        requires python >= 3.6 . I'm sorry for the inconvenience but I like
 #        this feature so much ...
-import os, re, sys, subprocess, glob
+import os, re, sys, subprocess, glob, copy
 from typing import *
 
 
@@ -38,19 +38,24 @@ def parsePackages() -> List[str]:
     return packages
 
 
-def installSharedObjects(deb_host_arch: str, deb_host_multiarch: str) -> None:
+def installSharedObjects(filelist: List[str],
+                         deb_host_arch: str, deb_host_multiarch: str,
+                         *, verbose: bool = False) -> List[str]:
     '''
-    Glob all the shared object and write install entries for them
+    Glob all the shared object from the file list, and write install entries
+    for them. The filtered list that does not contain .so file will be returned.
+    When verbose is toggled, it prints .so files ignored.
     '''
     # Glob libs
-    libs = glob.glob('opt/**/**.so', recursive=True)
+    solibs = [x for x in filelist if re.match('.*\.so(\.?\d*)$', x)]
+    libs = copy.copy(solibs)
+    rest = [x for x in filelist if not re.match('.*\.so(\.?\d*)$', x)]
     # get package names in control file
     packages = parsePackages()
     # filter the lib list by architecture
     if deb_host_arch == 'amd64':
         libs = [x for x in libs if 'ia32' not in x]
-        # dedup
-        libs = [x for x in libs if 'intel64_lin' not in x]
+        libs = [x for x in libs if 'intel64_lin' not in x] # dedup
     else:
         libs = [x for x in libs if 'intel64' not in x]
         libs = [x for x in libs if 'ia32_lin' not in x]
@@ -59,6 +64,10 @@ def installSharedObjects(deb_host_arch: str, deb_host_multiarch: str) -> None:
     # tbb and iomp5 are already provided by other packages
     libs = [x for x in libs if 'iomp' not in x]
     libs = [x for x in libs if 'tbb/' not in x]
+    # report dropped files
+    for lib in solibs:
+        if lib not in libs and verbose:
+            print('Ignoring', lib)
     # now let's install them !
     for so in libs:
         path, fname = os.path.dirname(so), os.path.basename(so)
@@ -70,26 +79,36 @@ def installSharedObjects(deb_host_arch: str, deb_host_multiarch: str) -> None:
                     f'usr/lib/{deb_host_multiarch}/')
         else:
             raise Exception(f'Warning: Which package should ship {fname} ??')
+    return rest
 
 
-def installStaticLibs(deb_host_arch: str, deb_host_multiarch: str) -> None:
+def installStaticLibs(filelist: List[str],
+                      deb_host_arch: str, deb_host_multiarch: str,
+                      *, verbose: bool = False) -> List[str]:
     '''
-    Glob all the static libraries and add them into .install files
+    Glob all the static libraries from filelist, and add them into corresponding
+    .install files. A list contains no .a file will be returned.
+    When verbose is toggled, it prints ignored static libs.
     '''
     # Glob libs
-    libs = glob.glob('opt/**/**.a', recursive=True)
+    alibs = [x for x in allfiles if re.match('.*\.a$', x)]
+    libs = copy.copy(alibs)
+    rest = [x for x in allfiles if not re.match('.*\.a$', x)]
     # get package names in control file
     packages = parsePackages()
     # filter the lib list by architecture
     if deb_host_arch == 'amd64':
         libs = [x for x in libs if 'ia32' not in x]
-        # dedup
-        libs = [x for x in libs if 'intel64_lin' not in x]
+        libs = [x for x in libs if 'intel64_lin' not in x] # dedup
     else:
         libs = [x for x in libs if 'intel64' not in x]
         libs = [x for x in libs if 'ia32_lin' not in x]
     libs = [x for x in libs if 'benchmarks' not in x]
     libs = [x for x in libs if 'iomp' not in x]
+    # report static libs being dropped
+    for lib in alibs:
+        if lib not in libs and verbose:
+            print('Ignoring', lib)
     # now let's install them !
     for so in libs:
         path, fname = os.path.dirname(so), os.path.basename(so)
@@ -109,6 +128,7 @@ def installStaticLibs(deb_host_arch: str, deb_host_multiarch: str) -> None:
                     f'usr/lib/{deb_host_multiarch}/')
         else:
             raise Exception(f'Warning: Which package should ship {fname} ??')
+    return rest
 
 
 def installDocs() -> None:
@@ -159,6 +179,7 @@ def generate_install_files(packages: List[str], multiarch: str) -> None:
 
 if __name__ == '__main__':
 
+    dh_verbose = os.getenv('DH_VERBOSE')  or True
     host_arch = getDpkgArchitecture('DEB_HOST_ARCH')
     host_multiarch = getDpkgArchitecture('DEB_HOST_MULTIARCH')
     #host_arch, host_multiarch = 'i386', 'i386-linux-gnu'  # DEBUG for i386
@@ -166,11 +187,13 @@ if __name__ == '__main__':
     allfiles = sorted(glob.glob('opt/**', recursive=True))
     allfiles = [x for x in allfiles if not os.path.isdir(x)]  # Remove dirs
 
-    installSharedObjects(host_arch, host_multiarch)
-    allfiles = [x for x in allfiles if not re.match('.*\.so(\.?\d*)$', x)]
+    # install .so files and filter the list
+    allfiles = installSharedObjects(
+                   allfiles, host_arch, host_multiarch, verbose=dh_verbose)
 
-    installStaticLibs(host_arch, host_multiarch)
-    allfiles = [x for x in allfiles if not re.match('.*\.a$', x)]
+    allfiles = installStaticLibs(
+                   allfiles, host_arch, host_multiarch, verbose=dh_verbose)
+    exit()
 
     installDocs()
     allfiles = [x for x in allfiles if not '/documentation_' in x]
