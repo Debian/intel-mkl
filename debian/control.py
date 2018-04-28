@@ -154,13 +154,28 @@ def installIncludes(filelist: List[str],
     return rest
 
 
+def installTools(filelist: List[str], deb_host_arch: str,
+                 *, verbose: bool = False) -> None:
+    '''
+    Install tools. Argument is similary to previous functions.
+    '''
+    tools = [x for x in allfiles if '/linux/mkl/tools/' in x]
+    rest = [x for x in filelist if x not in tools]
+    # install them!
+    for tool in tools:
+        path, fname = os.path.dirname(tool), os.path.basename(tool)
+        if 'mkl_link_tool' in tool:
+            package = 'intel-mkl-linktool'
+            print(f'installing {fname} ➜ {package}')
+            installFile(tool, package, 'usr/bin/')
+        else:
+            package = 'libmkl-full-dev'
+            print(f'installing {fname} ➜ {package}')
+            installFile(tool, package, 'usr/share/intel-mkl/')
+    return rest
+
+
 def installDocs() -> None:
-    '''
-    '''
-    pass
-
-
-def installTools() -> None:
     '''
     '''
     pass
@@ -202,6 +217,7 @@ if __name__ == '__main__':
     #host_arch, host_multiarch = 'i386', 'i386-linux-gnu'  # DEBUG for i386
 
     allfiles = sorted(glob.glob('opt/**', recursive=True))
+    num_allfiles = len(allfiles)
     allfiles = [x for x in allfiles if not os.path.isdir(x)]  # Remove dirs
 
     # install .so files and filter the list
@@ -215,16 +231,15 @@ if __name__ == '__main__':
     # install header files and filter the list
     allfiles = installIncludes(allfiles, verbose=dh_verbose)
 
-    # install tools and 
+    # install tools and filter the list
+    allfiles = installTools(allfiles, host_arch, verbose=dh_verbose)
 
-    print(f'{len(allfiles)} Files left uninstalled.')
+    print(f'{len(allfiles)} / {num_allfiles} Files left uninstalled.')
     exit()
 
     installDocs()
     allfiles = [x for x in allfiles if not '/documentation_' in x]
 
-    installTools()
-    allfiles = [x for x in allfiles if not '/linux/mkl/tools/' in x]
 
     installMisc()
     allfiles = [x for x in allfiles if not '/linux/mkl/benchmarks/' in x]
