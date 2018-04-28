@@ -214,16 +214,18 @@ Package: libmkl-meta-interface
 Section: non-free/metapackages
 Architecture: amd64 i386
 Depends: ${misc:Depends},
-         libmkl-intel-lp64 (= ${binary:Version}),
-         libmkl-intel-ilp64 (= ${binary:Version}),
-         libmkl-gf-lp64 (= ${binary:Version}),
-         libmkl-gf-ilp64 (= ${binary:Version}),
+         libmkl-intel-lp64 (= ${binary:Version}) [amd64],
+         libmkl-intel-ilp64 (= ${binary:Version}) [amd64],
+         libmkl-gf-lp64 (= ${binary:Version}) [amd64],
+         libmkl-gf-ilp64 (= ${binary:Version}) [amd64],
+         libmkl-intel (= ${binary:Version}) [i386],
+         libmkl-gf (= ${binary:Version}) [i386],
 Description: Metapackage of intel-MKL: Shared Objects of Interface Layer
  FIXME
 
 Package: libmkl-intel-lp64
 Section: non-free/libs
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: Intel® MKL: LP64 interface library for the Intel compilers
@@ -238,7 +240,7 @@ Description: Intel® MKL: LP64 interface library for the Intel compilers
 
 Package: libmkl-intel-ilp64
 Section: non-free/libs
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: Intel® MKL: ILP64 interface library for the Intel compilers
@@ -251,9 +253,17 @@ Description: Intel® MKL: ILP64 interface library for the Intel compilers
  interface library.
  It belongs to the Interface Layer of MKL.
 
+Package: libmkl-intel
+Section: non-free/libs
+Architecture: i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL: ILP64 interface library for the Intel compilers
+ FIXME
+
 Package: libmkl-gf-lp64
 Section: non-free/libs
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: Intel® MKL: LP64 interface library for the GNU Fortran compilers
@@ -266,7 +276,7 @@ Description: Intel® MKL: LP64 interface library for the GNU Fortran compilers
 
 Package: libmkl-gf-ilp64
 Section: non-free/libs
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: Intel® MKL: ILP64 interface library for the GNU Fortran compilers
@@ -277,6 +287,14 @@ Description: Intel® MKL: ILP64 interface library for the GNU Fortran compilers
  This package contains ILP64 interface library for the GNU Fortran compilers.
  It belongs to the Interface Layer of MKL.
 
+Package: libmkl-gf
+Section: non-free/libs
+Architecture: i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL: ILP64 interface library for the GNU Fortran compilers
+ FIXME
+
 # [ Shared Object Packages ] -- Threading Layer ###############################
 
 Package: libmkl-meta-threading
@@ -284,10 +302,10 @@ Section: non-free/metapackages
 Architecture: amd64 i386
 Depends: ${misc:Depends},
          libmkl-intel-thread (= ${binary:Version}),
-         libmkl-tbb-thread (= ${binary:Version}),
          libmkl-gnu-thread (= ${binary:Version}),
-         libmkl-pgi-thread (= ${binary:Version}),
          libmkl-sequential (= ${binary:Version}),
+         libmkl-tbb-thread (= ${binary:Version}),
+         libmkl-pgi-thread (= ${binary:Version}) [amd64],
 Description: Metapackage of intel-MKL: Shared Objects of Threading Layer
  FIXME
 
@@ -306,7 +324,7 @@ Description: Intel® MKL: OpenMP threading library for the Intel compilers
 
 Package: libmkl-tbb-thread
 Section: non-free/libs
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: Intel® MKL: Intel TBB threading library for the Intel compilers
@@ -332,7 +350,7 @@ Description: Intel® MKL: OpenMP threading library for GNU Fortran/C compilers
 
 Package: libmkl-pgi-thread
 Section: non-free/libs
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: Intel® MKL: OpenMP threading library for the PGI compiler
@@ -362,23 +380,31 @@ Package: libmkl-meta-computational
 Section: non-free/metapackages
 Architecture: amd64 i386
 Depends: ${misc:Depends},
-         libmkl-core              (= ${binary:Version}),
-         libmkl-def               (= ${binary:Version}),
-         libmkl-mc                (= ${binary:Version}),
-         libmkl-mc3               (= ${binary:Version}),
          libmkl-avx               (= ${binary:Version}),
          libmkl-avx2              (= ${binary:Version}),
          libmkl-avx512            (= ${binary:Version}),
-         libmkl-avx512-mic        (= ${binary:Version}),
-         libmkl-vml-def           (= ${binary:Version}),
-         libmkl-vml-mc            (= ${binary:Version}),
-         libmkl-vml-mc2           (= ${binary:Version}),
-         libmkl-vml-mc3           (= ${binary:Version}),
+         libmkl-avx512-mic        (= ${binary:Version}) [amd64],
+         libmkl-core              (= ${binary:Version}),
+         libmkl-def               (= ${binary:Version}) [amd64],
+         libmkl-mc                (= ${binary:Version}) [amd64],
+         libmkl-mc3               (= ${binary:Version}) [amd64],
+         libmkl-p4                (= ${binary:Version}) [i386],
+         libmkl-p4m               (= ${binary:Version}) [i386],
+         libmkl-p4m3              (= ${binary:Version}) [i386],
          libmkl-vml-avx           (= ${binary:Version}),
          libmkl-vml-avx2          (= ${binary:Version}),
          libmkl-vml-avx512        (= ${binary:Version}),
-         libmkl-vml-avx512-mic    (= ${binary:Version}),
+         libmkl-vml-avx512-mic    (= ${binary:Version}) [amd64],
          libmkl-vml-cmpt          (= ${binary:Version}),
+         libmkl-vml-def           (= ${binary:Version}) [amd64],
+         libmkl-vml-ia            (= ${binary:Version}) [i386],
+         libmkl-vml-mc            (= ${binary:Version}) [amd64],
+         libmkl-vml-mc2           (= ${binary:Version}) [amd64],
+         libmkl-vml-mc3           (= ${binary:Version}) [amd64],
+         libmkl-vml-p4            (= ${binary:Version}) [i386],
+         libmkl-vml-p4m           (= ${binary:Version}) [i386],
+         libmkl-vml-p4m2          (= ${binary:Version}) [i386],
+         libmkl-vml-p4m3          (= ${binary:Version}) [i386],
 Description: Metapackage of intel-MKL: Shared Objects for Computaional Layer
  FIXME
 
@@ -388,7 +414,10 @@ Architecture: amd64 i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 # Let's at least add the default candidate library as Depends
-         libmkl-def (= ${binary:Version}),
+         libmkl-def     (= ${binary:Version}) [amd64],
+         libmkl-vml-def (= ${binary:Version}) [amd64],
+         libmkl-p4      (= ${binary:Version}) [i386],
+         libmkl-vml-p4  (= ${binary:Version}) [i386],
 Description: Intel® MKL: Library dispatcher of Computational Layer
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -622,7 +651,7 @@ Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
 
 Package: libmkl-meta-cluster
 Section: non-free/metapackages
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${misc:Depends},
          libmkl-scalapack-lp64       (= ${binary:Version}),
          libmkl-scalapack-ilp64      (= ${binary:Version}),
@@ -642,7 +671,7 @@ Description: Metapackage for Intel-MKL: Shared Object for Cluster
 
 Package: libmkl-scalapack-lp64
 Section: non-free/libs
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: Intel® MKL : ScaLAPACK routine library supporting LP64 interface
@@ -655,7 +684,7 @@ Description: Intel® MKL : ScaLAPACK routine library supporting LP64 interface
 
 Package: libmkl-scalapack-ilp64
 Section: non-free/libs
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: Intel® MKL : ScaLAPACK routine library supporting ILP64 interface
@@ -668,7 +697,7 @@ Description: Intel® MKL : ScaLAPACK routine library supporting ILP64 interface
 
 Package: libmkl-cdft-core
 Section: non-free/libs
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: Intel® MKL : Cluster version of FFT functions
@@ -681,7 +710,7 @@ Description: Intel® MKL : Cluster version of FFT functions
 
 Package: libmkl-blacs-intelmpi-lp64
 Section: non-free/libs
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: Intel® MKL : LP64 BLACS routines for Intel® MPI and MPICH2+
@@ -695,7 +724,7 @@ Description: Intel® MKL : LP64 BLACS routines for Intel® MPI and MPICH2+
 
 Package: libmkl-blacs-intelmpi-ilp64
 Section: non-free/libs
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: Intel® MKL : ILP64 BLACS routines for Intel® MPI and MPICH2+
@@ -709,7 +738,7 @@ Description: Intel® MKL : ILP64 BLACS routines for Intel® MPI and MPICH2+
 
 Package: libmkl-blacs-openmpi-lp64
 Section: non-free/libs
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: Intel® MKL : LP64 version of BLACS routines for Open MPI
@@ -722,7 +751,7 @@ Description: Intel® MKL : LP64 version of BLACS routines for Open MPI
 
 Package: libmkl-blacs-openmpi-ilp64
 Section: non-free/libs
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: Intel® MKL : ILP64 version of BLACS routines for Open MPI
@@ -735,7 +764,7 @@ Description: Intel® MKL : ILP64 version of BLACS routines for Open MPI
 
 Package: libmkl-blacs-sgimpt-lp64
 Section: non-free/libs
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: Intel® MKL : LP64 version of BLACS routines for SGI MPI Toolkit
@@ -748,7 +777,7 @@ Description: Intel® MKL : LP64 version of BLACS routines for SGI MPI Toolkit
 
 Package: libmkl-blacs-sgimpt-ilp64
 Section: non-free/libs
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: Intel® MKL : ILP64 version of BLACS routines for SGI MPT
