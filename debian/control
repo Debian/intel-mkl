@@ -469,7 +469,7 @@ Description: Intel® MKL: Library dispatcher of Computational Layer
  .
  This package contains the Library dispatcher for dynamic load of
  processor-specific kernel.
- It belongs to the Computational Computational Layer of MKL.
+ It belongs to the Computational Layer of MKL.
 
 Package: libmkl-def
 Section: non-free/libs
@@ -483,7 +483,7 @@ Description: Intel® MKL: Default kernel library
  maximum performance.
  .
  This package contains the Default kernel library.
- It belongs to the Computational Computational Layer of MKL.
+ It belongs to the Computational Layer of MKL.
 
 Package: libmkl-mc
 Section: non-free/libs
@@ -498,7 +498,7 @@ Description: Intel® MKL: Kernel library for Intel® SSSE3 enabled processors
  .
  This package contains the Kernel library for Intel® Supplemental Streaming
  SIMD Extensions 3 (Intel® SSSE3) enabled processors.
- It belongs to the Computational Computational Layer of MKL.
+ It belongs to the Computational Layer of MKL.
 
 Package: libmkl-mc3
 Section: non-free/libs
@@ -513,7 +513,7 @@ Description: Intel® MKL: Kernel library for Intel® SSE4.2 enabled processors
  .
  This package contains the Kernel library for Intel® Streaming SIMD
  Extensions 4.2 (Intel® SSE4.2) enabled processors.
- It belongs to the Computational Computational Layer of MKL.
+ It belongs to the Computational Layer of MKL.
 
 Package: libmkl-avx
 Section: non-free/libs
@@ -528,7 +528,7 @@ Description: Intel® MKL: Kernel library for Intel® AVX enabled processors
  .
  This package contains the Kernel library for Intel® Advanced Vector
  Extensions (Intel® AVX) enabled processors.
- It belongs to the Computational Computational Layer of MKL.
+ It belongs to the Computational Layer of MKL.
 
 Package: libmkl-avx2
 Section: non-free/libs
@@ -543,7 +543,7 @@ Description: Intel® MKL: Kernel library for Intel® AVX2 enabled processors
  .
  This package contains the Kernel library for Intel® Advanced Vector
  Extensions 2 (Intel® AVX2) enabled processors.
- It belongs to the Computational Computational Layer of MKL.
+ It belongs to the Computational Layer of MKL.
 
 Package: libmkl-avx512
 Section: non-free/libs
@@ -558,7 +558,7 @@ Description: Intel® MKL: Kernel library for Intel® AVX-512 enabled processors
  .
  This package contains the Kernel library for dispatching Intel® Advanced
  Vector Extensions 512 (Intel® AVX-512) on Intel® Xeon® processors.
- It belongs to the Computational Computational Layer of MKL.
+ It belongs to the Computational Layer of MKL.
 
 Package: libmkl-avx512-mic
 Section: non-free/libs
@@ -573,7 +573,7 @@ Description: Intel® MKL : Kernel library for Intel® AVX-512 Xeon Phi processor
  .
  This package contains the Kernel library for dispatching Intel® Advanced
  Vector Extensions 512 (Intel® AVX-512) on Intel® Xeon Phi™ processors.
- It belongs to the Computational Computational Layer of MKL.
+ It belongs to the Computational Layer of MKL.
 
 Package: libmkl-vml-def
 Section: non-free/libs
@@ -588,7 +588,7 @@ Description: Intel® MKL : VM/VS/DF part of default kernels
  .
  This package contains the Vector Mathematics (VM)/Vector Statistics (VS)/Data
  Fitting (DF) part of default kernels.
- It belongs to the Computational Computational Layer of MKL.
+ It belongs to the Computational Layer of MKL.
 
 Package: libmkl-vml-mc
 Section: non-free/libs
@@ -602,8 +602,7 @@ Description: Intel® MKL : VM/VS/DF for Intel® SSSE3 enabled processors
  maximum performance.
  .
  This package contains the VM/VS/DF for Intel® SSSE3 enabled processors.
- It belongs to the Computational Computational Layer of MKL.
-
+ It belongs to the Computational Layer of MKL.
 
 Package: libmkl-vml-mc2
 Section: non-free/libs
@@ -618,7 +617,7 @@ Description: Intel® MKL : VM/VS/DF for 45nm Hi-k Core2 and Xeon processor
  .
  This package contains the VM/VS/DF for 45nm Hi-k Intel® Core™2 and
  Intel® Xeon® processor families.
- It belongs to the Computational Computational Layer of MKL.
+ It belongs to the Computational Layer of MKL.
 
 Package: libmkl-vml-mc3
 Section: non-free/libs
@@ -632,7 +631,7 @@ Description: Intel® MKL : VM/VS/DF for Intel® SSE4.2 enabled processors
  maximum performance.
  .
  This package contains the VM/VS/DF for Intel® SSE4.2 enabled processors.
- It belongs to the Computational Computational Layer of MKL.
+ It belongs to the Computational Layer of MKL.
 
 Package: libmkl-vml-avx
 Section: non-free/libs
@@ -646,7 +645,7 @@ Description: Intel® MKL : VM/VS/DF optimized for Intel® AVX enabled processors
  maximum performance.
  .
  This package contains the VM/VS/DF optimized for Intel® AVX enabled processors.
- It belongs to the Computational Computational Layer of MKL.
+ It belongs to the Computational Layer of MKL.
 
 Package: libmkl-vml-avx2
 Section: non-free/libs
@@ -660,7 +659,7 @@ Description: Intel® MKL : VM/VS/DF optimized for Intel® AVX2 enabled processor
  maximum performance.
  .
  This package contains the VM/VS/DF optimized for Intel® AVX2 enabled processors
- It belongs to the Computational Computational Layer of MKL.
+ It belongs to the Computational Layer of MKL.
 
 Package: libmkl-vml-avx512
 Section: non-free/libs
@@ -675,7 +674,7 @@ Description: Intel® MKL : VM/VS/DF optimized for AVX-512 on Xeon® processors
  .
  This package contains the VM/VS/DF optimized for Intel® AVX-512 on
  Intel® Xeon® processors.
- It belongs to the Computational Computational Layer of MKL.
+ It belongs to the Computational Layer of MKL.
 
 Package: libmkl-vml-avx512-mic
 Section: non-free/libs
@@ -690,7 +689,7 @@ Description: Intel® MKL : VM/VS/DF optimized for AVX-512 on Xeon Phi™ process
  .
  This package contains the VM/VS/DF optimized for Intel® AVX-512 on
  Intel® Xeon Phi™ processors.
- It belongs to the Computational Computational Layer of MKL.
+ It belongs to the Computational Layer of MKL.
 
 Package: libmkl-vml-cmpt
 Section: non-free/libs
@@ -705,7 +704,7 @@ Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
  .
  This package contains the VM/VS/DF library for conditional numerical
  reproducibility.
- It belongs to the Computational Computational Layer of MKL.
+ It belongs to the Computational Layer of MKL.
 
 Package: libmkl-p4
 Section: non-free/libs
