@@ -4,7 +4,6 @@ Priority: optional
 Maintainer: Debian Science Maintainers <debian-science-maintainers@lists.alioth.debian.org>
 Uploaders: Mo Zhou <cdluminate@gmail.com>,
 Build-Depends: debhelper (>=11~),
-               mpich,
 # My script control.py requires python3 >= 3.6
                python3 (>= 3.6),
                rpm2cpio,
@@ -49,6 +48,7 @@ Vcs-Git: https://salsa.debian.org/science-team/intel-mkl.git
 Package: intel-mkl
 Section: non-free/metapackages
 Architecture: amd64 i386
+Multi-Arch: same
 Depends: ${misc:Depends},
          libmkl-dev (= ${binary:Version}),
 Description: Intel® Math Kernel Library (Intel® MKL)
@@ -56,7 +56,9 @@ Description: Intel® Math Kernel Library (Intel® MKL)
 
 Package: intel-mkl-cluster
 Section: non-free/metapackages
-Architecture: amd64 i386
+# There is no cluster support for i386
+Architecture: amd64
+Multi-Arch: same
 Depends: ${misc:Depends},
          intel-mkl (= ${binary:Version}),
          libmkl-meta-cluster (= ${binary:Version}),
@@ -65,10 +67,13 @@ Description: Intel® Math Kernel Library (Intel® MKL) (Cluster)
 
 Package: intel-mkl-full
 Section: non-free/metapackages
-Architecture: amd64 i386
+Architecture: amd64
+Multi-Arch: same
 Depends: ${misc:Depends},
          intel-mkl (= ${binary:Version}),
          intel-mkl-cluster (= ${binary:Version}),
+         intel-mkl-linktool:i386 (= ${binary:Version}),
+         libmkl-full-dev (= ${binary:Version}),
 Description: Intel® Math Kernel Library (Intel® MKL) (Full)
  FIXME
 
@@ -88,10 +93,19 @@ Description: Intel(R) Math Kernel Library (Intel(R) MKL) Link Tool v4.7
 
 Package: libmkl-full-dev
 Section: non-free/libdevel
-Architecture: amd64 i386
+Architecture: amd64
+Multi-Arch: foreign
 Depends: ${shlibs:Depends},
          ${misc:Depends},
-         libmkl-dev (= ${binary:Version}),
+         libmkl-dev                      (= ${binary:Version}),
+         libmkl-rt:amd64                 (= ${binary:Version}),
+         libmkl-rt:i386                  (= ${binary:Version}),
+         libmkl-interface-dev:amd64      (= ${binary:Version}),
+         libmkl-interface-dev:i386       (= ${binary:Version}),
+         libmkl-threading-dev:amd64      (= ${binary:Version}),
+         libmkl-threading-dev:i386       (= ${binary:Version}),
+         libmkl-computational-dev:amd64  (= ${binary:Version}),
+         libmkl-computational-dev:i386   (= ${binary:Version}),
 # Copied from here: https://software.intel.com/en-us/mkl-linux-developer-guide-2019-beta
 # Upstream revision: 062
 Description: Intel® Math Kernel Library (Intel® MKL) (Full Version Dev)
@@ -136,13 +150,14 @@ Description: Intel® Math Kernel Library (Intel® MKL) (Full Version Dev)
 Package: libmkl-dev
 Section: non-free/libdevel
 Architecture: amd64 i386
+Multi-Arch: foreign
 Depends: ${shlibs:Depends},
          ${misc:Depends},
-         libmkl-rt (= ${binary:Version}),
-         libmkl-interface-dev (= ${binary:Version}),
-         libmkl-threading-dev (= ${binary:Version}),
+         libmkl-rt                (= ${binary:Version}),
+         libmkl-interface-dev     (= ${binary:Version}),
+         libmkl-threading-dev     (= ${binary:Version}),
          libmkl-computational-dev (= ${binary:Version}),
-Description: Intel® Math Kernel Library (Intel® MKL) (Full Dev)
+Description: Intel® Math Kernel Library (Intel® MKL) (Dev)
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
  maximum performance. The library provides Fortran and C programming language
@@ -150,11 +165,12 @@ Description: Intel® Math Kernel Library (Intel® MKL) (Full Dev)
  written in either C or C++, as well as in any other language that can
  reference a C interface.
  .
- This package pulls
+ This package pulls the headers of MKL.
 
 Package: libmkl-interface-dev
 Section: non-free/libdevel
 Architecture: amd64 i386
+Multi-Arch: same
 Depends: ${misc:Depends},
          libmkl-meta-interface (= ${binary:Version}),
 Description: Static libs of intel-MKL: Interface Layer
@@ -163,6 +179,7 @@ Description: Static libs of intel-MKL: Interface Layer
 Package: libmkl-threading-dev
 Section: non-free/libdevel
 Architecture: amd64 i386
+Multi-Arch: same
 Depends: ${misc:Depends},
          libmkl-meta-threading (= ${binary:Version}),
 Description: Static libs of intel-MKL: Threading Layer
@@ -171,6 +188,7 @@ Description: Static libs of intel-MKL: Threading Layer
 Package: libmkl-computational-dev
 Section: non-free/libdevel
 Architecture: amd64 i386
+Multi-Arch: same
 Depends: ${misc:Depends},
          libkml-meta-computational (= ${binary:Version}),
 Description: Static libs of intel-MKL: Computational Layer
@@ -178,7 +196,8 @@ Description: Static libs of intel-MKL: Computational Layer
 
 Package: libmkl-cluster-dev
 Section: non-free/libdevel
-Architecture: amd64 i386
+Architecture: amd64
+Multi-Arch: same
 Depends: ${misc:Depends},
          libmkl-meta-cluster (= ${binary:Version}),
 Description: Static libs of intel-MKL: Cluster
@@ -191,6 +210,7 @@ Description: Static libs of intel-MKL: Cluster
 Package: libmkl-rt
 Section: non-free/libs
 Architecture: amd64 i386
+Multi-Arch: same
 Provides: libblas.so.3,
           liblapack.so.3,
           libblas.so,
@@ -213,13 +233,14 @@ Description: Intel® MKL: Single Dynamic Library (SDL)
 Package: libmkl-meta-interface
 Section: non-free/metapackages
 Architecture: amd64 i386
+Multi-Arch: same
 Depends: ${misc:Depends},
-         libmkl-intel-lp64 (= ${binary:Version}) [amd64],
-         libmkl-intel-ilp64 (= ${binary:Version}) [amd64],
-         libmkl-gf-lp64 (= ${binary:Version}) [amd64],
-         libmkl-gf-ilp64 (= ${binary:Version}) [amd64],
-         libmkl-intel (= ${binary:Version}) [i386],
-         libmkl-gf (= ${binary:Version}) [i386],
+         libmkl-intel-lp64   (= ${binary:Version}) [amd64],
+         libmkl-intel-ilp64  (= ${binary:Version}) [amd64],
+         libmkl-gf-lp64      (= ${binary:Version}) [amd64],
+         libmkl-gf-ilp64     (= ${binary:Version}) [amd64],
+         libmkl-intel        (= ${binary:Version}) [i386],
+         libmkl-gf           (= ${binary:Version}) [i386],
 Description: Metapackage of intel-MKL: Shared Objects of Interface Layer
  FIXME
 
@@ -300,6 +321,7 @@ Description: Intel® MKL: ILP64 interface library for the GNU Fortran compilers
 Package: libmkl-meta-threading
 Section: non-free/metapackages
 Architecture: amd64 i386
+Multi-Arch: same
 Depends: ${misc:Depends},
          libmkl-intel-thread (= ${binary:Version}),
          libmkl-gnu-thread (= ${binary:Version}),
@@ -379,6 +401,7 @@ Description: Intel® MKL: Sequential library
 Package: libmkl-meta-computational
 Section: non-free/metapackages
 Architecture: amd64 i386
+Multi-Arch: same
 Depends: ${misc:Depends},
          libmkl-avx               (= ${binary:Version}),
          libmkl-avx2              (= ${binary:Version}),
@@ -429,7 +452,7 @@ Description: Intel® MKL: Library dispatcher of Computational Layer
 
 Package: libmkl-def
 Section: non-free/libs
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: Intel® MKL: Default kernel library
@@ -442,7 +465,7 @@ Description: Intel® MKL: Default kernel library
 
 Package: libmkl-mc
 Section: non-free/libs
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: Intel® MKL: Kernel library for Intel® SSSE3 enabled processors
@@ -456,7 +479,7 @@ Description: Intel® MKL: Kernel library for Intel® SSSE3 enabled processors
 
 Package: libmkl-mc3
 Section: non-free/libs
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: Intel® MKL: Kernel library for Intel® SSE4.2 enabled processors
@@ -512,7 +535,7 @@ Description: Intel® MKL: Kernel library for Intel® AVX-512 enabled processors
 
 Package: libmkl-avx512-mic
 Section: non-free/libs
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: Intel® MKL : Kernel library for Intel® AVX-512 Xeon Phi processors
@@ -526,7 +549,7 @@ Description: Intel® MKL : Kernel library for Intel® AVX-512 Xeon Phi processor
 
 Package: libmkl-vml-def
 Section: non-free/libs
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: Intel® MKL : VM/VS/DF part of default kernels
@@ -540,7 +563,7 @@ Description: Intel® MKL : VM/VS/DF part of default kernels
 
 Package: libmkl-vml-mc
 Section: non-free/libs
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: Intel® MKL : VM/VS/DF for Intel® SSSE3 enabled processors
@@ -554,7 +577,7 @@ Description: Intel® MKL : VM/VS/DF for Intel® SSSE3 enabled processors
 
 Package: libmkl-vml-mc2
 Section: non-free/libs
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: Intel® MKL : VM/VS/DF for 45nm Hi-k Core2 and Xeon processor
@@ -568,7 +591,7 @@ Description: Intel® MKL : VM/VS/DF for 45nm Hi-k Core2 and Xeon processor
 
 Package: libmkl-vml-mc3
 Section: non-free/libs
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: Intel® MKL : VM/VS/DF for Intel® SSE4.2 enabled processors
@@ -621,7 +644,7 @@ Description: Intel® MKL : VM/VS/DF optimized for AVX-512 on Xeon® processors
 
 Package: libmkl-vml-avx512-mic
 Section: non-free/libs
-Architecture: amd64 i386
+Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
 Description: Intel® MKL : VM/VS/DF optimized for AVX-512 on Xeon Phi™ processors
@@ -647,11 +670,76 @@ Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
  reproducibility.
  It belongs to the Computational Computational Layer of MKL.
 
+Package: libmkl-p4
+Section: non-free/libs
+Architecture: i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
+ FIXME
+
+Package: libmkl-p4m
+Section: non-free/libs
+Architecture: i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
+ FIXME
+
+Package: libmkl-p4m3
+Section: non-free/libs
+Architecture: i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
+ FIXME
+
+Package: libmkl-vml-ia
+Section: non-free/libs
+Architecture: i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
+ FIXME
+
+Package: libmkl-vml-p4
+Section: non-free/libs
+Architecture: i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
+ FIXME
+
+Package: libmkl-vml-p4m
+Section: non-free/libs
+Architecture: i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
+ FIXME
+
+Package: libmkl-vml-p4m2
+Section: non-free/libs
+Architecture: i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
+ FIXME
+
+Package: libmkl-vml-p4m3
+Section: non-free/libs
+Architecture: i386
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
+ FIXME
+
 # [ Shared Object Packages ] -- Cluster Libraries #############################
 
 Package: libmkl-meta-cluster
 Section: non-free/metapackages
 Architecture: amd64
+Multi-Arch: same
 Depends: ${misc:Depends},
          libmkl-scalapack-lp64       (= ${binary:Version}),
          libmkl-scalapack-ilp64      (= ${binary:Version}),
@@ -659,7 +747,7 @@ Depends: ${misc:Depends},
          libmkl-blacs-intelmpi-lp64  (= ${binary:Version}),
          libmkl-blacs-intelmpi-ilp64 (= ${binary:Version}),
          libmkl-blacs-openmpi-lp64   (= ${binary:Version}),
-         libmkl-blacs-openmpi-ilp64   (= ${binary:Version}),
+         libmkl-blacs-openmpi-ilp64  (= ${binary:Version}),
          libmkl-blacs-sgimpt-lp64    (= ${binary:Version}),
          libmkl-blacs-sgimpt-ilp64   (= ${binary:Version}),
 # cluster libraries are built upon interface, threading and computational layers
