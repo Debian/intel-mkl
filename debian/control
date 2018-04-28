@@ -820,8 +820,13 @@ Multi-Arch: same
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          libmkl-locale (= ${binary:Version}),
-Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
- FIXME
+Description: Intel® MKL : Pentium 4 processor kernel library
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains Pentium® 4 processor kernel library.
+ It belongs to the Computational Layer of MKL.
 
 Package: libmkl-p4m
 Section: non-free/libs
@@ -830,8 +835,14 @@ Multi-Arch: same
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          libmkl-locale (= ${binary:Version}),
-Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
- FIXME
+Description: Intel® MKL : Kernel library for Intel SSSE3 enabled processors
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains Kernel library for Intel Supplemental Streaming SIMD
+ Extensions 3 (Intel SSSE3) enabled processors.
+ It belongs to the Computational Layer of MKL.
 
 Package: libmkl-p4m3
 Section: non-free/libs
@@ -840,8 +851,14 @@ Multi-Arch: same
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          libmkl-locale (= ${binary:Version}),
-Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
- FIXME
+Description: Intel® MKL : Kernel library for Intel SSE4.2 enabled processors
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains Kernel library for Intel® Streaming SIMD Extensions 4.2
+ (Intel® SSE4.2) enabled processors.
+ It belongs to the Computational Layer of MKL.
 
 Package: libmkl-vml-ia
 Section: non-free/libs
@@ -850,8 +867,14 @@ Multi-Arch: same
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          libmkl-locale (= ${binary:Version}),
-Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
- FIXME
+Description: Intel® MKL : VM/VS/DF default kernel for newer Intel architecture
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains VM/VS/DF default kernel for newer Intel® architecture
+ processors.
+ It belongs to the Computational Layer of MKL.
 
 Package: libmkl-vml-p4
 Section: non-free/libs
@@ -860,8 +883,14 @@ Multi-Arch: same
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          libmkl-locale (= ${binary:Version}),
-Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
- FIXME
+Description: Intel® MKL : VM/VS/DF part of Pentium 4 processor kernel
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains Vector Mathematics (VM)/Vector Statistics (VS)/Data
+ Fitting (DF) part of Pentium® 4 processor kernel.
+ It belongs to the Computational Layer of MKL.
 
 Package: libmkl-vml-p4m
 Section: non-free/libs
@@ -870,8 +899,13 @@ Multi-Arch: same
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          libmkl-locale (= ${binary:Version}),
-Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
- FIXME
+Description: Intel® MKL : VM/VS/DF for Intel® SSSE3 enabled processors
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains VM/VS/DF for Intel® SSSE3 enabled processors.
+ It belongs to the Computational Layer of MKL.
 
 Package: libmkl-vml-p4m2
 Section: non-free/libs
@@ -880,8 +914,14 @@ Multi-Arch: same
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          libmkl-locale (= ${binary:Version}),
-Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
- FIXME
+Description: Intel® MKL : VM/VS/DF for 45nm Hi-k Core2 and Intel Xeon® processor
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains VM/VS/DF for 45nm Hi-k Intel® Core™2 and Intel Xeon
+ processor families.
+ It belongs to the Computational Layer of MKL.
 
 Package: libmkl-vml-p4m3
 Section: non-free/libs
@@ -890,8 +930,13 @@ Multi-Arch: same
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          libmkl-locale (= ${binary:Version}),
-Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
- FIXME
+Description: Intel® MKL : VM/VS/DF for Intel® SSE4.2 enabled processors
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains VM/VS/DF for Intel® SSE4.2 enabled processors.
+ It belongs to the Computational Layer of MKL.
 
 # [ Shared Object Packages ] -- Cluster Libraries #############################
 
@@ -919,8 +964,6 @@ Description: Metapackage for Intel-MKL: Shared Object for Cluster
  maximum performance.
  .
  This package pulls shared objects in the Interface Layer.
-
- FIXME
 
 Package: libmkl-scalapack-lp64
 Section: non-free/libs
