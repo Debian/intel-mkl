@@ -1,0 +1,14 @@
+#! /bin/sh
+set -e
+
+update-alternatives --install /usr/lib/@DEB_HOST_MULTIARCH@/libblas.so.3 \
+                    libblas.so.3-@DEB_HOST_MULTIARCH@ \
+                    /usr/lib/@DEB_HOST_MULTIARCH@/libmkl_rt.so 50
+
+update-alternatives --install /usr/lib/@DEB_HOST_MULTIARCH@/liblapack.so.3 \
+                    liblapack.so.3-@DEB_HOST_MULTIARCH@ \
+                    /usr/lib/@DEB_HOST_MULTIARCH@/libmkl_rt.so 50
+
+#DEBHELPER#
+
+exit 0
