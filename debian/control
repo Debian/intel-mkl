@@ -229,6 +229,7 @@ Depends: ${shlibs:Depends},
          libmkl-meta-interface (= ${binary:Version}),
          libmkl-meta-threading (= ${binary:Version}),
          libmkl-meta-computational (= ${binary:Version}),
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL: Single Dynamic Library (SDL)
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -257,6 +258,7 @@ Section: non-free/libs
 Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL: LP64 interface library for the Intel compilers
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -272,6 +274,7 @@ Section: non-free/libs
 Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL: ILP64 interface library for the Intel compilers
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -287,6 +290,7 @@ Section: non-free/libs
 Architecture: i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL: ILP64 interface library for the Intel compilers
  FIXME
 
@@ -295,6 +299,7 @@ Section: non-free/libs
 Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL: LP64 interface library for the GNU Fortran compilers
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -308,6 +313,7 @@ Section: non-free/libs
 Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL: ILP64 interface library for the GNU Fortran compilers
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -321,6 +327,7 @@ Section: non-free/libs
 Architecture: i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL: ILP64 interface library for the GNU Fortran compilers
  FIXME
 
@@ -344,6 +351,7 @@ Section: non-free/libs
 Architecture: amd64 i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL: OpenMP threading library for the Intel compilers
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -357,6 +365,7 @@ Section: non-free/libs
 Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL: Intel TBB threading library for the Intel compilers
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -370,6 +379,7 @@ Section: non-free/libs
 Architecture: amd64 i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL: OpenMP threading library for GNU Fortran/C compilers
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -383,6 +393,7 @@ Section: non-free/libs
 Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL: OpenMP threading library for the PGI compiler
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -396,6 +407,7 @@ Section: non-free/libs
 Architecture: amd64 i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL: Sequential library
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -449,6 +461,7 @@ Depends: ${shlibs:Depends},
          libmkl-vml-def (= ${binary:Version}) [amd64],
          libmkl-p4      (= ${binary:Version}) [i386],
          libmkl-vml-p4  (= ${binary:Version}) [i386],
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL: Library dispatcher of Computational Layer
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -463,6 +476,7 @@ Section: non-free/libs
 Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL: Default kernel library
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -476,6 +490,7 @@ Section: non-free/libs
 Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL: Kernel library for Intel® SSSE3 enabled processors
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -490,6 +505,7 @@ Section: non-free/libs
 Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL: Kernel library for Intel® SSE4.2 enabled processors
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -504,6 +520,7 @@ Section: non-free/libs
 Architecture: amd64 i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL: Kernel library for Intel® AVX enabled processors
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -518,6 +535,7 @@ Section: non-free/libs
 Architecture: amd64 i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL: Kernel library for Intel® AVX2 enabled processors
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -532,6 +550,7 @@ Section: non-free/libs
 Architecture: amd64 i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL: Kernel library for Intel® AVX-512 enabled processors
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -546,6 +565,7 @@ Section: non-free/libs
 Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : Kernel library for Intel® AVX-512 Xeon Phi processors
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -560,6 +580,7 @@ Section: non-free/libs
 Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : VM/VS/DF part of default kernels
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -574,6 +595,7 @@ Section: non-free/libs
 Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : VM/VS/DF for Intel® SSSE3 enabled processors
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -588,6 +610,7 @@ Section: non-free/libs
 Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : VM/VS/DF for 45nm Hi-k Core2 and Xeon processor
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -602,6 +625,7 @@ Section: non-free/libs
 Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : VM/VS/DF for Intel® SSE4.2 enabled processors
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -615,6 +639,7 @@ Section: non-free/libs
 Architecture: amd64 i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : VM/VS/DF optimized for Intel® AVX enabled processors
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -628,6 +653,7 @@ Section: non-free/libs
 Architecture: amd64 i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : VM/VS/DF optimized for Intel® AVX2 enabled processors
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -641,6 +667,7 @@ Section: non-free/libs
 Architecture: amd64 i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : VM/VS/DF optimized for AVX-512 on Xeon® processors
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -655,6 +682,7 @@ Section: non-free/libs
 Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : VM/VS/DF optimized for AVX-512 on Xeon Phi™ processors
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -669,6 +697,7 @@ Section: non-free/libs
 Architecture: amd64 i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -683,6 +712,7 @@ Section: non-free/libs
 Architecture: i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
  FIXME
 
@@ -691,6 +721,7 @@ Section: non-free/libs
 Architecture: i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
  FIXME
 
@@ -699,6 +730,7 @@ Section: non-free/libs
 Architecture: i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
  FIXME
 
@@ -707,6 +739,7 @@ Section: non-free/libs
 Architecture: i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
  FIXME
 
@@ -715,6 +748,7 @@ Section: non-free/libs
 Architecture: i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
  FIXME
 
@@ -723,6 +757,7 @@ Section: non-free/libs
 Architecture: i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
  FIXME
 
@@ -731,6 +766,7 @@ Section: non-free/libs
 Architecture: i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
  FIXME
 
@@ -739,6 +775,7 @@ Section: non-free/libs
 Architecture: i386
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : VM/VS/DF for conditional numerical reproducibility
  FIXME
 
@@ -770,6 +807,7 @@ Section: non-free/libs
 Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : ScaLAPACK routine library supporting LP64 interface
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -783,6 +821,7 @@ Section: non-free/libs
 Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : ScaLAPACK routine library supporting ILP64 interface
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -796,6 +835,7 @@ Section: non-free/libs
 Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : Cluster version of FFT functions
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -809,6 +849,7 @@ Section: non-free/libs
 Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : LP64 BLACS routines for Intel® MPI and MPICH2+
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -823,6 +864,7 @@ Section: non-free/libs
 Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : ILP64 BLACS routines for Intel® MPI and MPICH2+
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -837,6 +879,7 @@ Section: non-free/libs
 Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : LP64 version of BLACS routines for Open MPI
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -850,6 +893,7 @@ Section: non-free/libs
 Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : ILP64 version of BLACS routines for Open MPI
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -863,6 +907,7 @@ Section: non-free/libs
 Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : LP64 version of BLACS routines for SGI MPI Toolkit
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
@@ -876,6 +921,7 @@ Section: non-free/libs
 Architecture: amd64
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-locale (= ${binary:Version}),
 Description: Intel® MKL : ILP64 version of BLACS routines for SGI MPT
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
