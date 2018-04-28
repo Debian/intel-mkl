@@ -38,7 +38,7 @@ def parsePackages() -> List[str]:
     return packages
 
 
-def installSharedObjects() -> None:
+def installSharedObjects(deb_host_arch: str, deb_host_multiarch: str) -> None:
     '''
     Glob all the shared object and write install entries for them
     '''
@@ -47,8 +47,6 @@ def installSharedObjects() -> None:
     # get package names in control file
     packages = parsePackages()
     # filter the lib list by architecture
-    deb_host_arch = getDpkgArchitecture('DEB_HOST_ARCH')
-    deb_host_multiarch = getDpkgArchitecture('DEB_HOST_MULTIARCH')
     if deb_host_arch == 'amd64':
         libs = [x for x in libs if 'ia32' not in x]
         # dedup
@@ -74,7 +72,7 @@ def installSharedObjects() -> None:
             raise Exception(f'Warning: Which package should ship {fname} ??')
 
 
-def installStaticLibs() -> None:
+def installStaticLibs(deb_host_arch: str, deb_host_multiarch: str) -> None:
     '''
     Glob all the static libraries and add them into .install files
     '''
@@ -83,8 +81,6 @@ def installStaticLibs() -> None:
     # get package names in control file
     packages = parsePackages()
     # filter the lib list by architecture
-    deb_host_arch = getDpkgArchitecture('DEB_HOST_ARCH')
-    deb_host_multiarch = getDpkgArchitecture('DEB_HOST_MULTIARCH')
     if deb_host_arch == 'amd64':
         libs = [x for x in libs if 'ia32' not in x]
         # dedup
@@ -114,6 +110,31 @@ def installStaticLibs() -> None:
         else:
             raise Exception(f'Warning: Which package should ship {fname} ??')
 
+
+def installDocs() -> None:
+    '''
+    '''
+    pass
+
+
+def installIncludes() -> None:
+    '''
+    '''
+    pass
+
+
+def installTools() -> None:
+    '''
+    '''
+    pass
+
+
+def installMisc() -> None:
+    '''
+    '''
+    pass
+
+
 def parse_binary_packages(control: str) -> List[Tuple[str,str]]:
     '''
     Parse the given control file. This is a working DIRTY HACK.
@@ -138,8 +159,44 @@ def generate_install_files(packages: List[str], multiarch: str) -> None:
 
 if __name__ == '__main__':
 
-    installSharedObjects()
-    installStaticLibs()
+    host_arch = getDpkgArchitecture('DEB_HOST_ARCH')
+    host_multiarch = getDpkgArchitecture('DEB_HOST_MULTIARCH')
+    #host_arch, host_multiarch = 'i386', 'i386-linux-gnu'  # DEBUG for i386
+
+    allfiles = sorted(glob.glob('opt/**', recursive=True))
+    allfiles = [x for x in allfiles if not os.path.isdir(x)]  # Remove dirs
+
+    installSharedObjects(host_arch, host_multiarch)
+    allfiles = [x for x in allfiles if not re.match('.*\.so(\.?\d*)$', x)]
+
+    installStaticLibs(host_arch, host_multiarch)
+    allfiles = [x for x in allfiles if not re.match('.*\.a$', x)]
+
+    installDocs()
+    allfiles = [x for x in allfiles if not '/documentation_' in x]
+
+    installIncludes()
+    allfiles = [x for x in allfiles if not '/linux/mkl/include/' in x]
+    allfiles = [x for x in allfiles if not '/linux/mkl/bin/pkgconfig/' in x]
+
+    installTools()
+    allfiles = [x for x in allfiles if not '/linux/mkl/tools/' in x]
+
+    installMisc()
+    allfiles = [x for x in allfiles if not '/linux/mkl/benchmarks/' in x]
+    allfiles = [x for x in allfiles if not '/linux/mkl/examples/' in x]
+    allfiles = [x for x in allfiles if not '/linux/bin/' in x]
+
+    pass  # FIXME: how to deal with the interfaces
+    allfiles = [x for x in allfiles if '/linux/mkl/interfaces/' not in x]
+
+    # ignore unwanted files
+    allfiles = [x for x in allfiles if 'opt/intel/parallel_studio_xe' not in x]
+    allfiles = [x for x in allfiles if 'iomp' not in x]
+
+    # just like dh-missing --list-missing
+    for f in allfiles: print(f)
+
     exit()
 
     # Read control file and parse
