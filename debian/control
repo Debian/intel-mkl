@@ -205,6 +205,14 @@ Description: Static libs of intel-MKL: Cluster
 
 # [ Shared Object Packages ] ##################################################
 
+Package: libmkl-locale
+Section: non-free/libs
+Architecture: amd64 i386
+Multi-Arch: foreign
+Depends: ${misc:Depends},
+Description: Intel MKL: Locale Files Used by All Shared Objects
+ FIXME
+
 # [ Shared Object Packages ] -- SDL: Single Dymamic Library ###################
 
 Package: libmkl-rt

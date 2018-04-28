@@ -221,7 +221,7 @@ def installMisc(filelist: List[str], *, verbose: bool = False) -> List[str]:
     miscs = [x for x in miscs if 'mkl/benchmarks' not in x]
     installFile(
         'opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/examples',
-        'libmkl-full-dev', 'usr/share/intel-mkl/')
+        'intel-mkl-doc', 'usr/share/doc/intel-mkl/')
     miscs = [x for x in miscs if 'mkl/examples' not in x]
     installFile(
         'opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/interfaces',
