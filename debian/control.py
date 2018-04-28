@@ -131,13 +131,30 @@ def installStaticLibs(filelist: List[str],
     return rest
 
 
+def installIncludes(filelist: List[str],
+                    *, verbose: bool = False) -> List[str]:
+    '''
+    Install docs and return the filtered list.
+    Print ignored files when verbose is set.
+    '''
+    incs = [x for x in filelist if '/linux/mkl/include/' in x]
+    incs += [x for x in filelist if '/linux/mkl/bin/pkgconfig/' in x]
+    rest = [x for x in filelist if x not in incs]
+    # install them!
+    for inc in incs:
+        path, fname = os.path.dirname(inc), os.path.basename(inc)
+        if 'pkgconfig' not in path:
+            package = 'libmkl-dev'
+            print(f'installing {fname} ➜ {package}')
+            installFile(inc, package, f'usr/include/mkl/')
+        else:
+            package = 'libmkl-dev'
+            print(f'installing {fname} ➜ {package}')
+            installFile(inc, package, f'usr/share/pkgconfig/')
+    return rest
+
+
 def installDocs() -> None:
-    '''
-    '''
-    pass
-
-
-def installIncludes() -> None:
     '''
     '''
     pass
@@ -191,16 +208,20 @@ if __name__ == '__main__':
     allfiles = installSharedObjects(
                    allfiles, host_arch, host_multiarch, verbose=dh_verbose)
 
+    # install .a files and filter the list
     allfiles = installStaticLibs(
                    allfiles, host_arch, host_multiarch, verbose=dh_verbose)
+
+    # install header files and filter the list
+    allfiles = installIncludes(allfiles, verbose=dh_verbose)
+
+    # install tools and 
+
+    print(f'{len(allfiles)} Files left uninstalled.')
     exit()
 
     installDocs()
     allfiles = [x for x in allfiles if not '/documentation_' in x]
-
-    installIncludes()
-    allfiles = [x for x in allfiles if not '/linux/mkl/include/' in x]
-    allfiles = [x for x in allfiles if not '/linux/mkl/bin/pkgconfig/' in x]
 
     installTools()
     allfiles = [x for x in allfiles if not '/linux/mkl/tools/' in x]
