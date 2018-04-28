@@ -29,6 +29,12 @@ extract-upstream-rpms:
 
 override_dh_auto_configure: extract-upstream-rpms
 	python3 debian/control.py  # Generate install files
+	sed -e "s/@DEB_HOST_MULTIARCH@/$(DEB_HOST_MULTIARCH)/g" \
+		< debian/libmkl-rt.postinst.in > debian/libmkl-rt.postinst
+	chmod +x debian/libmkl-rt.postinst
+	sed -e "s/@DEB_HOST_MULTIARCH@/$(DEB_HOST_MULTIARCH)/g" \
+		< debian/libmkl-rt.prerm.in > debian/libmkl-rt.prerm
+	chmod +x debian/libmkl-rt.prerm
 
 override_dh_auto_clean:
 	-$(RM) debian/*.install  # auto-generated install files
