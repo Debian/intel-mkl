@@ -963,7 +963,7 @@ Description: Metapackage for Intel-MKL: Shared Object for Cluster
  optimized, extensively threaded routines for applications that require
  maximum performance.
  .
- This package pulls shared objects in the Interface Layer.
+ This package pulls shared objects for Cluster support.
 
 Package: libmkl-scalapack-lp64
 Section: non-free/libs
