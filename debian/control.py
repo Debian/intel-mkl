@@ -117,7 +117,7 @@ def installStaticLibs(filelist: List[str],
             package = 'libmkl-threading-dev'
         elif any(x in fname for x in ('blacs', 'scalapack', 'cdft')):
             package = 'libmkl-cluster-dev'
-        elif any(x in fname for x in ('intel_', 'gf_')):
+        elif any(x in fname for x in ('intel_', 'gf_', 'intel.a', 'blas95', 'lapack95')):
             package = 'libmkl-interface-dev'
         elif any(x in fname for x in ('core', 'lapack', 'blas')):
             package = 'libmkl-computational-dev'

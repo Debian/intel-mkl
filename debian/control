@@ -19,16 +19,27 @@ Vcs-Git: https://salsa.debian.org/science-team/intel-mkl.git
 
 # [ Binary Package Index ]
 #   * Root Meta Packages
+#     + intel-mkl
+#       - basic set of MKL dev files and libraries
+#       - top-level meta package for i386 architecture
+#     + intel-mkl-cluster [amd64]
+#       - = basic set + cluster support
+#     + intel-mkl-full [amd64]
+#       - = basic set + cluster support + i386 libs (multiarch)
+#       - should pull all files provided by MKL except for the filtered ones.
 #   * Tool Packages
-#     + MKL Link Tool (Advisor) and MKL Custom .so Builder
+#     + MKL Link Tool
 #   * Development Packages
 #     + Common Development Files (C/Fortran)
+#       - libmkl-dev
 #     + Static Libs
+#       - divided by layer
 #     + Cluster Libraries
 #       - libmkl_{scalapack*,cdft,blacs*}.a
 #     + Benchmark Files
+#       - ignored. Too problematic as reported by lintian.
 #   * Shared Object Packages
-#     + SDL
+#     + SDL (IMPORTANT!)
 #       - libmkl_rt
 #     + Interface Layer
 #       - libmkl_{intel*,gf*}
@@ -38,10 +49,6 @@ Vcs-Git: https://salsa.debian.org/science-team/intel-mkl.git
 #       - libmkl_{core,def,mc*,avx*,vml*}
 #     + Cluster Libraries
 #       - libmkl_{scalapack*,cdft*,blacs*}.so
-#   * TODO: What are they?
-#       - "mkl/interfaces" intel-mkl-cluster-common-2018.2-199-2018.2-199.noarch.rpm
-#       - "mkl/interfaces" intel-mkl-common-c-2018.2-199-2018.2-199.noarch.rpm
-#       - mkl_msg.cat
 
 # [ Meta Packages ] ###########################################################
 
@@ -52,7 +59,15 @@ Multi-Arch: same
 Depends: ${misc:Depends},
          libmkl-dev (= ${binary:Version}),
 Description: Intel® Math Kernel Library (Intel® MKL)
- FIXME
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance. The library provides Fortran and C programming language
+ interfaces. Intel MKL C language interfaces can be called from applications
+ written in either C or C++, as well as in any other language that can
+ reference a C interface.
+ .
+ This package pulls the basic set of development files and libraries of MKL
+ in the present architecture. Cluster support is not included.
 
 Package: intel-mkl-cluster
 Section: non-free/metapackages
@@ -63,7 +78,15 @@ Depends: ${misc:Depends},
          intel-mkl (= ${binary:Version}),
          libmkl-meta-cluster (= ${binary:Version}),
 Description: Intel® Math Kernel Library (Intel® MKL) (Cluster)
- FIXME
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance. The library provides Fortran and C programming language
+ interfaces. Intel MKL C language interfaces can be called from applications
+ written in either C or C++, as well as in any other language that can
+ reference a C interface.
+ .
+ This package pulls the development files and libraries of MKL in the present
+ architecture, including Cluster support.
 
 Package: intel-mkl-full
 Section: non-free/metapackages
@@ -75,7 +98,14 @@ Depends: ${misc:Depends},
          intel-mkl-linktool:i386 (= ${binary:Version}),
          libmkl-full-dev (= ${binary:Version}),
 Description: Intel® Math Kernel Library (Intel® MKL) (Full)
- FIXME
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance. The library provides Fortran and C programming language
+ interfaces. Intel MKL C language interfaces can be called from applications
+ written in either C or C++, as well as in any other language that can
+ reference a C interface.
+ .
+ This package pulls the full version of MKL, including several i386 packages.
 
 # [ Tool Packages ] ###########################################################
 
@@ -87,7 +117,12 @@ Multi-Arch: foreign
 Depends: ${misc:Depends},
          ${shlibs:Depends},
 Description: Intel(R) Math Kernel Library (Intel(R) MKL) Link Tool v4.7
- FIXME
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package provides a command line tool which suggests compiler argument
+ for linking against MKL.
 
 # [ Development Packages ] ####################################################
 
@@ -174,7 +209,11 @@ Multi-Arch: same
 Depends: ${misc:Depends},
          libmkl-meta-interface (= ${binary:Version}),
 Description: Static libs of intel-MKL: Interface Layer
- FIXME
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package ships the static libraries of Interface Layer.
 
 Package: libmkl-threading-dev
 Section: non-free/libdevel
@@ -183,7 +222,11 @@ Multi-Arch: same
 Depends: ${misc:Depends},
          libmkl-meta-threading (= ${binary:Version}),
 Description: Static libs of intel-MKL: Threading Layer
- FIXME
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package ships the static libraries of Threading Layer.
 
 Package: libmkl-computational-dev
 Section: non-free/libdevel
@@ -192,7 +235,11 @@ Multi-Arch: same
 Depends: ${misc:Depends},
          libmkl-meta-computational (= ${binary:Version}),
 Description: Static libs of intel-MKL: Computational Layer
- FIXME
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package ships the static libraries of Computational Layer.
 
 Package: libmkl-cluster-dev
 Section: non-free/libdevel
@@ -201,7 +248,11 @@ Multi-Arch: same
 Depends: ${misc:Depends},
          libmkl-meta-cluster (= ${binary:Version}),
 Description: Static libs of intel-MKL: Cluster
- FIXME
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package ships the static libraries for Cluster.
 
 # [ Shared Object Packages ] ##################################################
 
@@ -211,7 +262,11 @@ Architecture: amd64 i386
 Multi-Arch: foreign
 Depends: ${misc:Depends},
 Description: Intel MKL: Locale Files Used by All Shared Objects
- FIXME
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package ships the message catalog file for shared objects from MKL.
 
 # [ Shared Object Packages ] -- SDL: Single Dymamic Library ###################
 
@@ -251,7 +306,11 @@ Depends: ${misc:Depends},
          libmkl-intel        (= ${binary:Version}) [i386],
          libmkl-gf           (= ${binary:Version}) [i386],
 Description: Metapackage of intel-MKL: Shared Objects of Interface Layer
- FIXME
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package pulls shared objects in the Interface Layer.
 
 Package: libmkl-intel-lp64
 Section: non-free/libs
@@ -294,8 +353,15 @@ Multi-Arch: same
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          libmkl-locale (= ${binary:Version}),
-Description: Intel® MKL: ILP64 interface library for the Intel compilers
- FIXME
+Description: Intel® MKL: (ia32) Interface library for the Intel compilers
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains Interface library for the Intel compilers. Also use for
+ other supported compilers that do not have a specialized Intel MKL interface
+ library.
+ It belongs to the Interface Layer of MKL.
 
 Package: libmkl-gf-lp64
 Section: non-free/libs
@@ -334,8 +400,13 @@ Multi-Arch: same
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          libmkl-locale (= ${binary:Version}),
-Description: Intel® MKL: ILP64 interface library for the GNU Fortran compilers
- FIXME
+Description: Intel® MKL: (ia32) Interface library for the GNU Fortran compiler
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package contains Interface library for the GNU Fortran compiler.
+ It belongs to the Interface Layer of MKL.
 
 # [ Shared Object Packages ] -- Threading Layer ###############################
 
@@ -350,7 +421,11 @@ Depends: ${misc:Depends},
          libmkl-tbb-thread (= ${binary:Version}),
          libmkl-pgi-thread (= ${binary:Version}) [amd64],
 Description: Metapackage of intel-MKL: Shared Objects of Threading Layer
- FIXME
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package pulls shared objects in the Threading Layer.
 
 Package: libmkl-intel-thread
 Section: non-free/libs
@@ -460,7 +535,11 @@ Depends: ${misc:Depends},
          libmkl-vml-p4m2          (= ${binary:Version}) [i386],
          libmkl-vml-p4m3          (= ${binary:Version}) [i386],
 Description: Metapackage of intel-MKL: Shared Objects for Computaional Layer
- FIXME
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package pulls shared objects in the Computational Layer.
 
 Package: libmkl-core
 Section: non-free/libs
@@ -835,6 +914,12 @@ Depends: ${misc:Depends},
          libmkl-meta-threading       (= ${binary:Version}),
          libmkl-meta-computational   (= ${binary:Version}),
 Description: Metapackage for Intel-MKL: Shared Object for Cluster
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package pulls shared objects in the Interface Layer.
+
  FIXME
 
 Package: libmkl-scalapack-lp64
