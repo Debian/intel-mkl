@@ -190,7 +190,7 @@ Section: non-free/libdevel
 Architecture: amd64 i386
 Multi-Arch: same
 Depends: ${misc:Depends},
-         libkml-meta-computational (= ${binary:Version}),
+         libmkl-meta-computational (= ${binary:Version}),
 Description: Static libs of intel-MKL: Computational Layer
  FIXME
 
