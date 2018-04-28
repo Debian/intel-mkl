@@ -5,7 +5,8 @@
 # FIXME: Backporters, please notice that this script utilized one of the
 #        python3.6 features (format string, i.g. f''). That means this script
 #        requires python >= 3.6 . I'm sorry for the inconvenience but I like
-#        this feature so much ...
+#        this feature so much ... Type annotation for python >= 3.5 is also
+#        used ...
 import os, re, sys, subprocess, glob, copy
 from typing import *
 
@@ -145,8 +146,10 @@ def installIncludes(filelist: List[str],
         path, fname = os.path.dirname(inc), os.path.basename(inc)
         if 'pkgconfig' not in path:
             package = 'libmkl-dev'
-            print(f'installing {fname} ➜ {package}')
-            installFile(inc, package, f'usr/include/mkl/')
+            dest = os.path.dirname(re.sub('.*include/', '', inc))
+            dest = f'usr/include/mkl/{dest}'
+            print(f'installing {fname} ➜ {package} : {dest}')
+            installFile(inc, package, dest)
         else:
             package = 'libmkl-dev'
             print(f'installing {fname} ➜ {package}')
@@ -175,10 +178,29 @@ def installTools(filelist: List[str], deb_host_arch: str,
     return rest
 
 
-def installDocs() -> None:
+def installDocs(filelist: List[str], *, verbose: bool = False) -> None:
     '''
+    similar to previous functions.
     '''
-    pass
+    docs = [x for x in filelist if '/documentation_' in x]
+    rest = [x for x in filelist if x not in docs]
+    # install them!
+    for doc in docs:
+        path, fname = os.path.dirname(doc), os.path.basename(doc)
+        package = 'intel-mkl-doc'
+        if re.match('.*/en/mkl/.*', path):
+            dest = os.path.dirname(re.sub('.*/en/mkl/', '', doc))
+            dest = f'usr/share/doc/intel-mkl/{dest}'
+            print(f'installing {fname} ➜ {package} : {dest}')
+            installFile(doc, package, dest)
+        elif re.match('.*/ja/mkl/.*', path): # Japanese
+            dest = os.path.dirname(re.sub('.*/ja/mkl/', '', doc))
+            dest = f'usr/share/doc/intel-mkl/ja/{dest}'
+            print(f'installing {fname} ➜ {package} : {dest}')
+            installFile(doc, package, dest)
+        else:
+            raise Exception('New language found??')
+    return rest
 
 
 def installMisc() -> None:
@@ -234,11 +256,12 @@ if __name__ == '__main__':
     # install tools and filter the list
     allfiles = installTools(allfiles, host_arch, verbose=dh_verbose)
 
+    # install docs and filter the list
+    allfiles = installDocs(allfiles, verbose=dh_verbose)
+
     print(f'{len(allfiles)} / {num_allfiles} Files left uninstalled.')
     exit()
 
-    installDocs()
-    allfiles = [x for x in allfiles if not '/documentation_' in x]
 
 
     installMisc()
