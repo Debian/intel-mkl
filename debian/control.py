@@ -158,7 +158,7 @@ def installIncludes(filelist: List[str],
 
 
 def installTools(filelist: List[str], deb_host_arch: str,
-                 *, verbose: bool = False) -> None:
+                 *, verbose: bool = False) -> List[str]:
     '''
     Install tools. Argument is similary to previous functions.
     '''
@@ -178,7 +178,7 @@ def installTools(filelist: List[str], deb_host_arch: str,
     return rest
 
 
-def installDocs(filelist: List[str], *, verbose: bool = False) -> None:
+def installDocs(filelist: List[str], *, verbose: bool = False) -> List[str]:
     '''
     similar to previous functions.
     '''
@@ -203,13 +203,14 @@ def installDocs(filelist: List[str], *, verbose: bool = False) -> None:
     return rest
 
 
-def installMisc(filelist: List[str], *, verbose: bool = False) -> None:
+def installMisc(filelist: List[str], *, verbose: bool = False) -> List[str]:
     '''
     similar to previous functions.
     '''
     miscs = [x for x in filelist if '/linux/mkl/benchmarks/' in x]
     miscs += [x for x in filelist if '/linux/mkl/examples/' in x]
     miscs += [x for x in filelist if '/linux/mkl/interfaces/' in x]
+    miscs += [x for x in filelist if 'samples.html' in x]
     rest = [x for x in filelist if x not in miscs]
     # let's install the misc stuff!
     installFile(
@@ -224,32 +225,35 @@ def installMisc(filelist: List[str], *, verbose: bool = False) -> None:
         'opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/interfaces',
         'libmkl-full-dev', 'usr/share/intel-mkl/')
     miscs = [x for x in miscs if 'mkl/interfaces' not in x]
+    installFile('opt/intel/samples_2018/en/samples.html',
+        'intel-mkl-doc', 'usr/share/doc/intel-mkl/')
+    miscs = [x for x in miscs if 'samples.html' not in x]
     for misc in miscs:
         if verbose:
             print('Ignoring', misc)
     return rest
 
 
-def parse_binary_packages(control: str) -> List[Tuple[str,str]]:
+def installCats(filelist: List[str], deb_host_arch: str,
+                *, verbose: bool = False) -> List[str]:
     '''
-    Parse the given control file. This is a working DIRTY HACK.
-    returns List[Tuple(Package, Architectures)]
+    similar to previous functions
     '''
-    packages = re.findall('Package:\s*(.*)', control)
-    architectures = re.findall('Architecture:\s*(.*)', control)
-    assert(len(packages) == len(architectures))
-    return list(zip(packages, architectures))
-
-
-def generate_install_files(packages: List[str], multiarch: str) -> None:
-    '''
-    Automatically generate .install files for shared object packages
-    '''
-    for p in packages:
-        so = p.replace('-', '_') + '.so'
-        install = f'{so}\tusr/include/{multiarch}/'
-        with open(f'debian/{p}.install', 'w') as f:
-            f.write(install)
+    cats = [x for x in filelist if re.match('.*\.cat$', x)]
+    rest = [x for x in filelist if x not in cats]
+    # find opt -type f -name '*.cat' -exec md5sum '{}' \;
+    # amd64 and i386 message catalog files are the same.
+    if 'amd64' == deb_host_arch:
+        installFile('opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/lib/intel64_lin/locale/ja_JP/mkl_msg.cat',
+                    'libmkl-locale', 'usr/share/locale/ja_JP/')
+        installFile('opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/lib/intel64_lin/locale/en_US/mkl_msg.cat',
+                    'libmkl-locale', 'usr/share/locale/en_US/')
+    else: # i386
+        installFile('opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/lib/ia32_lin/locale/ja_JP/mkl_msg.cat',
+                    'libmkl-locale', 'usr/share/locale/ja_JP/')
+        installFile('opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/lib/ia32_lin/locale/en_US/mkl_msg.cat',
+                    'libmkl-locale', 'usr/share/locale/en_US/')
+    return rest
 
 
 if __name__ == '__main__':
@@ -283,6 +287,9 @@ if __name__ == '__main__':
     # install misc files and filter the list
     allfiles = installMisc(allfiles, verbose=dh_verbose)
 
+    # install the locale file
+    allfiles = installCats(allfiles, host_arch, verbose=dh_verbose)
+
     # filter the files that we don't want
     allfiles = [x for x in allfiles if 'opt/intel/parallel_studio_xe' not in x]
     allfiles = [x for x in allfiles if 'iomp' not in x]
@@ -293,24 +300,4 @@ if __name__ == '__main__':
     if dh_verbose:
         for f in allfiles: print(f)
 
-    exit()
-
-
-    pass  # FIXME: how to deal with the interfaces
-    allfiles = [x for x in allfiles if '/linux/mkl/interfaces/' not in x]
-
-    # ignore unwanted files
-    allfiles = [x for x in allfiles if 'opt/intel/parallel_studio_xe' not in x]
-    allfiles = [x for x in allfiles if 'iomp' not in x]
-
-
-    exit()
-
-    # Read control file and parse
-    control = open('debian/control', 'r').read()
-    packages = list(parse_binary_packages(control))
-    # Filter the package list by architecture and name
-    packages = [p for (p, a) in packages if deb_host_arch in a
-                  and p.startswith('lib') and '-dev' not in p]
-    # Automatically generate install files for shared object packages
-    generate_install_files(packages, deb_host_multiarch)
+    # the license files, the shell scripts for compiler variables are ignored.
