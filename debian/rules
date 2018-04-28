@@ -9,8 +9,11 @@
 #
 # Apart from that, I'd strongly suggest you build this package under /dev/shm!
 
-# This variable is used as a memo.
+# These variables are used as memo.
 MKL_ORIG_TARBALL = l_mkl_2018.2.199.tgz
+MD5SUM           = fd31b656a8eb859c89495b9cc41230b4
+SHA256SUM = e28d12173bef9e615b0ded2f95f59a42b3e9ad0afa713a79f8801da2bfb31936
+
 
 %:
 	dh $@
@@ -21,7 +24,6 @@ extract-upstream-rpms:
 		done
 
 override_dh_auto_configure: extract-upstream-rpms
-	dh_auto_configure
 	python3 debian/control.py  # Generate install files
 
 override_dh_auto_clean:
