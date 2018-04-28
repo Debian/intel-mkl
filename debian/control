@@ -88,6 +88,22 @@ Description: Intel® Math Kernel Library (Intel® MKL) (Cluster)
  This package pulls the development files and libraries of MKL in the present
  architecture, including Cluster support.
 
+Package: intel-mkl-doc
+Section: non-free/doc
+Architecture: all
+Depends: ${misc:Depends},
+Description: Intel® Math Kernel Library (Intel® MKL) (Doc)
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance. The library provides Fortran and C programming language
+ interfaces. Intel MKL C language interfaces can be called from applications
+ written in either C or C++, as well as in any other language that can
+ reference a C interface.
+ .
+ This package ships several document files, but not a complete copy of MKL doc.
+ Please go to the homepage for the full documentation.
+ https://software.intel.com/en-us/mkl
+
 Package: intel-mkl-full
 Section: non-free/metapackages
 Architecture: amd64
@@ -257,9 +273,8 @@ Description: Static libs of intel-MKL: Cluster
 # [ Shared Object Packages ] ##################################################
 
 Package: libmkl-locale
-Section: non-free/libs
-Architecture: amd64 i386
-Multi-Arch: foreign
+Section: non-free/misc
+Architecture: all
 Depends: ${misc:Depends},
 Description: Intel MKL: Locale Files Used by All Shared Objects
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
