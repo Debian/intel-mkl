@@ -271,6 +271,7 @@ def overrideLintian() -> None:
                      'hardening-no-bindnow',  # upstream issue
                      'hardening-no-fortify-functions',  # upstream issue
                      'library-not-linked-against-libc',  # upstream issue
+                     'shared-lib-without-dependency-information',  # upstream issue
                      'sharedobject-in-library-directory-missing-soname',  # upstream issue
                      'shlib-without-versioned-soname',  # upstream issue
                      'spelling-error-in-binary',  # upstream issue
