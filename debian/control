@@ -295,8 +295,6 @@ Architecture: amd64 i386
 Multi-Arch: same
 Provides: libblas.so.3,
           liblapack.so.3,
-          libblas.so,
-          liblapack.so,
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          debconf,
