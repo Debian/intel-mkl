@@ -307,9 +307,10 @@ def overrideLintian() -> None:
 
 if __name__ == '__main__':
 
-    dh_verbose = os.getenv('DH_VERBOSE')  or True
+    dh_verbose = os.getenv('DH_VERBOSE')  #or True
     host_arch = getDpkgArchitecture('DEB_HOST_ARCH')
     host_multiarch = getDpkgArchitecture('DEB_HOST_MULTIARCH')
+    # No need to change the following line if overridden in rules.
     #host_arch, host_multiarch = 'i386', 'i386-linux-gnu'  # DEBUG for i386
 
     allfiles = sorted(glob.glob('opt/**', recursive=True))
