@@ -1,8 +1,8 @@
-Document: Intel MKL Documentation
+Document: Intel-MKL-Documentation
 Title: Getting Started with Intel® Math Kernel Library 2018 for Linux
 Author: Intel
 Abstract: Getting Started with Intel® Math Kernel Library 2018 for Linux
-Section: Science
+Section: Science/Mathematics
 
 Format: HTML
 Index: /usr/share/doc/intel-mkl/ps2018/get_started.htm
