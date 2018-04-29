@@ -11,9 +11,9 @@ _Description: Use libmkl_rt.so as the default alternative to BLAS/LAPACK?
  liblapack.so.3, so that packages built against BLAS/LAPACK can directly use
  MKL without rebuild.
  .
- However, MKL is PROPRIETARY and there is potential license violation if this
- package silently sets it as the default BLAS/LAPACK implementation. So you
- have to make a choice here.
+ However, MKL itself is PROPRIETARY and there is potential license violation
+ if this package silently sets it as the default BLAS/LAPACK implementation.
+ So you have to make a choice here.
  .
- If you don't know what MKL is, or unwilling to set it as default, choose
- the default.
+ If you don't know what MKL is, or unwilling to set it as default, just choose
+ the preset value or simply type Enter.

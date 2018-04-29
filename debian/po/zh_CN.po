@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: intel-mkl\n"
 "Report-Msgid-Bugs-To: intel-mkl@packages.debian.org\n"
-"POT-Creation-Date: 2018-04-29 04:11+0000\n"
+"POT-Creation-Date: 2018-04-29 05:52+0000\n"
 "PO-Revision-Date: 2018-04-29 02:35:0000\n"
 "Last-Translator: Mo Zhou <cdluminate@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -43,10 +43,15 @@ msgstr ""
 #. Type: boolean
 #. Description
 #: ../libmkl-rt.templates:2001
+#, fuzzy
+#| msgid ""
+#| "However, MKL is PROPRIETARY and there is potential license violation if "
+#| "this package silently sets it as the default BLAS/LAPACK implementation. "
+#| "So you have to make a choice here."
 msgid ""
-"However, MKL is PROPRIETARY and there is potential license violation if this "
-"package silently sets it as the default BLAS/LAPACK implementation. So you "
-"have to make a choice here."
+"However, MKL itself is PROPRIETARY and there is potential license violation "
+"if this package silently sets it as the default BLAS/LAPACK implementation. "
+"So you have to make a choice here."
 msgstr ""
 "然而，MKL 本身是专有软件，如果本软件包擅自将其设置为默认的 BLAS/LAPACK 实"
 "现，\n"
@@ -55,8 +60,12 @@ msgstr ""
 #. Type: boolean
 #. Description
 #: ../libmkl-rt.templates:2001
+#, fuzzy
+#| msgid ""
+#| "If you don't know what MKL is, or unwilling to set it as default, choose "
+#| "the default."
 msgid ""
-"If you don't know what MKL is, or unwilling to set it as default, choose the "
-"default."
+"If you don't know what MKL is, or unwilling to set it as default, just "
+"choose the preset value or simply type Enter."
 msgstr ""
 "如果您完全不知道 MKL 是什么，或者不希望将其设置为默认，那么就选择预设。"
