@@ -4,12 +4,6 @@ set -e
 # source debconf library
 . /usr/share/debconf/confmodule
 
-db_settitle libmkl-rt/title
-
-# potential license violation
-db_input high libmkl-rt/use-as-default-blas-lapack || true
-db_go
-
 db_get libmkl-rt/use-as-default-blas-lapack
 if [ "$RET" = "true" ]; then
 
