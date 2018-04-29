@@ -464,7 +464,7 @@ Description: Intel® MKL: OpenMP threading library for the Intel compilers
 
 Package: libmkl-tbb-thread
 Section: non-free/libs
-Architecture: amd64
+Architecture: amd64 i386
 Multi-Arch: same
 Depends: ${shlibs:Depends},
          ${misc:Depends},
