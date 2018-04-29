@@ -4,8 +4,7 @@ set -e
 # source debconf library
 . /usr/share/debconf/confmodule
 
-db_get libmkl-rt/use-as-default-blas-lapack
-if [ "$RET" = "true" ] && [ "$1" != "upgrade" ]; then
+if [ "$1" != "upgrade" ]; then
 
     update-alternatives --remove libblas.so.3-@DEB_HOST_MULTIARCH@ \
                         /usr/lib/@DEB_HOST_MULTIARCH@/libmkl_rt.so
