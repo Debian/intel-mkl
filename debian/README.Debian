@@ -1,13 +1,10 @@
 Tips about Using this MKL Package
 =================================
 
-Why isn't libmkl_rt.so the candidate of the highest priority to libblas.so.3?
------------------------------------------------------------------------------
+libmkl_rt.so 's priority in the alternatives mechanism
+------------------------------------------------------
 
-I'm assigning MKL with the lowest priority, for sake of avoiding any risk
-about licensing problem. See this thread for detail:
-
-  https://lists.debian.org/debian-science/2018/04/msg00071.html
+See https://lists.debian.org/debian-science/2018/04/msg00071.html
 
 
 How to get the upstream source?
@@ -20,4 +17,4 @@ Go to this page:
 Click "Free Download". The tarball will be available after registration.
 There are several hashsums in rules.
 
-  -- Mo Zhou <cdluminate@gmail.com>, Last Update: Apr 28 2018
+  -- Mo Zhou <cdluminate@gmail.com>, Last Update: Apr 29 2018
