@@ -94,6 +94,7 @@ Package: intel-mkl-doc
 Section: non-free/doc
 Architecture: all
 Depends: ${misc:Depends},
+         libjs-jquery,
 Description: Intel® Math Kernel Library (Intel® MKL) (Doc)
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require

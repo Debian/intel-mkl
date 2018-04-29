@@ -28,13 +28,21 @@ extract-upstream-rpms:
 		done
 
 override_dh_auto_configure: extract-upstream-rpms
-	python3 debian/control.py  # Generate install files
+	python3 debian/control.py  # Generate install files and lintian overrides
 	sed -e "s/@DEB_HOST_MULTIARCH@/$(DEB_HOST_MULTIARCH)/g" \
 		< debian/libmkl-rt.postinst.in > debian/libmkl-rt.postinst
 	chmod +x debian/libmkl-rt.postinst
 	sed -e "s/@DEB_HOST_MULTIARCH@/$(DEB_HOST_MULTIARCH)/g" \
 		< debian/libmkl-rt.prerm.in > debian/libmkl-rt.prerm
 	chmod +x debian/libmkl-rt.prerm
+
+	# deal with embedded libjs-jquery
+	$(RM) opt/intel/documentation_2018/ja/mkl/ps2018/resources/jquery-1.11.1.min.js
+	$(RM) opt/intel/documentation_2018/en/mkl/ps2018/resources/jquery-1.11.1.min.js
+	ln -s /usr/share/javascript/jquery/jquery.min.js \
+		opt/intel/documentation_2018/ja/mkl/ps2018/resources/jquery-1.11.1.min.js
+	ln -s /usr/share/javascript/jquery/jquery.min.js \
+		opt/intel/documentation_2018/en/mkl/ps2018/resources/jquery-1.11.1.min.js
 
 override_dh_auto_clean:
 	debconf-updatepo
