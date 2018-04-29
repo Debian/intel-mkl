@@ -7,7 +7,6 @@ Table of Contents
   (*) libmkl_rt.so 's priority in the alternatives mechanism
   (*) Where is MKL documentation?
   (*) How do I link against MKL?
-
   (*) How do I understand the upstream MKL source directory structure?
   (*) How to get the upstream source tarball?
   (*) What? MKL is redistributable?
@@ -24,9 +23,9 @@ Here are some points from package maintainer:
 1. If your program computes weirdly slow with MKL, the following points
    may be helpful for you to find out the root of problem.
 
-   * Disable gomp usage from compiler flags, by removing
+   * Disable gomp usage from compiler (GCC) flags, by removing
 
-       -fopenmp -DUSE_OPENMP
+       -fopenmp
 
      from compiler argument list. Compile and try the program again.
 
