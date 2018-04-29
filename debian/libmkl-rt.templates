@@ -1,3 +1,7 @@
+Template: libmkl-rt/title
+Type: title
+_Description: Intel® Math Kernel Library (Intel® MKL)
+
 Template: libmkl-rt/use-as-default-blas-lapack
 Type: boolean
 Default: false

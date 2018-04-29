@@ -1,9 +1,19 @@
 #! /bin/sh
 set -e
 
-# I'm assigning MKL with the lowest priority, for sake of avoiding any risk
-# about licensing problem.
-# https://lists.debian.org/debian-science/2018/04/msg00071.html
+# source debconf library
+. /usr/share/debconf/confmodule
+
+db_settitle libmkl-rt/title
+
+# potential license violation
+db_input high libmkl-rt/use-as-default-blas-lapack || true
+db_go
+
+db_get libmkl-rt/use-as-default-blas-lapack
+if [ "$RET" = "true" ]; then
+
+echo "Setting MKL as default BLAS/LAPACK implementation." 1>&2
 
 update-alternatives --install /usr/lib/@DEB_HOST_MULTIARCH@/libblas.so.3 \
                     libblas.so.3-@DEB_HOST_MULTIARCH@ \
@@ -12,6 +22,8 @@ update-alternatives --install /usr/lib/@DEB_HOST_MULTIARCH@/libblas.so.3 \
 update-alternatives --install /usr/lib/@DEB_HOST_MULTIARCH@/liblapack.so.3 \
                     liblapack.so.3-@DEB_HOST_MULTIARCH@ \
                     /usr/lib/@DEB_HOST_MULTIARCH@/libmkl_rt.so 1
+
+fi
 
 #DEBHELPER#
 
