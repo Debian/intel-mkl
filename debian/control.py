@@ -264,7 +264,7 @@ def _override(package: str, overrides: List[str]) -> None:
     Write a lintian override file for specified package
     '''
     overrides = [f'# Automatically overridden by {__file__}'] + overrides
-    print(f'lintian overrides for {p} ...')
+    print(f'lintian overrides for {package} ...')
     with open(f'debian/{package}.lintian-overrides', 'a') as f:
         f.writelines(x + '\n' for x in overrides)
 
