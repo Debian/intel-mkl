@@ -1,5 +1,5 @@
-intel-mkl (2018.2.199-1) UNRELEASED; urgency=low
+intel-mkl (2018.2.199-1) experimental; urgency=low
 
   * Initial release. (Closes: #895881)
 
- -- Mo Zhou <cdluminate@gmail.com>  Tue, 17 Apr 2018 04:08:47 +0000
+ -- Mo Zhou <cdluminate@gmail.com>  Sun, 29 Apr 2018 07:21:26 +0000
