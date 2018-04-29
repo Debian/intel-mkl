@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: intel-mkl\n"
 "Report-Msgid-Bugs-To: intel-mkl@packages.debian.org\n"
-"POT-Creation-Date: 2018-04-29 02:26+0000\n"
+"POT-Creation-Date: 2018-04-29 03:30+0000\n"
 "PO-Revision-Date: 2018-04-29 02:35:0000\n"
 "Last-Translator: Mo Zhou <cdluminate@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,27 +15,34 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#. Type: boolean
+#. Type: title
 #. Description
 #: ../libmkl-rt.templates:1001
+msgid "Intel Math Kernel Library (Intel MKL)"
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../libmkl-rt.templates:2001
 msgid "Use libmkl_rt.so as the default alternative to BLAS/LAPACK?"
 msgstr "是否将 libmkl_rt 用作默认 BLAS/LAPACK ？"
 
 #. Type: boolean
 #. Description
-#: ../libmkl-rt.templates:1001
+#: ../libmkl-rt.templates:2001
 msgid ""
 "Intel MKL's Single Dynamic Library (SDL) is installed on your machine. This "
 "shared object can be used as an alternative to both libblas.so.3 and "
 "liblapack.so.3, so that packages built against BLAS/LAPACK can directly use "
 "MKL without rebuild."
-msgstr "Intel MKL 的 SDL 动态库已经安装在您的计算机上。该动态库可以用作\n"
+msgstr ""
+"Intel MKL 的 SDL 动态库已经安装在您的计算机上。该动态库可以用作\n"
 "libblas.so.3 以及 liblapack.so.3 的默认选择，从而使链接到 BLAS/LAPACK 的\n"
 "应用程序不需要重新编译即可直接使用 MKL。"
 
 #. Type: boolean
 #. Description
-#: ../libmkl-rt.templates:1001
+#: ../libmkl-rt.templates:2001
 msgid ""
 "However, MKL is PROPRIETARY and there is potential license violation if we "
 "silently set it as the default BLAS/LAPACK implementation. So we need you to "
@@ -46,12 +53,13 @@ msgstr ""
 
 #. Type: boolean
 #. Description
-#: ../libmkl-rt.templates:1001
+#: ../libmkl-rt.templates:2001
 msgid ""
 "If you don't know what MKL is, or unwilling to set it as default, choose No. "
 "If you want to use libmkl_rt.so as the default alternative to libblas.so.3 "
 "and liblapack.so.3, choose Yes."
 msgstr ""
 "如果您完全不知道 MKL 是什么，或者不愿意将其设置为默认，那么就选择“否”。\n"
-"如果您希望将 libmkl_rt.so 设置为默认的 libblas.so.3 和 liblapack.so.3 选项，\n"
+"如果您希望将 libmkl_rt.so 设置为默认的 libblas.so.3 和 liblapack.so.3 选"
+"项，\n"
 "那就选择“是”。"
