@@ -1,0 +1,52 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the intel-mkl package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: intel-mkl\n"
+"Report-Msgid-Bugs-To: intel-mkl@packages.debian.org\n"
+"POT-Creation-Date: 2018-04-29 02:26+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#. Type: boolean
+#. Description
+#: ../libmkl-rt.templates:1001
+msgid "Use libmkl_rt.so as the default alternative to BLAS/LAPACK?"
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../libmkl-rt.templates:1001
+msgid ""
+"Intel MKL's Single Dynamic Library (SDL) is installed on your machine. This "
+"shared object can be used as an alternative to both libblas.so.3 and "
+"liblapack.so.3, so that packages built against BLAS/LAPACK can directly use "
+"MKL without rebuild."
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../libmkl-rt.templates:1001
+msgid ""
+"However, MKL is PROPRIETARY and there is potential license violation if we "
+"silently set it as the default BLAS/LAPACK implementation. So we need you to "
+"make a choice here."
+msgstr ""
+
+#. Type: boolean
+#. Description
+#: ../libmkl-rt.templates:1001
+msgid ""
+"If you don't know what MKL is, or unwilling to set it as default, choose No. "
+"If you want to use libmkl_rt.so as the default alternative to libblas.so.3 "
+"and liblapack.so.3, choose Yes."
+msgstr ""

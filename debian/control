@@ -8,6 +8,7 @@ Build-Depends: debhelper (>=11~),
                python3 (>= 3.6),
                rpm2cpio,
                debconf,
+               po-debconf,
 Standards-Version: 4.1.4
 Homepage: https://software.intel.com/en-us/mkl
 Vcs-Browser: https://salsa.debian.org/science-team/intel-mkl
