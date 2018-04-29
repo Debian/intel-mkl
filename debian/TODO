@@ -2,3 +2,5 @@
   is working without the fake libiomp5 package??
 * what are the interfaces/ files used for??
   https://software.intel.com/en-us/mkl-linux-developer-guide-high-level-directory-structure
+* benchmark directory is filtered. debian package hpcc seems to ship
+  some files in that directory. Check it and recommend/suggest hpcc.
