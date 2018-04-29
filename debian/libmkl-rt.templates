@@ -15,6 +15,5 @@ _Description: Use libmkl_rt.so as the default alternative to BLAS/LAPACK?
  silently set it as the default BLAS/LAPACK implementation. So we need you to
  make a choice here.
  .
- If you don't know what MKL is, or unwilling to set it as default, choose No.
- If you want to use libmkl_rt.so as the default alternative to libblas.so.3
- and liblapack.so.3, choose Yes.
+ If you don't know what MKL is, or unwilling to set it as default, choose
+ the default.
