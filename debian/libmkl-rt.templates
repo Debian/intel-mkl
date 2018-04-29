@@ -1,0 +1,16 @@
+Template: libmkl-rt/use-as-default-blas-lapack
+Type: boolean
+Default: false
+_Description: Use libmkl_rt.so as the default alternative to BLAS/LAPACK?
+ Intel MKL's Single Dynamic Library (SDL) is installed on your machine. This
+ shared object can be used as an alternative to both libblas.so.3 and
+ liblapack.so.3, so that packages built against BLAS/LAPACK can directly use
+ MKL without rebuild.
+ .
+ However, MKL is PROPRIETARY and there is potential license violation if we
+ silently set it as the default BLAS/LAPACK implementation. So we need you to
+ make a choice here.
+ .
+ If you don't know what MKL is, or unwilling to set it as default, choose No.
+ If you want to use libmkl_rt.so as the default alternative to libblas.so.3
+ and liblapack.so.3, choose Yes.
