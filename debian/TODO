@@ -1,0 +1,4 @@
+* iomp5 is filtered. Which MKL library depends on it?? it seems that MKL
+  is working without the fake libiomp5 package??
+* what are the interfaces/ files used for??
+  https://software.intel.com/en-us/mkl-linux-developer-guide-high-level-directory-structure

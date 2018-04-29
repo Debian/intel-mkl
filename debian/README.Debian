@@ -1,14 +1,102 @@
 Tips about Using this MKL Package
 =================================
 
+Table of Contents
+
+  (*) MKL performance tips from maintainer
+  (*) libmkl_rt.so 's priority in the alternatives mechanism
+  (*) Where is MKL documentation?
+  (*) How do I link against MKL?
+
+  (*) How do I understand the upstream MKL source directory structure?
+  (*) How to get the upstream source tarball?
+  (*) What? MKL is redistributable?
+
+MKL performance tips from maintainer
+------------------------------------
+
+Upstream's doc about performance and memory:
+
+https://software.intel.com/en-us/mkl-linux-developer-guide-managing-performance-and-memory
+
+Here are some points from package maintainer:
+
+1. If your program computes weirdly slow with MKL, the following points
+   may be helpful for you to find out the root of problem.
+
+   * Disable gomp usage from compiler flags, by removing
+
+       -fopenmp -DUSE_OPENMP
+
+     from compiler argument list. Compile and try the program again.
+
+   * Set MKL_THREADING_LAYER=sequential environment variable if you
+     are calling MKL from a multi-threading application.
+
+   * Tweak environment variable OMP_NUM_THREADS or MKL_NUM_THREADS
+
+   * For small size problems:
+     https://software.intel.com/en-us/mkl-linux-developer-guide-improving-performance-for-small-size-problems
+
+   * ...
+
+   * Refer to upstream doc if you want more detail.
+
+2. libmkl_rt.so is a magical run-time dispatcher which detects your
+   CPU capacity at run time, and automatically selects shared objects
+   from which symbols are loaded. By tracing the library calls you
+   will figure out which shared objects are actually called.
+
+     e.g. $ ltrace my_program
+
+   See ltrace(1) for detail.
+
 libmkl_rt.so 's priority in the alternatives mechanism
 ------------------------------------------------------
 
 See https://lists.debian.org/debian-science/2018/04/msg00071.html
 
 
-How to get the upstream source?
--------------------------------
+Where is MKL documentation?
+---------------------------
+
+Install package 'intel-mkl-doc', and open this URL in your browser:
+
+  file:///usr/share/doc/intel-mkl/ps2018/get_started.htm
+
+This is an MKL documentation overview page. However network access
+is required to browse further documents pointed by the page.
+
+
+How do I link against MKL?
+--------------------------
+
+Just "-lmkl_rt".
+
+For more complicated linking, refer any one of the following:
+
+ * https://software.intel.com/en-us/mkl-linux-developer-guide-using-the-single-dynamic-library
+
+ * intel-mkl-doc /usr/share/doc/intel-mkl/common/mkl_link_line_advisor.htm
+
+ * intel-mkl-linktool:i386 (command line version of the above advisor)
+
+See upstream doc for more detail.
+
+How do I understand the upstream MKL source directory structure?
+----------------------------------------------------------------
+
+Go to the following page:
+
+  https://software.intel.com/en-us/mkl-linux-developer-guide
+
+I believe that section "Structure of the Intel Math Kernel Library" and
+"Appendix C: Directory Structure in Detail" are exactly what you want.
+Upstream documentation elaborates not only the directory structure, but
+also individual files.
+
+How to get the upstream source tarball?
+---------------------------------------
 
 Go to this page:
 
@@ -16,5 +104,19 @@ Go to this page:
 
 Click "Free Download". The tarball will be available after registration.
 There are several hashsums in rules.
+
+What? MKL is redistributable?
+-----------------------------
+
+As declared by upstream at this page
+
+  https://software.intel.com/en-us/mkl/license-faq
+  "Yes, redistribution is allowed per the terms of the ISSL."
+
+Even if registration is required before downloading the MKL tarball,
+the tarball itself is re-distributable and licensed under ISSL.
+See communication with upstream for more detail:
+
+  https://github.com/intel/mkl-dnn/issues/206
 
   -- Mo Zhou <cdluminate@gmail.com>, Last Update: Apr 29 2018
