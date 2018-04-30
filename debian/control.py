@@ -369,7 +369,7 @@ if __name__ == '__main__':
 
     print(f'{len(allfiles)} / {num_allfiles} Files left uninstalled.')
 
-    installDebianSpecific()
+    installDebianSpecific(host_arch)
 
     # just like what dh-missing --list-missing does.
     if dh_verbose:
