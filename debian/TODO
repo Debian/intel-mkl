@@ -3,4 +3,3 @@
 * benchmark directory is filtered. debian package hpcc seems to ship
   some files in that directory. Check it and recommend/suggest hpcc.
 * check license for all files
-* install my pkgconfig instead of upstream ones

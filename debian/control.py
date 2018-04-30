@@ -25,6 +25,8 @@ def installFile(fpath: str, package: str, dest: str = '') -> None:
     Write an entry in specified package's install file, for installing
     the file to dest.
     '''
+    # XXX: parse binary packages, and raise exception when the uesr
+    #      tries to install file to a package that does not exist.
     with open(os.path.join('debian', f'{package}.install'), 'a') as f:
         f.write(f'{fpath}\t{dest}\n' if dest else f'{fpath}')
 
@@ -142,6 +144,9 @@ def installIncludes(filelist: List[str],
     incs = [x for x in filelist if '/linux/mkl/include/' in x]
     incs += [x for x in filelist if '/linux/mkl/bin/pkgconfig/' in x]
     rest = [x for x in filelist if x not in incs]
+    # debian package doesn't retain upstream directory structure, so that
+    # upstream pkgconfig files cannot be used. However, we have a replacements.
+    incs = [x for x in filelist if 'pkgconfig' not in x]  # no upstream pkgconfig
     # install them!
     for inc in incs:
         path, fname = os.path.dirname(inc), os.path.basename(inc)
@@ -152,9 +157,10 @@ def installIncludes(filelist: List[str],
             print(f'installing {fname} ➜ {package} : {dest}')
             installFile(inc, package, dest)
         else:
-            package = 'libmkl-dev'
-            print(f'installing {fname} ➜ {package}')
-            installFile(inc, package, f'usr/share/pkgconfig/')
+            pass
+            #package = 'libmkl-dev'
+            #print(f'installing {fname} ➜ {package}')
+            #installFile(inc, package, f'usr/share/pkgconfig/')
     return rest
 
 
@@ -259,6 +265,14 @@ def installCats(filelist: List[str], deb_host_arch: str,
     return rest
 
 
+def installDebianSpecific(deb_host_arch: str) -> None:
+    '''
+    install debian specific files that come from debian/
+    '''
+    dest = f'/usr/lib/pkgconfig/{deb_host_multiarch}/'
+    installFile('debian/pkgconfig/*.pc', 'libmkl-dev', dest)
+
+
 def _override(package: str, overrides: List[str]) -> None:
     '''
     Write a lintian override file for specified package
@@ -354,6 +368,8 @@ if __name__ == '__main__':
     allfiles = [x for x in allfiles if 'iomp' not in x]
 
     print(f'{len(allfiles)} / {num_allfiles} Files left uninstalled.')
+
+    installDebianSpecific()
 
     # just like what dh-missing --list-missing does.
     if dh_verbose:
