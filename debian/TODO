@@ -1,5 +1,6 @@
 * iomp5 is filtered. Which MKL library depends on it?? it seems that MKL
   is working without the fake libiomp5 package??
+  deal with the iomp / gomp / mpich / openmpi / tbb dependencies.
 * what are the interfaces/ files used for??
   https://software.intel.com/en-us/mkl-linux-developer-guide-high-level-directory-structure
 * benchmark directory is filtered. debian package hpcc seems to ship
@@ -7,3 +8,5 @@
 * db_purge on dpkg --purge seems to be automatically handled by dh_installdebconf.
   test it.
 * recommend doc package.
+* check license for all files
+* is the message catalog file installed to the right place?
