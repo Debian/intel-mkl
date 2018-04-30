@@ -10,3 +10,8 @@
   upstream directory structure, but modifying upstream pkgconfig is not
   allowed.
   at the same time, drop the upstream pkgconfig
+* /usr/lib/x86_64-linux-gnu/mkl/libblas.so.3
+  /usr/lib/x86_64-linux-gnu/mkl/liblapack.so.3
+
+  and document them
+
