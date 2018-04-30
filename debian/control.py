@@ -265,7 +265,7 @@ def installCats(filelist: List[str], deb_host_arch: str,
     return rest
 
 
-def installDebianSpecific(deb_host_arch: str) -> None:
+def installDebianSpecific(deb_host_multiarch: str) -> None:
     '''
     install debian specific files that come from debian/
     '''
@@ -369,7 +369,7 @@ if __name__ == '__main__':
 
     print(f'{len(allfiles)} / {num_allfiles} Files left uninstalled.')
 
-    installDebianSpecific(host_arch)
+    installDebianSpecific(host_multiarch)
 
     # just like what dh-missing --list-missing does.
     if dh_verbose:
