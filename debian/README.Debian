@@ -6,6 +6,7 @@ Table of Contents
 
   (*) How to install these MKL Debian packages?
   (*) How do I link against MKL?
+  (*) Environment variables
   (*) MKL performance tips from maintainer
   (*) libmkl_rt.so 's priority in the alternatives mechanism
   (*) Where is MKL documentation?
@@ -61,6 +62,26 @@ For more complicated linking, refer any one of the following:
  * intel-mkl-linktool:i386 (command line version of the above advisor)
 
 See upstream doc for more detail.
+
+-------------------------------------------------------------------------------
+Environment variables
+-------------------------------------------------------------------------------
+
+You may need to manually export the NLSPATH variable, so that the catopen(3)
+call is able to find the message catalog:
+
+   $ export NLSPATH=/usr/share/locale/en_US/%N:$NLSPATH
+
+Or $ export NLSPATH=/usr/share/locale/ja_JP/%N:$NLSPATH if your locale is ja_JP.
+There is a file debian/tests/catalog.cc for testing catopen.
+
+Apart from NLSPATH, the other environment variables prepared by upstream
+scripts such as mklvars.sh are not needed. Here are some of these variables:
+
+   INCLUDE, MKLROOT, LD_LIBRARY_PATH, LIBRARY_PATH, CPATH, NLSPATH,
+   MIC_LD_LIBRARY_PATH, MKL_MIC_ENABLE, DYLD_LIBRARY_PATH, F95ROOT
+   ...
+
 
 -------------------------------------------------------------------------------
 MKL performance tips from maintainer

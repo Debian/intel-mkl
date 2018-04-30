@@ -9,7 +9,6 @@
   test it.
 * recommend doc package.
 * check license for all files
-* is the message catalog file installed to the right place?
 * change header install dir.
 * provide libblas.so and header again.
 * write pkgconfig file for MKL. Debian's mkl package doesn't retain the
