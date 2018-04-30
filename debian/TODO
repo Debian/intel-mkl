@@ -1,16 +1,11 @@
-* iomp5 is filtered. Which MKL library depends on it?? it seems that MKL
-  is working without the fake libiomp5 package??
-  deal with the iomp / gomp / mpich / openmpi / tbb dependencies.
 * what are the interfaces/ files used for??
   https://software.intel.com/en-us/mkl-linux-developer-guide-high-level-directory-structure
 * benchmark directory is filtered. debian package hpcc seems to ship
   some files in that directory. Check it and recommend/suggest hpcc.
 * db_purge on dpkg --purge seems to be automatically handled by dh_installdebconf.
   test it.
-* recommend doc package.
 * check license for all files
-* change header install dir.
-* provide libblas.so and header again.
+* change header install dir, and provide libblas.so and header again.
 * write pkgconfig file for MKL. Debian's mkl package doesn't retain the
   upstream directory structure, but modifying upstream pkgconfig is not
   allowed.
