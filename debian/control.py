@@ -11,6 +11,13 @@ import os, re, sys, subprocess, glob, copy
 from typing import *
 
 
+def dhVerbose() -> bool:
+    '''
+    Literally get the value of DH_VERBOSE
+    '''
+    return os.getenv('DH_VERBOSE') or True
+
+
 def getDpkgArchitecture(query: str) -> str:
     '''
     dpkg-architecture -qQUERY
@@ -18,17 +25,6 @@ def getDpkgArchitecture(query: str) -> str:
     result = subprocess.Popen(['dpkg-architecture', f'-q{query}'],
              stdout=subprocess.PIPE).communicate()[0].decode().strip()
     return result
-
-
-def installFile(fpath: str, package: str, dest: str = '') -> None:
-    '''
-    Write an entry in specified package's install file, for installing
-    the file to dest.
-    '''
-    # XXX: parse binary packages, and raise exception when the uesr
-    #      tries to install file to a package that does not exist.
-    with open(os.path.join('debian', f'{package}.install'), 'a') as f:
-        f.write(f'{fpath}\t{dest}\n' if dest else f'{fpath}')
 
 
 def parsePackages() -> List[str]:
@@ -41,32 +37,52 @@ def parsePackages() -> List[str]:
     return packages
 
 
+def eGrep(ls: List[str], regex: str) -> List[str]:
+    '''
+    Just like grep -e.
+    '''
+    regex, match, unmatch = re.compile(regex), [], []
+    for l in ls:
+        if regex.match(l):
+            match.append(l)
+        else:
+            unmatch.append(l)
+    return match, unmatch
+
+
+def installFile(fpath: str, package: str, dest: str = '') -> None:
+    '''
+    Write an entry in specified package's install file, for installing
+    the file to dest.
+    '''
+    if package not in parsePackages():
+        raise Exception(f'Package [{package}] is not found in debian/control!' +
+                f' cannot install {fpath}')
+    print(f'installing {fpath} ➜ {package}')
+    with open(os.path.join('debian', f'{package}.install'), 'a') as f:
+        f.write(f'{fpath}\t{dest}\n' if dest else f'{fpath}')
+
+
 def installSharedObjects(filelist: List[str],
-                         deb_host_arch: str, deb_host_multiarch: str,
-                         *, verbose: bool = False) -> List[str]:
+                         *, verbose: bool = dhVerbose()) -> List[str]:
     '''
     Glob all the shared object from the file list, and write install entries
     for them. The filtered list that does not contain .so file will be returned.
     When verbose is toggled, it prints .so files ignored.
     '''
+    # lookup arch info
+    deb_host_arch = getDpkgArchitecture('DEB_HOST_ARCH')
+    deb_host_multiarch = getDpkgArchitecture('DEB_HOST_MULTIARCH')
     # Glob libs
-    solibs = [x for x in filelist if re.match('.*\.so(\.?\d*)$', x)]
+    solibs, rest = eGrep(filelist, '.*\.so(\.?\d*)$')
     libs = copy.copy(solibs)
-    rest = [x for x in filelist if not re.match('.*\.so(\.?\d*)$', x)]
-    # get package names in control file
-    packages = parsePackages()
     # filter the lib list by architecture
     if deb_host_arch == 'amd64':
-        libs = [x for x in libs if 'ia32' not in x]
-        libs = [x for x in libs if 'intel64_lin' not in x] # dedup
+        _, libs = eGrep(libs, '.*ia32.*')
+        _, libs = eGrep(libs, '.*intel64_lin.*')  # Dedup
     else:
-        libs = [x for x in libs if 'intel64' not in x]
-        libs = [x for x in libs if 'ia32_lin' not in x]
-    # don't care about the libs used by intel's installer
-    libs = [x for x in libs if 'uninstall' not in x]
-    # tbb and iomp5 are already provided by other packages
-    libs = [x for x in libs if 'iomp' not in x]
-    libs = [x for x in libs if 'tbb/' not in x]
+        _, libs = eGrep(libs, '.*intel64.*')
+        _, libs = eGrep(libs, '.*ia32_lin.*')  # Dedup
     # report dropped files
     for lib in solibs:
         if lib not in libs and verbose:
@@ -75,39 +91,31 @@ def installSharedObjects(filelist: List[str],
     for so in libs:
         path, fname = os.path.dirname(so), os.path.basename(so)
         package = re.sub('\.so$', '', fname).replace('_', '-')
-        #print(path, fname, package)
-        if package in packages:
-            print(f'installing {fname} ➜ {package}')
-            installFile(os.path.join(path, fname), package,
-                    f'usr/lib/{deb_host_multiarch}/')
-        else:
-            raise Exception(f'Warning: Which package should ship {fname} ??')
+        installFile(os.path.join(path, fname), package,
+                f'usr/lib/{deb_host_multiarch}/')
     return rest
 
 
 def installStaticLibs(filelist: List[str],
-                      deb_host_arch: str, deb_host_multiarch: str,
-                      *, verbose: bool = False) -> List[str]:
+                      *, verbose: bool = dhVerbose()) -> List[str]:
     '''
     Glob all the static libraries from filelist, and add them into corresponding
     .install files. A list contains no .a file will be returned.
     When verbose is toggled, it prints ignored static libs.
     '''
+    # lookup arch info
+    deb_host_arch = getDpkgArchitecture('DEB_HOST_ARCH')
+    deb_host_multiarch = getDpkgArchitecture('DEB_HOST_MULTIARCH')
     # Glob libs
-    alibs = [x for x in allfiles if re.match('.*\.a$', x)]
+    alibs, rest = eGrep(filelist, '.*/linux/mkl/lib/.*\.a$')
     libs = copy.copy(alibs)
-    rest = [x for x in allfiles if not re.match('.*\.a$', x)]
-    # get package names in control file
-    packages = parsePackages()
     # filter the lib list by architecture
     if deb_host_arch == 'amd64':
         libs = [x for x in libs if 'ia32' not in x]
         libs = [x for x in libs if 'intel64_lin' not in x] # dedup
     else:
         libs = [x for x in libs if 'intel64' not in x]
-        libs = [x for x in libs if 'ia32_lin' not in x]
-    libs = [x for x in libs if 'benchmarks' not in x]
-    libs = [x for x in libs if 'iomp' not in x]
+        libs = [x for x in libs if 'ia32_lin' not in x] # dedup
     # report static libs being dropped
     for lib in alibs:
         if lib not in libs and verbose:
@@ -126,87 +134,71 @@ def installStaticLibs(filelist: List[str],
             package = 'libmkl-computational-dev'
         else:
             package = 'no-such-package'
-        if package in packages:
-            print(f'installing {fname} ➜ {package}')
-            installFile(os.path.join(path, fname), package,
+        installFile(os.path.join(path, fname), package,
                     f'usr/lib/{deb_host_multiarch}/')
-        else:
-            raise Exception(f'Warning: Which package should ship {fname} ??')
     return rest
 
 
 def installIncludes(filelist: List[str],
-                    *, verbose: bool = False) -> List[str]:
+                    *, verbose: bool = dhVerbose()) -> List[str]:
     '''
     Install docs and return the filtered list.
     Print ignored files when verbose is set.
     '''
-    incs = [x for x in filelist if '/linux/mkl/include/' in x]
-    incs += [x for x in filelist if '/linux/mkl/bin/pkgconfig/' in x]
-    rest = [x for x in filelist if x not in incs]
-    # debian package doesn't retain upstream directory structure, so that
-    # upstream pkgconfig files cannot be used. However, we have a replacements.
-    incs = [x for x in filelist if 'pkgconfig' not in x]  # no upstream pkgconfig
-    # install them!
-    for inc in incs:
-        path, fname = os.path.dirname(inc), os.path.basename(inc)
-        if 'pkgconfig' not in path:
-            package = 'libmkl-dev'
-            dest = os.path.dirname(re.sub('.*include/', '', inc))
-            dest = f'usr/include/mkl/{dest}'
-            print(f'installing {fname} ➜ {package} : {dest}')
-            installFile(inc, package, dest)
-        else:
-            pass
-            #package = 'libmkl-dev'
-            #print(f'installing {fname} ➜ {package}')
-            #installFile(inc, package, f'usr/share/pkgconfig/')
+    _, rest = eGrep(filelist, '.*/linux/mkl/include/.*')
+    incs = 'opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/include/*'
+    installFile(incs, 'libmkl-dev', 'usr/include/mkl/')
     return rest
 
 
-def installTools(filelist: List[str], deb_host_arch: str,
-                 *, verbose: bool = False) -> List[str]:
+def installTools(filelist: List[str],
+                 *, verbose: bool = dhVerbose()) -> List[str]:
     '''
     Install tools. Argument is similary to previous functions.
     '''
-    tools = [x for x in allfiles if '/linux/mkl/tools/' in x]
-    rest = [x for x in filelist if x not in tools]
-    # install them!
-    for tool in tools:
-        path, fname = os.path.dirname(tool), os.path.basename(tool)
-        if 'mkl_link_tool' in tool:
-            package = 'intel-mkl-linktool'
-            print(f'installing {fname} ➜ {package}')
-            installFile(tool, package, 'usr/bin/')
-        else:
-            package = 'libmkl-full-dev'
-            print(f'installing {fname} ➜ {package}')
-            installFile(tool, package, 'usr/share/intel-mkl/')
+    _, rest = eGrep(filelist, '.*/linux/mkl/tools/.*')
+    installFile(
+            'opt/intel/compilers_and_libraries_*/linux/mkl/tools/mkl_link_tool',
+            'intel-mkl-linktool', 'usr/bin/')
+    installFile(
+            'opt/intel/compilers_and_libraries_*/linux/mkl/tools/builder',
+            'libmkl-full-dev', 'usr/share/intel-mkl/')
     return rest
 
 
-def installDocs(filelist: List[str], *, verbose: bool = False) -> List[str]:
+def installDocs(filelist: List[str],
+                *, verbose: bool = dhVerbose()) -> List[str]:
     '''
     similar to previous functions.
     '''
-    docs = [x for x in filelist if '/documentation_' in x]
-    rest = [x for x in filelist if x not in docs]
-    # install them!
-    for doc in docs:
-        path, fname = os.path.dirname(doc), os.path.basename(doc)
-        package = 'intel-mkl-doc'
-        if re.match('.*/en/mkl/.*', path):
-            dest = os.path.dirname(re.sub('.*/en/mkl/', '', doc))
-            dest = f'usr/share/doc/intel-mkl/{dest}'
-            print(f'installing {fname} ➜ {package} : {dest}')
-            installFile(doc, package, dest)
-        elif re.match('.*/ja/mkl/.*', path): # Japanese
-            dest = os.path.dirname(re.sub('.*/ja/mkl/', '', doc))
-            dest = f'usr/share/doc/intel-mkl/ja/{dest}'
-            print(f'installing {fname} ➜ {package} : {dest}')
-            installFile(doc, package, dest)
-        else:
-            raise Exception('New language found??')
+    _, rest = eGrep(filelist, '^opt/intel/documentation.*')
+    _, rest = eGrep(rest, '^opt/intel/samples.*')
+    installFile('opt/intel/documentation_2018',
+                'intel-mkl-doc', 'usr/share/doc/intel-mkl/')
+    installFile('opt/intel/samples_2018',
+                'intel-mkl-doc', 'usr/share/doc/intel-mkl/')
+    return rest
+
+
+def installCatalog(filelist: List[str],
+                *, verbose: bool = False) -> List[str]:
+    '''
+    similar to previous functions
+    '''
+    deb_host_arch = getDpkgArchitecture('DEB_HOST_ARCH')
+    _, rest = eGrep(filelist, '.*\.cat$')
+    # find opt -type f -name '*.cat' -exec md5sum '{}' \;
+    # amd64 and i386 message catalog files are the same.
+    if 'amd64' == deb_host_arch:
+        installFile('opt/intel/compilers_and_libraries_*/linux/mkl/lib/intel64_lin/locale/ja_JP/mkl_msg.cat',
+                    'libmkl-locale', 'usr/share/locale/ja_JP/')
+        installFile('opt/intel/compilers_and_libraries_*/linux/mkl/lib/intel64_lin/locale/en_US/mkl_msg.cat',
+                    'libmkl-locale', 'usr/share/locale/en_US/')
+    else: # i386
+        installFile('opt/intel/compilers_and_libraries_*/linux/mkl/lib/ia32_lin/locale/ja_JP/mkl_msg.cat',
+                    'libmkl-locale', 'usr/share/locale/ja_JP/')
+        installFile('opt/intel/compilers_and_libraries_*/linux/mkl/lib/ia32_lin/locale/en_US/mkl_msg.cat',
+                    'libmkl-locale', 'usr/share/locale/en_US/')
     return rest
 
 
@@ -243,26 +235,6 @@ def installMisc(filelist: List[str], *, verbose: bool = False) -> List[str]:
     return rest
 
 
-def installCats(filelist: List[str], deb_host_arch: str,
-                *, verbose: bool = False) -> List[str]:
-    '''
-    similar to previous functions
-    '''
-    cats = [x for x in filelist if re.match('.*\.cat$', x)]
-    rest = [x for x in filelist if x not in cats]
-    # find opt -type f -name '*.cat' -exec md5sum '{}' \;
-    # amd64 and i386 message catalog files are the same.
-    if 'amd64' == deb_host_arch:
-        installFile('opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/lib/intel64_lin/locale/ja_JP/mkl_msg.cat',
-                    'libmkl-locale', 'usr/share/locale/ja_JP/')
-        installFile('opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/lib/intel64_lin/locale/en_US/mkl_msg.cat',
-                    'libmkl-locale', 'usr/share/locale/en_US/')
-    else: # i386
-        installFile('opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/lib/ia32_lin/locale/ja_JP/mkl_msg.cat',
-                    'libmkl-locale', 'usr/share/locale/ja_JP/')
-        installFile('opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/lib/ia32_lin/locale/en_US/mkl_msg.cat',
-                    'libmkl-locale', 'usr/share/locale/en_US/')
-    return rest
 
 
 def installDebianSpecific(deb_host_multiarch: str) -> None:
@@ -330,7 +302,6 @@ def overrideLintian() -> None:
 
 if __name__ == '__main__':
 
-    dh_verbose = os.getenv('DH_VERBOSE')  #or True
     host_arch = getDpkgArchitecture('DEB_HOST_ARCH')
     host_multiarch = getDpkgArchitecture('DEB_HOST_MULTIARCH')
     # No need to change the following line if overridden in rules.
@@ -338,34 +309,29 @@ if __name__ == '__main__':
 
     allfiles = sorted(glob.glob('opt/**', recursive=True))
     num_allfiles = len(allfiles)
-    allfiles = [x for x in allfiles if not os.path.isdir(x)]  # Remove dirs
 
-    # install .so files and filter the list
-    allfiles = installSharedObjects(
-                   allfiles, host_arch, host_multiarch, verbose=dh_verbose)
+    # Remove directories from file list
+    allfiles = [x for x in allfiles if not os.path.isdir(x)]
 
-    # install .a files and filter the list
-    allfiles = installStaticLibs(
-                   allfiles, host_arch, host_multiarch, verbose=dh_verbose)
+    # Filter files that we never wanted.
+    _, allfiles = eGrep(allfiles, '^opt/intel/parallel_studio_xe.*')
+    _, allfiles = eGrep(allfiles, '.*/libtbb.*')
+    _, allfiles = eGrep(allfiles, '.*/libiomp.*')
 
-    # install header files and filter the list
-    allfiles = installIncludes(allfiles, verbose=dh_verbose)
+    # install specific files and filter the list
+    allfiles = installSharedObjects(allfiles)
+    allfiles = installStaticLibs(allfiles)
+    allfiles = installIncludes(allfiles)
+    allfiles = installTools(allfiles)
+    allfiles = installDocs(allfiles)
+    allfiles = installCatalog(allfiles)
 
-    # install tools and filter the list
-    allfiles = installTools(allfiles, host_arch, verbose=dh_verbose)
-
-    # install docs and filter the list
-    allfiles = installDocs(allfiles, verbose=dh_verbose)
-
+    for x in allfiles: print(x)
+    exit()
     # install misc files and filter the list
     allfiles = installMisc(allfiles, verbose=dh_verbose)
 
     # install the locale file
-    allfiles = installCats(allfiles, host_arch, verbose=dh_verbose)
-
-    # filter the files that we don't want
-    allfiles = [x for x in allfiles if 'opt/intel/parallel_studio_xe' not in x]
-    allfiles = [x for x in allfiles if 'iomp' not in x]
 
     print(f'{len(allfiles)} / {num_allfiles} Files left uninstalled.')
 
