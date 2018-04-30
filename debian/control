@@ -4,6 +4,7 @@ Priority: optional
 Maintainer: Debian Science Maintainers <debian-science-maintainers@lists.alioth.debian.org>
 Uploaders: Mo Zhou <cdluminate@gmail.com>,
 Build-Depends: debhelper (>=11~),
+               dh-exec,
 # My script control.py requires python3 >= 3.6
                python3 (>= 3.6),
                rpm2cpio,
