@@ -96,6 +96,7 @@ Description: Intel® Math Kernel Library (Intel® MKL) (Cluster)
 Package: intel-mkl-doc
 Section: non-free/doc
 Architecture: all
+Multi-Arch: foreign
 Depends: ${misc:Depends},
          libjs-jquery,
 Description: Intel® Math Kernel Library (Intel® MKL) (Doc)
@@ -119,7 +120,7 @@ Depends: ${misc:Depends},
          intel-mkl-cluster       (= ${binary:Version}),
          intel-mkl-linktool:i386 (= ${binary:Version}),
          libmkl-full-dev         (= ${binary:Version}),
-         intel-mkl-doc           (= ${binary:Version}),
+         intel-mkl-doc           (= ${source:Version}),
 Recommends: hpcc,
 Description: Intel® Math Kernel Library (Intel® MKL) (Full)
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
@@ -165,7 +166,7 @@ Depends: ${shlibs:Depends},
          libmkl-threading-dev:i386       (= ${binary:Version}),
          libmkl-computational-dev:amd64  (= ${binary:Version}),
          libmkl-computational-dev:i386   (= ${binary:Version}),
-Suggests: intel-mkl-doc                  (= ${binary:Version}),
+Suggests: intel-mkl-doc                  (= ${source:Version}),
 # Copied from here: https://software.intel.com/en-us/mkl-linux-developer-guide-2019-beta
 # Upstream revision: 062
 Description: Intel® Math Kernel Library (Intel® MKL) (Full Version Dev)
@@ -221,7 +222,7 @@ Depends: ${shlibs:Depends},
          libmkl-computational-dev (= ${binary:Version}),
          libomp-dev,
          pkg-config,
-Recommends: intel-mkl-doc         (= ${binary:Version}),
+Recommends: intel-mkl-doc         (= ${source:Version}),
 Description: Intel® Math Kernel Library (Intel® MKL) (Dev)
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
