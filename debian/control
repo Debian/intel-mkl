@@ -220,7 +220,6 @@ Depends: ${shlibs:Depends},
          libmkl-interface-dev     (= ${binary:Version}),
          libmkl-threading-dev     (= ${binary:Version}),
          libmkl-computational-dev (= ${binary:Version}),
-         libomp-dev,
          pkg-config,
 Recommends: intel-mkl-doc         (= ${source:Version}),
 Description: Intel® Math Kernel Library (Intel® MKL) (Dev)
