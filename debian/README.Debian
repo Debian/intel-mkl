@@ -18,7 +18,7 @@ Table of Contents
 How to install these MKL Debian packages?
 -------------------------------------------------------------------------------
 
-(1) If you want the basic set (without cluster and cluster) of MKL, which
+(1) If you want the basic set (without cluster and multiarch) of MKL, which
     includes shared objects, static libraries and headers:
 
       $ sudo apt install intel-mkl
