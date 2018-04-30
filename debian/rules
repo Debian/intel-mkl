@@ -49,6 +49,7 @@ override_dh_auto_clean:
 	-$(RM) debian/*.install  # auto-generated install files
 	-$(RM) debian/*.lintian-overrides  # auto-generated lintian files
 	-$(RM) debian/*.postinst debian/*.prerm  # auto-gen maintainer scripts
+	-$(RM) -rf debian/__pycache__
 	-$(RM) -rf opt  # extracted from upstream rpm packages
 
 # don't strip any of these binary blobs as agreed in intel's license.
