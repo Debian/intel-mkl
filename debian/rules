@@ -4,17 +4,17 @@
 # [ Maintainer Notes ]
 #
 # Unlike the nvidia-cuda-toolkit packaging, I wouldn't like to maintain a
-# bunch of *.install files. Here all the *.install files are auto-generated
+# pile of *.install files. Here all the *.install files are auto-generated
 # from python script debian/control.py .
 #
-# Apart from that, I'd strongly suggest you build this package under /dev/shm!
+# If you have more than 16GB RAM, try build this package under /dev/shm.
 
 # These variables are used as memo.
 MKL_ORIG_TARBALL = l_mkl_2018.2.199.tgz
 MD5SUM           = fd31b656a8eb859c89495b9cc41230b4
-SHA256SUM = e28d12173bef9e615b0ded2f95f59a42b3e9ad0afa713a79f8801da2bfb31936
+SHA256SUM        = e28d12173bef9e615b0ded2f95f59a42b3e9ad0afa713a79f8801da2bfb31936
 
-# for debugging i386 builds on amd64
+# debugging i386 builds on amd64. [not formal cross build but dirty hack]
 #export DEB_HOST_ARCH = i386
 #export DEB_HOST_MULTIARCH = i386-linux-gnu
 
