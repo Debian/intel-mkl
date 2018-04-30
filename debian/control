@@ -214,6 +214,8 @@ Architecture: amd64 i386
 Multi-Arch: foreign
 Provides: libblas.so,
           liblapack.so,
+Pre-depends: libblas-dev,
+             liblapack-dev,
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          libmkl-rt                (= ${binary:Version}),
