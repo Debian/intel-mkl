@@ -202,6 +202,16 @@ def installCatalog(filelist: List[str],
     return rest
 
 
+def installExamples(filelist: List[str]) -> List[str]:
+    '''
+    similar to previous
+    '''
+    exs, rest = eGrep(filelist, '.*/linux/mkl/examples/.*')
+    for ex in exs:
+        installFile(ex, 'intel-mkl-doc', 'usr/share/intel-mkl/')
+    return rest
+
+
 def installMisc(filelist: List[str], *, verbose: bool = False) -> List[str]:
     '''
     similar to previous functions.
@@ -331,11 +341,10 @@ if __name__ == '__main__':
     allfiles = installTools(allfiles)
     allfiles = installDocs(allfiles)
     allfiles = installCatalog(allfiles)
+    allfiles = installExamples(allfiles)
 
-    for x in allfiles: print(x)
-    exit()
     # install misc files and filter the list
-    allfiles = installMisc(allfiles, verbose=dh_verbose)
+    #allfiles = installMisc(allfiles, verbose=dh_verbose)
 
     # install the locale file
 
@@ -344,8 +353,8 @@ if __name__ == '__main__':
     installDebianSpecific(host_multiarch)
 
     # just like what dh-missing --list-missing does.
-    if dh_verbose:
-        for f in allfiles: print(f)
+    if dhVerbose():
+        for f in allfiles: print('missing', '<><><>', f)
 
     # the license files, the shell scripts for compiler variables are ignored.
 

@@ -25,15 +25,15 @@ License:   INTEL_SIMPLIFIED_SOFTWARE_LICENSE
 # under opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/include/fftw
 # after extracting rpm packages, see rules for how to extract the archives.
 # See: https://github.com/intel/mkl-dnn/issues/206#issuecomment-385154890
-Files:     rpm/*.rpm@*/fftw.h
-           rpm/*.rpm@*/fftw3-mpi.h
-           rpm/*.rpm@*/fftw3.h
-           rpm/*.rpm@*/fftw_f77.i
-           rpm/*.rpm@*/fftw_mpi.h
-           rpm/*.rpm@*/fftw_threads.h
-           rpm/*.rpm@*/rfftw.h
-           rpm/*.rpm@*/rfftw_mpi.h
-           rpm/*.rpm@*/rfftw_threads.h
+Files:     rpm/*.rpm @opt/intel/compilers_and_libraries_*/linux/mkl/include/fftw.h
+           rpm/*.rpm @opt/intel/compilers_and_libraries_*/linux/mkl/include/fftw3-mpi.h
+           rpm/*.rpm @opt/intel/compilers_and_libraries_*/linux/mkl/include/fftw3.h
+           rpm/*.rpm @opt/intel/compilers_and_libraries_*/linux/mkl/include/fftw_f77.i
+           rpm/*.rpm @opt/intel/compilers_and_libraries_*/linux/mkl/include/fftw_mpi.h
+           rpm/*.rpm @opt/intel/compilers_and_libraries_*/linux/mkl/include/fftw_threads.h
+           rpm/*.rpm @opt/intel/compilers_and_libraries_*/linux/mkl/include/rfftw.h
+           rpm/*.rpm @opt/intel/compilers_and_libraries_*/linux/mkl/include/rfftw_mpi.h
+           rpm/*.rpm @opt/intel/compilers_and_libraries_*/linux/mkl/include/rfftw_threads.h
 Copyright: 2003, 2007-14 Matteo Frigo
            1997-1999, 2003 Massachusetts Institute of Technology
 License:   FFTW-BSD-2-Clause

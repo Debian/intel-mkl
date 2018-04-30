@@ -6,13 +6,19 @@
 
 Table of Contents
 
+  -- User Part --
+
   (*) How to install these MKL Debian packages?
   (*) How do I link against MKL?
   (*) Environment variables for MKL
   (*) MKL performance tips from maintainer
   (*) Switching BLAS/LAPACK by environment variable and alternatives mechanism
   (*) Building your custom library from MKL with selected symbols
-  (*) Where is MKL documentation?
+  (*) Where is MKL documentation and examples?
+  (*) Upstream's XXX is missing, where is it?
+
+  -- Debian Developer Part --
+
   (*) How do I understand the upstream MKL source directory structure?
   (*) How to get the upstream source tarball?
   (*) What? MKL is redistributable?
@@ -54,17 +60,19 @@ How to install these MKL Debian packages?
 How do I link against MKL?
 -------------------------------------------------------------------------------
 
-Just "-lmkl_rt".
+Just "-lmkl_rt". Or if you prefer pkg-config, compile program like this:
+
+  $ g++ testdgemm.cc $(pkg-config --libs --cflags mkl-rt)
+
+Here the mkl-rt.pc file is provided by Debian package instead of upstream.
+The c++ source file mentioned in the above command line can be found under
+the debian/tests directory.
 
 For more complicated linking, refer any one of the following:
 
  * https://software.intel.com/en-us/mkl-linux-developer-guide-using-the-single-dynamic-library
-
  * intel-mkl-doc /usr/share/doc/intel-mkl/common/mkl_link_line_advisor.htm
-
  * intel-mkl-linktool:i386 (command line version of the above advisor)
-
-See upstream doc for more detail.
 
 -------------------------------------------------------------------------------
 Environment variables for MKL
@@ -104,11 +112,8 @@ Here are some points from package maintainer:
 
    * Tweak environment variable OMP_NUM_THREADS or MKL_NUM_THREADS
 
-   * Disable OpenMP usage from compiler (GCC) flags, e.g. for GOMP by removing
-
-       -fopenmp
-
-     from the compiler argument list. Compile and try the program again.
+   * Check if your program is linked against libgomp, however MKL runs
+     in with libiomp5.
 
    * For small size problems:
      https://software.intel.com/en-us/mkl-linux-developer-guide-improving-performance-for-small-size-problems
@@ -220,7 +225,7 @@ index 327ac54..b57e078 100644
 
 
 -------------------------------------------------------------------------------
-Where is MKL documentation?
+Where is MKL documentation and examples?
 -------------------------------------------------------------------------------
 
 Install package 'intel-mkl-doc', and open this URL in your browser:
@@ -230,6 +235,22 @@ Install package 'intel-mkl-doc', and open this URL in your browser:
 This is an MKL documentation overview page. However network access
 is required to browse further documents pointed by the page.
 
+You can find some examples and miscellaneous files here after installing
+the intel-mkl-doc package:
+
+  /usr/share/doc/intel-mkl/
+
+
+-------------------------------------------------------------------------------
+Upstream's XXX is missing, where is it?
+-------------------------------------------------------------------------------
+
+Indeed some files from upstream are not included in the Debian package because
+they are troublesome or unusable due to some reason.
+
+If you need them, please download MKL tarball from Intel's site, or by apt:
+
+  $ apt source intel-mkl
 
 -------------------------------------------------------------------------------
 How do I understand the upstream MKL source directory structure?

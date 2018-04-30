@@ -219,6 +219,7 @@ Depends: ${shlibs:Depends},
          libmkl-threading-dev     (= ${binary:Version}),
          libmkl-computational-dev (= ${binary:Version}),
          libomp-dev,
+         pkg-config,
 Recommends: intel-mkl-doc         (= ${binary:Version}),
 Description: Intel® Math Kernel Library (Intel® MKL) (Dev)
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
