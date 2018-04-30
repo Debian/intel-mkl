@@ -212,39 +212,17 @@ def installExamples(filelist: List[str]) -> List[str]:
     return rest
 
 
-def installMisc(filelist: List[str], *, verbose: bool = False) -> List[str]:
+def installBenchmarks(filelist: List[str]) -> List[str]:
     '''
-    similar to previous functions.
+    similar to previous
     '''
-    miscs = [x for x in filelist if '/linux/mkl/benchmarks/' in x]
-    miscs += [x for x in filelist if '/linux/mkl/examples/' in x]
-    miscs += [x for x in filelist if '/linux/mkl/interfaces/' in x]
-    miscs += [x for x in filelist if 'samples.html' in x]
-    rest = [x for x in filelist if x not in miscs]
-    # let's install the misc stuff!
-    # XXX: the benchmark files are problematic: rpath, missing libmpicxx.so.12
-    #      currently we don't install them.
-    #installFile(
-    #    'opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/benchmarks',
-    #    'libmkl-full-dev', 'usr/share/intel-mkl/')
-    miscs = [x for x in miscs if 'mkl/benchmarks' not in x]
-    installFile(
-        'opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/examples',
-        'intel-mkl-doc', 'usr/share/doc/intel-mkl/')
-    miscs = [x for x in miscs if 'mkl/examples' not in x]
-    installFile(
-        'opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/interfaces',
-        'libmkl-full-dev', 'usr/share/intel-mkl/')
-    miscs = [x for x in miscs if 'mkl/interfaces' not in x]
-    installFile('opt/intel/samples_2018/en/samples.html',
-        'intel-mkl-doc', 'usr/share/doc/intel-mkl/')
-    miscs = [x for x in miscs if 'samples.html' not in x]
-    for misc in miscs:
-        if verbose:
-            print('Ignoring', misc)
+    _, rest = eGrep(filelist, '.*/linux/mkl/benchmarks/.*')
+    # hpcg is ignored.
+    # - because I didn't find the way to build them without Intel C++ compiler.
+    # linpack and ml_linpack are ignored. we have suggested hpcc package.
+    # - linpack directory contains a pile of binaries. they works.
+    # - mp_linpack same as above
     return rest
-
-
 
 
 def installDebianSpecific(deb_host_multiarch: str) -> None:
@@ -333,6 +311,7 @@ if __name__ == '__main__':
     # -- these wrapper (interfaces/*) files relys on MKLROOT. We already broke
     #    upstream directory structure, rendering the these files hard to use.
     _, allfiles = eGrep(allfiles, '.*/linux/mkl/interfaces/.*')
+    # -- we have already /licensing/
 
     # install specific files and filter the list
     allfiles = installSharedObjects(allfiles)
@@ -342,6 +321,7 @@ if __name__ == '__main__':
     allfiles = installDocs(allfiles)
     allfiles = installCatalog(allfiles)
     allfiles = installExamples(allfiles)
+    allfiles = installBenchmarks(allfiles)
 
     # install misc files and filter the list
     #allfiles = installMisc(allfiles, verbose=dh_verbose)
