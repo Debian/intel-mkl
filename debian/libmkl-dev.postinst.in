@@ -1,0 +1,40 @@
+#! /bin/sh
+set -e
+
+# source debconf library
+. /usr/share/debconf/confmodule
+
+# priority 1 is even lower than the netlib reference implementation
+# This should be safe enough.
+_mkl_rt_priority=1
+
+db_get libmkl-rt/use-as-default-blas-lapack
+if [ "$RET" = "true" ]; then
+  echo "Setting MKL as default BLAS/LAPACK implementation as requested." 1>&2
+  _mkl_rt_priority=50
+fi
+
+# MKL has no all-in-one static library.
+
+update-alternatives --install /usr/lib/@DEB_HOST_MULTIARCH@/libblas.so \
+                    libblas.so-@DEB_HOST_MULTIARCH@ \
+                    /usr/lib/@DEB_HOST_MULTIARCH@/libmkl_rt.so \
+                    $_mkl_rt_priority \
+                    --slave /usr/include/@DEB_HOST_MULTIARCH@/cblas.h \
+                    cblas.h-@DEB_HOST_MULTIARCH@ \
+                    /usr/include/mkl/mkl_cblas.h \
+                    --slave /usr/lib/@DEB_HOST_MULTIARCH@/pkgconfig/blas.pc \
+                    blas.pc-@DEB_HOST_MULTIARCH@ \
+                    /usr/lib/pkgconfig/mkl-rt.pc
+
+update-alternatives --install /usr/lib/@DEB_HOST_MULTIARCH@/liblapack.so \
+                    liblapack.so-@DEB_HOST_MULTIARCH@ \
+                    /usr/lib/@DEB_HOST_MULTIARCH@/libmkl_rt.so \
+                    $_mkl_rt_priority \
+                    --slave /usr/lib/@DEB_HOST_MULTIARCH@/pkgconfig/lapack.pc \
+                    lapack.pc-@DEB_HOST_MULTIARCH@ \
+                    /usr/lib/pkgconfig/mkl-rt.pc
+
+#DEBHELPER#
+
+exit 0
