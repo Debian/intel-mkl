@@ -23,7 +23,9 @@ SHA256SUM        = e28d12173bef9e615b0ded2f95f59a42b3e9ad0afa713a79f8801da2bfb31
 	dh $@
 
 extract-upstream-rpms:
+	#https://www.centos.org/docs/5/html/Deployment_Guide-en-US/s1-check-rpm-sig.html
 	set -e; for rpmfile in $$(find rpm -type f -name '*.rpm'); do \
+		rpm -K --nosignature $$rpmfile; \
 		rpm2cpio $$rpmfile | cpio -idmv; \
 		done
 

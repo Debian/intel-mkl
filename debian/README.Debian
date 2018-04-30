@@ -11,6 +11,7 @@ Table of Contents
   (*) Environment variables for MKL
   (*) MKL performance tips from maintainer
   (*) Switching BLAS/LAPACK by environment variable and alternatives mechanism
+  (*) Building your custom library from MKL with selected symbols
   (*) Where is MKL documentation?
   (*) How do I understand the upstream MKL source directory structure?
   (*) How to get the upstream source tarball?
@@ -172,6 +173,51 @@ the priority will be changed to 50, which is even higher than OpenBLAS.
       usr/lib/${DEB_HOST_MULTIARCH}/mkl/liblapack.so.3
 
     They are both symlinked to libmkl_rt.so . For detail see ld.so(8).
+
+-------------------------------------------------------------------------------
+Building your custom library from MKL with selected symbols
+-------------------------------------------------------------------------------
+
+MKL provides a builder for building your custom library from MKL.
+The user can decide which symbol to include in this custom library.
+In upstream tarball, this builder locates here:
+
+  opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/tools/builder
+
+In the Debian package that tool is moved to /usr/share/intel-mkl/ . Besides,
+since Debian package doesn't retain the upstream directory structure, you
+need to patch the builder so that it works correctly. However, due to intel's
+ISSL license, we cannot install a patched builder for you. Here goes the
+patch:
+
+
+```
+diff --git a/makefile b/makefile
+index 327ac54..b57e078 100644
+--- a/makefile
++++ b/makefile
+@@ -76,11 +76,14 @@ help:
+ 
+ ##------------------------------------------------------------------------------
+ 
+-MKLROOT = /usr
+-mklia32_libpath=$(MKLROOT)/lib/i386-linux-gnu
+-mklintel64_libpath=$(MKLROOT)/lib/x86_64-linux-gnu
+-compileria32_libpath=$(MKLROOT)/lib/i386-linux-gnu
+-compilerintel64_libpath=$(MKLROOT)/lib/x86_64-linux-gnu
++ifndef MKLROOT
++MKLROOT = ../..
++endif
++
++mklia32_libpath=$(MKLROOT)/lib/ia32
++mklintel64_libpath=$(MKLROOT)/lib/intel64
++compileria32_libpath=$(MKLROOT)/../compiler/lib/ia32
++compilerintel64_libpath=$(MKLROOT)/../compiler/lib/intel64
+ 
+ #ifndef export
+ export=user_example_list
+```
+
 
 -------------------------------------------------------------------------------
 Where is MKL documentation?

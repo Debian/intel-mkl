@@ -313,10 +313,16 @@ if __name__ == '__main__':
     # Remove directories from file list
     allfiles = [x for x in allfiles if not os.path.isdir(x)]
 
-    # Filter files that we never wanted.
+    # [ Filter files that we never wanted ]
+    # -- upstream installer stuff. we don't need
     _, allfiles = eGrep(allfiles, '^opt/intel/parallel_studio_xe.*')
+    # -- there is already libtbb-dev package.
     _, allfiles = eGrep(allfiles, '.*/libtbb.*')
+    # -- libiomp5 is already prodided by other package.
     _, allfiles = eGrep(allfiles, '.*/libiomp.*')
+    # -- these wrapper (interfaces/*) files relys on MKLROOT. We already broke
+    #    upstream directory structure, rendering the these files hard to use.
+    _, allfiles = eGrep(allfiles, '.*/linux/mkl/interfaces/.*')
 
     # install specific files and filter the list
     allfiles = installSharedObjects(allfiles)
