@@ -1,14 +1,16 @@
 ===============================================================================
-Tips about Using this MKL Package
+                 Tips about Using Debian's MKL Package / FAQ
 ===============================================================================
+
+                    -- Mo Zhou <cdluminate@gmail.com>, Last Update: Apr 30 2018
 
 Table of Contents
 
   (*) How to install these MKL Debian packages?
   (*) How do I link against MKL?
-  (*) Environment variables
+  (*) Environment variables for MKL
   (*) MKL performance tips from maintainer
-  (*) libmkl_rt.so 's priority in the alternatives mechanism
+  (*) Switching BLAS/LAPACK by environment variable and alternatives mechanism
   (*) Where is MKL documentation?
   (*) How do I understand the upstream MKL source directory structure?
   (*) How to get the upstream source tarball?
@@ -64,7 +66,7 @@ For more complicated linking, refer any one of the following:
 See upstream doc for more detail.
 
 -------------------------------------------------------------------------------
-Environment variables
+Environment variables for MKL
 -------------------------------------------------------------------------------
 
 You may need to manually export the NLSPATH variable, so that the catopen(3)
@@ -124,11 +126,52 @@ Here are some points from package maintainer:
    See ltrace(1) for detail and advanced tracing.
 
 -------------------------------------------------------------------------------
-libmkl_rt.so 's priority in the alternatives mechanism
+Switching BLAS/LAPACK by environment variable and alternatives mechanism
 -------------------------------------------------------------------------------
 
-See https://lists.debian.org/debian-science/2018/04/msg00071.html
+Due to possible license violation, the default priority of MKL in the
+alternatives mechanism is set to 1. See the following link for discussion:
 
+  https://lists.debian.org/debian-science/2018/04/msg00071.html
+
+However, if the user explicitly agrees to use MKL as the default BLAS/LAPACK,
+the priority will be changed to 50, which is even higher than OpenBLAS.
+
+(1) If you want to change the BLAS/LAPACK implementation, and you have root
+    permission, the alternative mechanism is at your service.
+
+    First let's check the current alternative status
+
+      $ update-alternatives --get-selections | grep blas
+      $ update-alternatives --get-selections | grep lapack
+
+    Then, for example, let's switch the default BLAS implementation
+
+      $ sudo update-alternatives --config libblas.so.3-${DEB_HOST_MULTIARCH}
+
+    In the above command line, the actual value of placeholder
+    "${DEB_HOST_MULTIARCH}" can be found by issuing this command
+
+      $ dpkg-architecture -qDEB_HOST_MULTIARCH
+
+    By the way, GUI frontends of update-alternatives such as galternatives
+    will also work if you prefer them.
+
+(2) If you have NO root permission, but still want to change the default
+    BLAS/LAPACK implementation for yourself, there are still solutions.
+    Recall that as elaborated in manual page ls.so(8), both LD_LIBRARY_PATH
+    and LD_PRELOAD can be used as solution for this purpose.
+    Here is the LD_LIBRARY_PATH example:
+
+      $ export LD_LIBRARY_PATH=usr/lib/${DEB_HOST_MULTIARCH}/mkl/
+
+    The placeholder "${DEB_HOST_MULTIARCH}" is explained above. The above
+    solution works because we've put two symbol links in that directory:
+
+      usr/lib/${DEB_HOST_MULTIARCH}/mkl/libblas.so.3
+      usr/lib/${DEB_HOST_MULTIARCH}/mkl/liblapack.so.3
+
+    They are both symlinked to libmkl_rt.so . For detail see ld.so(8).
 
 -------------------------------------------------------------------------------
 Where is MKL documentation?
@@ -182,5 +225,3 @@ the tarball itself is re-distributable and licensed under ISSL.
 See communication with upstream for more detail:
 
   https://github.com/intel/mkl-dnn/issues/206
-
-  -- Mo Zhou <cdluminate@gmail.com>, Last Update: Apr 29 2018

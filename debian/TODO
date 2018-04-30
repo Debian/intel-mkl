@@ -2,16 +2,8 @@
   https://software.intel.com/en-us/mkl-linux-developer-guide-high-level-directory-structure
 * benchmark directory is filtered. debian package hpcc seems to ship
   some files in that directory. Check it and recommend/suggest hpcc.
-* db_purge on dpkg --purge seems to be automatically handled by dh_installdebconf.
-  test it.
 * check license for all files
-* change header install dir, and provide libblas.so and header again.
 * write pkgconfig file for MKL. Debian's mkl package doesn't retain the
   upstream directory structure, but modifying upstream pkgconfig is not
   allowed.
   at the same time, drop the upstream pkgconfig
-* /usr/lib/x86_64-linux-gnu/mkl/libblas.so.3
-  /usr/lib/x86_64-linux-gnu/mkl/liblapack.so.3
-
-  and document them
-
