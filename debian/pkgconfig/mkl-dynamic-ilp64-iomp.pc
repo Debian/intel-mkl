@@ -1,0 +1,9 @@
+prefix=/usr
+exec_prefix=${prefix}
+includedir=${prefix}/include/mkl
+
+Name: mkl-dynamic-ilp64-iomp
+Version: debian
+Description: compatible pkg-config
+Libs: -lmkl_intel_ilp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm -ldl
+Cflags: -DMKL_ILP64 -I${includedir}

@@ -3,7 +3,4 @@
 * benchmark directory is filtered. debian package hpcc seems to ship
   some files in that directory. Check it and recommend/suggest hpcc.
 * check license for all files
-* write pkgconfig file for MKL. Debian's mkl package doesn't retain the
-  upstream directory structure, but modifying upstream pkgconfig is not
-  allowed.
-  at the same time, drop the upstream pkgconfig
+* install my pkgconfig instead of upstream ones

@@ -1,0 +1,10 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib/@DEB_HOST_MULTIARCH@
+includedir=${prefix}/include/mkl
+
+Name: mkl
+Version: debian
+Description: compatible pkg-config
+Libs: -Wl,--start-group ${libdir}/libmkl_intel_ilp64.a ${libdir}/libmkl_sequential.a ${libdir}/libmkl_core.a -Wl,--end-group -lpthread -lm -ldl
+Cflags: -DMKL_ILP64 -I${includedir}

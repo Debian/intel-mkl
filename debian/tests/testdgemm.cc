@@ -1,13 +1,15 @@
 #include <iostream>
 #include <cstdlib>
 
-#include <cblas.h>
+//#include <cblas.h>
 //#include <mkl.h>
-//#include <mkl_cblas.h>  /* MKL - CBLAS Part */
+#include <mkl_cblas.h>  /* MKL - CBLAS Part */
+
 #include <sys/time.h>
 
 // This file is used to test correctness of cblas header / library packaging.
-// It also reveals
+// Although can be used as a very rough benchmarker.
+// g++ testdgemm.cc $(pkg-config --libs --cflags mkl-rt)
 
 const int repeat = 100;
 const int M = 512;

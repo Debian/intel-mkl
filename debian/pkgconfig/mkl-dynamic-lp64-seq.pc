@@ -1,0 +1,10 @@
+prefix=/usr
+exec_prefix=${prefix}
+includedir=${prefix}/include/mkl
+
+#info
+Name: mkl-dynamic-lp64-seq
+Version: debian
+Description: compatible pkg-config
+Libs: -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl
+Cflags: -I${includedir}
