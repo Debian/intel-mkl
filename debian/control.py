@@ -229,7 +229,7 @@ def installDebianSpecific(deb_host_multiarch: str) -> None:
     '''
     install debian specific files that come from debian/
     '''
-    dest = f'/usr/lib/pkgconfig/{deb_host_multiarch}/'
+    dest = f'/usr/lib/{deb_host_multiarch}/pkgconfig/'
     installFile('debian/pkgconfig/*.pc', 'libmkl-dev', dest)
 
 
