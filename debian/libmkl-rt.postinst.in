@@ -5,14 +5,8 @@ set -e
 . /usr/share/debconf/confmodule
 
 # priority 1 is even lower than the netlib reference implementation
-# This should be safe enough.
+# This should be safe enough if the package depends on a free alternative.
 _mkl_rt_priority=1
-
-db_get libmkl-rt/use-as-default-blas-lapack
-if [ "$RET" = "true" ]; then
-  echo "Setting MKL as default BLAS/LAPACK implementation as requested." 1>&2
-  _mkl_rt_priority=50
-fi
 
 update-alternatives --install /usr/lib/@DEB_HOST_MULTIARCH@/libblas.so.3 \
                     libblas.so.3-@DEB_HOST_MULTIARCH@ \
@@ -23,6 +17,41 @@ update-alternatives --install /usr/lib/@DEB_HOST_MULTIARCH@/liblapack.so.3 \
                     liblapack.so.3-@DEB_HOST_MULTIARCH@ \
                     /usr/lib/@DEB_HOST_MULTIARCH@/libmkl_rt.so \
                     $_mkl_rt_priority
+
+db_get libmkl-rt/use-as-default-blas-lapack
+if [ "$RET" = "true" ]; then
+
+  # When user says "yes", we point libblas.so.3 to MKL, and setting the
+  # alternative in manual mode.
+
+  echo "Setting MKL as default BLAS/LAPACK implementation as requested." 1>&2
+  update-alternatives --set libblas.so.3-@DEB_HOST_MULTIARCH@ \
+                      /usr/lib/@DEB_HOST_MULTIARCH@/libmkl_rt.so
+
+  update-alternatives --set liblapack.so.3-@DEB_HOST_MULTIARCH@ \
+                      /usr/lib/@DEB_HOST_MULTIARCH@/libmkl_rt.so
+
+else
+
+  # When user says "no", we do nothing. However if the user says "no" when
+  # MKL is selected, we should literally unselect it even if it's in manual
+  # mode.
+
+  if [ $(update-alternatives --query libblas.so.3-@DEB_HOST_MULTIARCH@
+       | grep ^Value: | cut -d ' ' -f 2) \
+       = /usr/lib/@DEB_HOST_MULTIARCH@/libmkl_rt.so ]; then
+
+    echo "Unselecting MKL as requested." 1>&2
+    update-alternatives --auto libblas.so.3-@DEB_HOST_MULTIARCH@
+
+    update-alternatives --auto liblapack.so.3-@DEB_HOST_MULTIARCH@
+
+    # We are sure that MKL will be unselected by putting these alternatives
+    # back into auto mode, because this package depends on free alternatives.
+
+  fi
+
+fi
 
 #DEBHELPER#
 

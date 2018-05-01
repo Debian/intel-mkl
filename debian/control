@@ -223,6 +223,11 @@ Depends: ${shlibs:Depends},
          libmkl-threading-dev     (= ${binary:Version}),
          libmkl-computational-dev (= ${binary:Version}),
          pkg-config,
+# Similar to libmkl-rt package,
+# we should depend on libblas.so and liblapack.so for a free alternatives,
+# but the two virtual packages are "Provided" by this package ...
+# Well, let's simply pull openblas.
+         libopenblas-dev,
 Recommends: intel-mkl-doc         (= ${source:Version}),
 Description: Intel® Math Kernel Library (Intel® MKL) (Dev)
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
@@ -314,6 +319,10 @@ Provides: libblas.so.3,
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          debconf,
+# we should depend on libblas.so.3 and liblapack.so.3 for a free alternatives,
+# but the two virtual packages are "Provided" by this package ...
+# Well, let's simply pull openblas.
+         libopenblas-base,
 # This library automatically selects shared objects from the three layers
          libmkl-meta-interface (= ${binary:Version}),
          libmkl-meta-threading (= ${binary:Version}),
