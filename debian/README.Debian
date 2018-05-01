@@ -2,7 +2,7 @@
                  Tips about Using Debian's MKL Package / FAQ
 ===============================================================================
 
-                    -- Mo Zhou <cdluminate@gmail.com>, Last Update: Apr 30 2018
+                    -- Mo Zhou <cdluminate@gmail.com>, Last Update: May 01 2018
 
 Table of Contents
 
@@ -22,6 +22,7 @@ Table of Contents
   (*) How do I understand the upstream MKL source directory structure?
   (*) How to get the upstream source tarball?
   (*) What? MKL is redistributable?
+  (*) How is this package organized?
 
 -------------------------------------------------------------------------------
 How to install these MKL Debian packages?
@@ -141,7 +142,9 @@ alternatives mechanism is set to 1. See the following link for discussion:
   https://lists.debian.org/debian-science/2018/04/msg00071.html
 
 However, if the user explicitly agrees to use MKL as the default BLAS/LAPACK,
-the priority will be changed to 50, which is even higher than OpenBLAS.
+libmkl_rt.so will be selected and be set in manual mode, overriding any
+other alternatives. In contrast, we will make sure MKL is not selected
+if the user rejects to use MKL as default.
 
 (1) If you want to change the BLAS/LAPACK implementation, and you have root
     permission, the alternative mechanism is at your service.
@@ -161,7 +164,8 @@ the priority will be changed to 50, which is even higher than OpenBLAS.
       $ dpkg-architecture -qDEB_HOST_MULTIARCH
 
     By the way, GUI frontends of update-alternatives such as galternatives
-    will also work if you prefer them.
+    will also work if you prefer them. For more information about usage
+    of update-alternatives, see manual page update-alternatives(1).
 
 (2) If you have NO root permission, but still want to change the default
     BLAS/LAPACK implementation for yourself, there are still solutions.
@@ -292,3 +296,41 @@ the tarball itself is re-distributable and licensed under ISSL.
 See communication with upstream for more detail:
 
   https://github.com/intel/mkl-dnn/issues/206
+
+-------------------------------------------------------------------------------
+How is this package organized?
+-------------------------------------------------------------------------------
+
+MKL package is a bit complex, but let me try to explain it.
+
+Installation and Usage of this package are explained in previous sections
+of this document, and they should have given you a basic idea how this package
+is organized.
+
+There is a detailed binary package index in debian/control. Files are carefully
+split into small packages. It must be pointed out that the two most important
+nodes in the dependency graph are libmkl-rt and libmkl-dev. Here are several
+important notes about the dependency graph:
+
+  * libmkl-rt is a run-time dispatching library. It auto matically selects
+    shared object from which symbols are loaded. Typically it select one shared
+    object from each of the three layers: interface layer, threading layer, and
+    computational layer. To reduce my burden, I grouped the children librarires
+    of libmkl-rt into three meta packages, respectively.
+
+  * libmkl-rt plus the basic set of static libraries plus the headers equal
+    to libmkl-dev.
+
+  * intel-mkl metapackage is simply a wrapper of libmkl-dev. I expect that most
+    user pull mkl by installing intel-mkl.
+
+  * intel-mkl-cluster is intel-mkl + cluster support.
+
+  * intel-mkl-full is intel-mkl + cluster support + multiarch (i386) libraries
+    + all other misc stuff (e.g. custom library builder).
+
+Despite of the 1000+ line control file, I tried my best to keep the rest part
+of packaging simple and elegant. The python script debian/control.py generates
+all the .install files and all the .lintian-overrides files. It scans upstream
+tarball and put files in a proper package. I think the comments in the script
+should be enough for one to fully understand what it does.
