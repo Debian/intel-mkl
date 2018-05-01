@@ -37,7 +37,7 @@ msgid ""
 "MKL without rebuild."
 msgstr ""
 "Intel MKL 的 SDL 动态库已经安装在您的计算机上。该动态库可以用作\n"
-"libblas.so.3 以及 liblapack.so.3 的默认选择，从而使链接到 BLAS/LAPACK 的\n"
+"libblas.so.3 以及 liblapack.so.3 的默认候选，从而使链接到 BLAS/LAPACK 的\n"
 "应用程序不需要重新编译即可直接使用 MKL。"
 
 #. Type: boolean
@@ -52,6 +52,11 @@ msgid ""
 "MKL licensing terms. For the case of software under the GNU General Public "
 "License, you may want to read this FAQ:"
 msgstr ""
+"然而，MKL 是非自由软件，其源代码并不公开。当您将 MKL 作为默认 BLAS/LAPACK\n"
+"实现时，您可能会违反那些动态链接到该库的 Copyleft 应用程序许可证。请仔细\n"
+"检查您希望配合 MKL 一起使用的软件的许可证，确保这些软件与 MKL 的许可证\n"
+"互相兼容。对于在 GNU General Public License (GPL) 协议下分发的软件，您可以\n"
+"参阅以下 FAQ："
 
 #. Type: boolean
 #. Description
