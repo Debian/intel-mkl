@@ -23,3 +23,10 @@ _Description: Use libmkl_rt.so as the default alternative to BLAS/LAPACK?
  .
  If you don't know what MKL is, or unwilling to set it as default, just choose
  the preset value or simply type Enter.
+
+Template: libmkl-rt/exact-so-3-selections
+Type: multiselect
+Choices: libblas.so.3-${DEB_HOST_MULTIARCH}, liblapack.so.3-${DEB_HOST_MULTIARCH}
+Default: libblas.so.3-${DEB_HOST_MULTIARCH}, liblapack.so.3-${DEB_HOST_MULTIARCH}
+Description: Which of the following symbol links should point to MKL?
+ Typically they both point to MKL (libmkl_rt.so).

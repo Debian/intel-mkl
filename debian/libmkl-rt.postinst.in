@@ -37,11 +37,12 @@ else
   # MKL is selected, we should literally unselect it even if it's in manual
   # mode.
 
-  if [ $(update-alternatives --query libblas.so.3-@DEB_HOST_MULTIARCH@
-       | grep ^Value: | cut -d ' ' -f 2) \
-       = /usr/lib/@DEB_HOST_MULTIARCH@/libmkl_rt.so ]; then
+  path=$(update-alternatives --query libblas.so.3-@DEB_HOST_MULTIARCH@ \
+         | grep ^Value: | cut -d ' ' -f 2)
 
-    echo "Unselecting MKL as requested." 1>&2
+  if [ "$path" = "/usr/lib/@DEB_HOST_MULTIARCH@/libmkl_rt.so" ]; then
+
+    echo "Unselecting MKL if they were previously selected." 1>&2
     update-alternatives --auto libblas.so.3-@DEB_HOST_MULTIARCH@
 
     update-alternatives --auto liblapack.so.3-@DEB_HOST_MULTIARCH@
