@@ -12,6 +12,7 @@ Source: https://software.intel.com/en-us/mkl
 # which means the file "opt/intel...fftw3.h" can be found after extracting all
 # the rpm packages, see debian/rules for how to extract the rpms.
 
+
 Files:     install_GUI.sh
            install.sh
            ipsxe_support_mkl.txt
@@ -21,20 +22,18 @@ Files:     install_GUI.sh
 Copyright: 2017 Intel Corporation.
 License:   INTEL_LICENSE_INSTALLER
 
+
 Files:     rpm/*
            PUBLIC_KEY.PUB
 Copyright: 2018 Intel Corporation.
+# INTEL_SIMPLIFIED_SOFTWARE_LICENSE, i.e. ISSL
 License:   INTEL_SIMPLIFIED_SOFTWARE_LICENSE
 
-Files:     rpm/*.rpm @opt/intel/compilers_and_libraries_*/linux/mkl/include/fftw.h
-           rpm/*.rpm @opt/intel/compilers_and_libraries_*/linux/mkl/include/fftw3-mpi.h
+
+Files:     rpm/*.rpm @opt/intel/compilers_and_libraries_*/linux/mkl/include/fftw3-mpi.h
            rpm/*.rpm @opt/intel/compilers_and_libraries_*/linux/mkl/include/fftw3.h
-           rpm/*.rpm @opt/intel/compilers_and_libraries_*/linux/mkl/include/fftw_f77.i
            rpm/*.rpm @opt/intel/compilers_and_libraries_*/linux/mkl/include/fftw_mpi.h
-           rpm/*.rpm @opt/intel/compilers_and_libraries_*/linux/mkl/include/fftw_threads.h
-           rpm/*.rpm @opt/intel/compilers_and_libraries_*/linux/mkl/include/rfftw.h
            rpm/*.rpm @opt/intel/compilers_and_libraries_*/linux/mkl/include/rfftw_mpi.h
-           rpm/*.rpm @opt/intel/compilers_and_libraries_*/linux/mkl/include/rfftw_threads.h
 # Matteo Frigo and Massachusetts Institute of Technology hold the copyright
 # for the following files:
 #   fftw.h, fftw3-mpi.h, fftw3.h, fftw_f77.i, fftw_mpi.h, fftw_threads.h, 
@@ -44,15 +43,33 @@ Copyright: 2003, 2007-14 Matteo Frigo
            1997-1999, 2003 Massachusetts Institute of Technology
 License:   FFTW-BSD-2-Clause
 
+
+Files:     rpm/*.rpm @opt/intel/compilers_and_libraries_*/linux/mkl/include/fftw.h
+           rpm/*.rpm @opt/intel/compilers_and_libraries_*/linux/mkl/include/fftw_f77.i
+           rpm/*.rpm @opt/intel/compilers_and_libraries_*/linux/mkl/include/fftw_threads.h
+           rpm/*.rpm @opt/intel/compilers_and_libraries_*/linux/mkl/include/rfftw.h
+           rpm/*.rpm @opt/intel/compilers_and_libraries_*/linux/mkl/include/rfftw_threads.h
+Copyright: 2003 Matteo Frigo
+           2003 Massachusetts Institute of Technology
+# In the same directory there are BSD-2 licenced files from the same author.
+# However the files listed above have ambiguous licence declaration.
+# According to upstream:
+#   https://github.com/intel/mkl-dnn/issues/206#issuecomment-385772103
+# The ambiguous licence declaration refers to Intel's ISSL.
+License:   INTEL_SIMPLIFIED_SOFTWARE_LICENSE
+
+
 Files:     rpm/*.rpm @opt/intel/documentation_2018/en/mkl/ps2018/resources/prism/*
 Copyright: 2012-2013 Lea Verou
 License:   MIT
+
 
 Files:     rpm/*.rpm @opt/intel/documentation_2018/ja/mkl/ps2018/resources/jquery-1.11.1.min.js
            rpm/*.rpm @opt/intel/documentation_2018/en/mkl/ps2018/resources/jquery-1.11.1.min.js
 # /*! jQuery v1.11.1 | (c) 2005, 2014 jQuery Foundation, Inc. | jquery.org/license */
 Copyright: 2005, 2014 jQuery Foundation, Inc.
 License:   MIT
+
 
 Files:     rpm/*.rpm @opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/benchmarks/hpcg/*
 Copyright: 2014-2018 Intel Corporation. All rights reserved.
@@ -68,6 +85,7 @@ Copyright: 2014-2018 Intel Corporation. All rights reserved.
            (C) Copyright 2013 All Rights Reserved
 License:   INTEL_ISSL_HPCG_LICENSE_DUAL_LICENSE
 
+
 Files:     rpm/*.rpm @opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/benchmarks/mp_linpack/*
 Copyright: 2001-2017 Intel Corporation All Rights Reserved.
            .
@@ -76,6 +94,7 @@ Copyright: 2001-2017 Intel Corporation All Rights Reserved.
            Innovative Computing Laboratory                                 
            (C) Copyright 2000-2008 All Rights Reserved                       
 License:   INTEL_ISSL_HPL_LICENSE_DUAL_LICENSE
+
 
 Files:     debian/*
 Copyright: 2018 Mo Zhou <cdluminate@gmail.com>
