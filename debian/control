@@ -212,13 +212,11 @@ Package: libmkl-dev
 Section: non-free/libdevel
 Architecture: amd64 i386
 Multi-Arch: foreign
-Provides: libblas.so,
-          liblapack.so,
-Pre-depends: libblas-dev,
-             liblapack-dev,
+Pre-depends: libblas-dev | libblas.so,
+             liblapack-dev | liblapack.so,
+             libmkl-rt            (= ${binary:Version}),
 Depends: ${shlibs:Depends},
          ${misc:Depends},
-         libmkl-rt                (= ${binary:Version}),
          libmkl-interface-dev     (= ${binary:Version}),
          libmkl-threading-dev     (= ${binary:Version}),
          libmkl-computational-dev (= ${binary:Version}),
@@ -314,8 +312,8 @@ Package: libmkl-rt
 Section: non-free/libs
 Architecture: amd64 i386
 Multi-Arch: same
-Provides: libblas.so.3,
-          liblapack.so.3,
+Pre-Depends: libblas3 | libblas.so.3,
+             liblapack3 | liblapack.so.3,
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          debconf,
