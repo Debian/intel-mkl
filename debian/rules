@@ -32,8 +32,8 @@ extract-rpms:
 autogen:
 	find debian -type f -name '*.in' \! -name 'POTFILES.in' -exec \
 		python3 debian/placeholder.py '{}' \;
-	chmod +x debian/libmkl-rt.postinst
-	chmod +x debian/libmkl-rt.prerm
+	chmod +x debian/libmkl-rt.postinst debian/libmkl-rt.prerm
+	chmod +x debian/libmkl-rt.config   debian/libmkl-dev.config
 
 override_dh_auto_configure: extract-rpms autogen
 	python3 debian/control.py  # Generate install files and lintian overrides
