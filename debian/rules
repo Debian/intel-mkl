@@ -22,7 +22,7 @@ SHA256SUM        = e28d12173bef9e615b0ded2f95f59a42b3e9ad0afa713a79f8801da2bfb31
 %:
 	dh $@
 
-extract-upstream-rpms:
+extract-rpms:
 	#https://www.centos.org/docs/5/html/Deployment_Guide-en-US/s1-check-rpm-sig.html
 	set -e; for rpmfile in $$(find rpm -type f -name '*.rpm'); do \
 		rpm -K --nosignature $$rpmfile; \
@@ -35,7 +35,7 @@ autogen:
 	chmod +x debian/libmkl-rt.postinst
 	chmod +x debian/libmkl-rt.prerm
 
-override_dh_auto_configure: extract-upstream-rpms autogen
+override_dh_auto_configure: extract-rpms autogen
 	python3 debian/control.py  # Generate install files and lintian overrides
 
 	# deal with embedded libjs-jquery
