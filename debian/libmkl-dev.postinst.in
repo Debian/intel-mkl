@@ -31,36 +31,42 @@ update-alternatives --install /usr/lib/@DEB_HOST_MULTIARCH@/liblapack.so \
 db_get libmkl-rt/use-as-default-blas-lapack
 if [ "$RET" = "true" ]; then
 
-  # When user says "yes", we point libblas.so to MKL, and setting the
+  # When user says "yes", we point the symlinks to MKL, and set the
   # alternative in manual mode.
-
   echo "Setting MKL as default BLAS/LAPACK implementation as requested." 1>&2
 
+  if (echo "$RET" | grep "libblas.so" 2>&1 1>/dev/null); then
   update-alternatives --set libblas.so-@DEB_HOST_MULTIARCH@ \
                       /usr/lib/@DEB_HOST_MULTIARCH@/libmkl_rt.so
+  fi
 
+  if (echo "$RET" | grep "liblapack.so" 2>&1 1>/dev/null); then
   update-alternatives --set liblapack.so-@DEB_HOST_MULTIARCH@ \
                       /usr/lib/@DEB_HOST_MULTIARCH@/libmkl_rt.so
+  fi
 
 else
 
   # When user says "no", we do nothing. However if the user says "no" when
   # MKL is selected, we should literally unselect it even if it's in manual
   # mode.
+  echo "Unselecting MKL if they were previously selected." 1>&2
 
-  if [ $(update-alternatives --query libblas.so.3-@DEB_HOST_MULTIARCH@
-       | grep ^Value: | cut -d ' ' -f 2) \
-       = /usr/lib/@DEB_HOST_MULTIARCH@/libmkl_rt.so ]; then
+  realblas=$(update-alternatives --query libblas.so-@DEB_HOST_MULTIARCH@ \
+             | grep ^Value: | cut -d ' ' -f 2)
+  reallapack=$(update-alternatives --query liblapack.so-@DEB_HOST_MULTIARCH@ \
+               | grep ^Value: | cut -d ' ' -f 2)
 
-    echo "Unselecting MKL as requested." 1>&2
+  if [ "$realblas" = "/usr/lib/@DEB_HOST_MULTIARCH@/libmkl_rt.so" ]; then
     update-alternatives --auto libblas.so-@DEB_HOST_MULTIARCH@
-
-    update-alternatives --auto liblapack.so-@DEB_HOST_MULTIARCH@
-
-    # We are sure that MKL will be unselected by putting these alternatives
-    # back into auto mode, because this package depends on free alternatives.
-
   fi
+
+  if [ "$reallapack" = "/usr/lib/@DEB_HOST_MULTIARCH@/libmkl_rt.so" ]; then
+    update-alternatives --auto liblapack.so-@DEB_HOST_MULTIARCH@
+  fi
+
+  # We are sure that MKL will be unselected by putting these alternatives
+  # back into auto mode, because this package depends on free alternatives.
 
 fi
 
