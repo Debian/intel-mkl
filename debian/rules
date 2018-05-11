@@ -11,8 +11,6 @@
 
 # These variables are used as memo.
 MKL_ORIG_TARBALL = l_mkl_2018.2.199.tgz
-MD5SUM           = fd31b656a8eb859c89495b9cc41230b4
-SHA256SUM        = e28d12173bef9e615b0ded2f95f59a42b3e9ad0afa713a79f8801da2bfb31936
 
 # debugging i386 builds on amd64. [not formal cross build but dirty hack]
 #export DEB_HOST_ARCH = i386
@@ -21,6 +19,10 @@ SHA256SUM        = e28d12173bef9e615b0ded2f95f59a42b3e9ad0afa713a79f8801da2bfb31
 
 %:
 	dh $@
+
+checksum:
+	md5sum debian/intel-mkl.md5
+	sha512sum debian/intel-mkl.sha512
 
 extract-rpms:
 	#https://www.centos.org/docs/5/html/Deployment_Guide-en-US/s1-check-rpm-sig.html
@@ -35,7 +37,7 @@ autogen:
 	chmod +x debian/libmkl-rt.postinst debian/libmkl-rt.prerm
 	chmod +x debian/libmkl-rt.config   debian/libmkl-dev.config
 
-override_dh_auto_configure: extract-rpms autogen
+override_dh_auto_configure: checksum extract-rpms autogen
 	python3 debian/control.py  # Generate install files and lintian overrides
 
 	# deal with embedded libjs-jquery
