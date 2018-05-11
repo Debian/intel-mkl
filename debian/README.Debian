@@ -2,7 +2,7 @@
                  Tips about Using Debian's MKL Package / FAQ
 ===============================================================================
 
-                    -- Mo Zhou <cdluminate@gmail.com>, Last Update: May 01 2018
+                    -- Mo Zhou <cdluminate@gmail.com>, Last Update: May 11 2018
 
 Table of Contents
 
@@ -10,18 +10,18 @@ Table of Contents
 
   (*) How to install these MKL Debian packages?
   (*) How do I link against MKL?
-  (*) Environment variables for MKL
-  (*) MKL performance tips from maintainer
+  (*) Environment variables
+  (*) MKL performance tips
   (*) Switching BLAS/LAPACK by environment variable and alternatives mechanism
-  (*) Building your custom library from MKL with selected symbols
-  (*) Where is MKL documentation and examples?
-  (*) Upstream's XXX is missing, where is it?
+  (*) Building custom library from MKL with selected symbols
+  (*) Where are MKL documentations and examples?
+  (*) Upstream's XXX is missing. Where is it?
 
   -- Debian Developer Part --
 
+  (*) Is MKL really redistributable?
+  (*) How do I obtain the upstream source tarball?
   (*) How do I understand the upstream MKL source directory structure?
-  (*) How to get the upstream source tarball?
-  (*) What? MKL is redistributable?
   (*) How is this package organized?
 
 -------------------------------------------------------------------------------
@@ -61,6 +61,7 @@ How to install these MKL Debian packages?
 How do I link against MKL?
 -------------------------------------------------------------------------------
 
+The simplest way to link against MKL is to link against libmkl_rt.so .
 Just "-lmkl_rt". Or if you prefer pkg-config, compile program like this:
 
   $ g++ testdgemm.cc $(pkg-config --libs --cflags mkl-rt)
@@ -76,7 +77,7 @@ For more complicated linking, refer any one of the following:
  * intel-mkl-linktool:i386 (command line version of the above advisor)
 
 -------------------------------------------------------------------------------
-Environment variables for MKL
+Environment variables
 -------------------------------------------------------------------------------
 
 You may need to manually export the NLSPATH variable, so that the catopen(3)
@@ -88,15 +89,10 @@ Or $ export NLSPATH=/usr/share/locale/ja_JP/%N:$NLSPATH if your locale is ja_JP.
 There is a file debian/tests/catalog.cc for testing catopen.
 
 Apart from NLSPATH, the other environment variables prepared by upstream
-scripts such as mklvars.sh are not needed. Here are some of these variables:
-
-   INCLUDE, MKLROOT, LD_LIBRARY_PATH, LIBRARY_PATH, CPATH, NLSPATH,
-   MIC_LD_LIBRARY_PATH, MKL_MIC_ENABLE, DYLD_LIBRARY_PATH, F95ROOT
-   ...
-
+scripts such as mklvars.sh are generally not needed.
 
 -------------------------------------------------------------------------------
-MKL performance tips from maintainer
+MKL performance tips
 -------------------------------------------------------------------------------
 
 Upstream's doc about performance and memory:
@@ -113,15 +109,14 @@ Here are some points from package maintainer:
 
    * Tweak environment variable OMP_NUM_THREADS or MKL_NUM_THREADS
 
-   * Check if your program is linked against libgomp, however MKL runs
-     in with libiomp5.
+   * Check if libgomp and libiomp5 are used at the same time.
 
    * For small size problems:
      https://software.intel.com/en-us/mkl-linux-developer-guide-improving-performance-for-small-size-problems
 
    * ...
 
-   * Refer to upstream doc if you want more detail.
+   * Refer to upstream doc.
 
 2. libmkl_rt.so is a magical run-time dispatcher which detects your
    CPU capacity at run time, and automatically selects shared objects
@@ -184,12 +179,12 @@ if the user rejects to use MKL as default.
     They are both symlinked to libmkl_rt.so . For detail see ld.so(8).
 
 -------------------------------------------------------------------------------
-Building your custom library from MKL with selected symbols
+Building custom library from MKL with selected symbols
 -------------------------------------------------------------------------------
 
-MKL provides a builder for building your custom library from MKL.
+MKL provides a builder for building custom library from MKL.
 The user can decide which symbol to include in this custom library.
-In upstream tarball, this builder locates here:
+After extracting upstream tarball, this builder locates here:
 
   opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/tools/builder
 
@@ -199,37 +194,33 @@ need to patch the builder so that it works correctly. However, due to intel's
 ISSL license, we cannot install a patched builder for you. Here goes the
 patch:
 
-
 ```
-diff --git a/makefile b/makefile
-index 327ac54..b57e078 100644
---- a/makefile
-+++ b/makefile
-@@ -76,11 +76,14 @@ help:
+--- makefile.bak	2018-05-11 14:59:29.533147763 +0000
++++ makefile	2018-05-11 15:01:37.454016074 +0000
+@@ -76,14 +76,11 @@
  
  ##------------------------------------------------------------------------------
  
--MKLROOT = /usr
--mklia32_libpath=$(MKLROOT)/lib/i386-linux-gnu
--mklintel64_libpath=$(MKLROOT)/lib/x86_64-linux-gnu
--compileria32_libpath=$(MKLROOT)/lib/i386-linux-gnu
--compilerintel64_libpath=$(MKLROOT)/lib/x86_64-linux-gnu
-+ifndef MKLROOT
-+MKLROOT = ../..
-+endif
-+
-+mklia32_libpath=$(MKLROOT)/lib/ia32
-+mklintel64_libpath=$(MKLROOT)/lib/intel64
-+compileria32_libpath=$(MKLROOT)/../compiler/lib/ia32
-+compilerintel64_libpath=$(MKLROOT)/../compiler/lib/intel64
+-ifndef MKLROOT
+-MKLROOT = ../..
+-endif
+-
+-mklia32_libpath=$(MKLROOT)/lib/ia32
+-mklintel64_libpath=$(MKLROOT)/lib/intel64
+-compileria32_libpath=$(MKLROOT)/../compiler/lib/ia32
+-compilerintel64_libpath=$(MKLROOT)/../compiler/lib/intel64
++MKLROOT = /usr
++mklia32_libpath=$(MKLROOT)/lib/i386-linux-gnu
++mklintel64_libpath=$(MKLROOT)/lib/x86_64-linux-gnu
++compileria32_libpath=$(MKLROOT)/lib/i386-linux-gnu
++compilerintel64_libpath=$(MKLROOT)/lib/x86_64-linux-gnu
  
  #ifndef export
  export=user_example_list
 ```
 
-
 -------------------------------------------------------------------------------
-Where is MKL documentation and examples?
+Where are MKL documentations and examples?
 -------------------------------------------------------------------------------
 
 Install package 'intel-mkl-doc', and open this URL in your browser:
@@ -244,17 +235,49 @@ the intel-mkl-doc package:
 
   /usr/share/doc/intel-mkl/
 
-
 -------------------------------------------------------------------------------
-Upstream's XXX is missing, where is it?
+Upstream's XXX is missing. Where is it?
 -------------------------------------------------------------------------------
 
 Indeed some files from upstream are not included in the Debian package because
 they are troublesome or unusable due to some reason.
 
+Contents not included in debian package:
+  - libiomp5-related files
+  - libtbb-related files
+  - all benchmark files
+
 If you need them, please download MKL tarball from Intel's site, or by apt:
 
   $ apt source intel-mkl
+
+-------------------------------------------------------------------------------
+Is MKL really redistributable?
+-------------------------------------------------------------------------------
+
+As declared by upstream at this page
+
+  https://software.intel.com/en-us/mkl/license-faq
+  "Yes, redistribution is allowed per the terms of the ISSL."
+
+Even if registration is required before downloading the MKL tarball,
+the tarball itself is re-distributable and licensed under ISSL.
+See communication with upstream for more detail:
+
+  https://github.com/intel/mkl-dnn/issues/206
+
+-------------------------------------------------------------------------------
+How do I obtain the upstream source tarball?
+-------------------------------------------------------------------------------
+
+Go to this page:
+
+  https://software.intel.com/en-us/mkl
+
+Click "Free Download". The tarball will be available after registration.
+There are several hashsums in rules.
+
+Note that, Intel provides MKL through other channels to, e.g. Pypi, APT, RPM.
 
 -------------------------------------------------------------------------------
 How do I understand the upstream MKL source directory structure?
@@ -268,34 +291,6 @@ I believe that section "Structure of the Intel Math Kernel Library" and
 "Appendix C: Directory Structure in Detail" are exactly what you want.
 Upstream documentation elaborates not only the directory structure, but
 also individual files.
-
--------------------------------------------------------------------------------
-How to get the upstream source tarball?
--------------------------------------------------------------------------------
-
-Go to this page:
-
-  https://software.intel.com/en-us/mkl
-
-Click "Free Download". The tarball will be available after registration.
-There are several hashsums in rules.
-
-Note that, Intel provides MKL through other channels to, e.g. Pypi, APT, RPM.
-
--------------------------------------------------------------------------------
-What? MKL is redistributable?
--------------------------------------------------------------------------------
-
-As declared by upstream at this page
-
-  https://software.intel.com/en-us/mkl/license-faq
-  "Yes, redistribution is allowed per the terms of the ISSL."
-
-Even if registration is required before downloading the MKL tarball,
-the tarball itself is re-distributable and licensed under ISSL.
-See communication with upstream for more detail:
-
-  https://github.com/intel/mkl-dnn/issues/206
 
 -------------------------------------------------------------------------------
 How is this package organized?
