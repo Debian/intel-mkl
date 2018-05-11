@@ -220,6 +220,8 @@ Depends: ${shlibs:Depends},
          libmkl-interface-dev     (= ${binary:Version}),
          libmkl-threading-dev     (= ${binary:Version}),
          libmkl-computational-dev (= ${binary:Version}),
+         libmkl-amd64-dev [amd64],
+         libmkl-i386-dev [i386],
          pkg-config,
 # Similar to libmkl-rt package,
 # we should depend on libblas.so and liblapack.so for a free alternatives,
@@ -236,6 +238,32 @@ Description: Intel® Math Kernel Library (Intel® MKL) (Dev)
  reference a C interface.
  .
  This package pulls the headers of MKL.
+
+Package: libmkl-amd64-dev
+Section: non-free/libdevel
+Architecture: amd64
+Multi-Arch: same
+Depends: ${misc:Depends},
+         libmkl-meta-interface (= ${binary:Version}),
+Description: Intel® Math Kernel Library (Intel® MKL) (Pkgconfig)
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package ships the pkgconfig files for amd64.
+
+Package: libmkl-i386-dev
+Section: non-free/libdevel
+Architecture: i386
+Multi-Arch: same
+Depends: ${misc:Depends},
+         libmkl-meta-interface (= ${binary:Version}),
+Description: Intel® Math Kernel Library (Intel® MKL) (Pkgconfig)
+ Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
+ optimized, extensively threaded routines for applications that require
+ maximum performance.
+ .
+ This package ships the pkgconfig files for i386.
 
 Package: libmkl-interface-dev
 Section: non-free/libdevel

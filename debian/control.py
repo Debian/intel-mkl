@@ -225,12 +225,12 @@ def installBenchmarks(filelist: List[str]) -> List[str]:
     return rest
 
 
-def installDebianSpecific(deb_host_multiarch: str) -> None:
+def installDebianSpecific(deb_host_arch: str, deb_host_multiarch: str) -> None:
     '''
     install debian specific files that come from debian/
     '''
     dest = f'/usr/lib/{deb_host_multiarch}/pkgconfig/'
-    installFile('debian/pkgconfig/*.pc', 'libmkl-dev', dest)
+    installFile('debian/pkgconfig/*.pc', f'libmkl-{deb_host_arch}-dev', dest)
 
 
 def _override(package: str, overrides: List[str]) -> None:
@@ -330,7 +330,7 @@ if __name__ == '__main__':
 
     print(f'{len(allfiles)} / {num_allfiles} Files left uninstalled.')
 
-    installDebianSpecific(host_multiarch)
+    installDebianSpecific(host_arch, host_multiarch)
 
     # just like what dh-missing --list-missing does.
     if dhVerbose():
