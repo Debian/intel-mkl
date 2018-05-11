@@ -1,4 +1,8 @@
 #!/usr/bin/python3
+'''
+Generate files from .in templates, replacing the placeholders in templates
+by the given strings.
+'''
 import sys, os, re
 sys.path.append('./debian')
 from control import getDpkgArchitecture
