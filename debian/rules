@@ -6,15 +6,13 @@
 # Unlike the nvidia-cuda-toolkit packaging, I wouldn't like to maintain a
 # pile of *.install files. Here all the *.install files are auto-generated
 # from python script debian/control.py .
-#
-# If you have more than 16GB RAM, try build this package under /dev/shm.
 
-# These variables are used as memo.
 MKL_ORIG_TARBALL = l_mkl_2018.2.199.tgz
 
 # debugging i386 builds on amd64. [not formal cross build but dirty hack]
 #export DEB_HOST_ARCH = i386
 #export DEB_HOST_MULTIARCH = i386-linux-gnu
+#export DEB_BUILD_ARCH = i386
 
 
 %:
@@ -34,8 +32,8 @@ extract-rpms:
 autogen:
 	find debian -type f,l -name '*.in' \! -name 'POTFILES.in' -exec \
 		python3 debian/placeholder.py '{}' \;
-	chmod +x debian/libmkl-rt.postinst debian/libmkl-rt.prerm
-	chmod +x debian/libmkl-rt.config   debian/libmkl-dev.config
+	chmod +x debian/libmkl-rt.postinst  debian/libmkl-rt.prerm   debian/libmkl-rt.config
+	chmod +x debian/libmkl-dev.postinst debian/libmkl-dev.prerm  debian/libmkl-dev.config
 
 override_dh_auto_configure: checksum extract-rpms autogen
 	python3 debian/control.py  # Generate install files and lintian overrides
@@ -52,11 +50,12 @@ override_dh_auto_clean:
 	debconf-updatepo
 	-$(RM) debian/*.install  # auto-generated install files
 	-$(RM) debian/*.lintian-overrides  # auto-generated lintian files
-	-$(RM) debian/*.postinst debian/*.prerm  # auto-gen maintainer scripts
+	-$(RM) debian/*.postinst debian/*.prerm debian/*.config  # auto-gen maintainer scripts
+	-$(RM) debian/pkgconfig/mkl-static*.pc  # auto-gen
 	-$(RM) -rf debian/__pycache__
 	-$(RM) -rf opt  # extracted from upstream rpm packages
 
-# don't strip any of these binary blobs as agreed in intel's license.
+# don't strip any of these binary blobs per intel's ISSL license.
 override_dh_strip:
 override_dh_strip_nondeterminism:
 	true
