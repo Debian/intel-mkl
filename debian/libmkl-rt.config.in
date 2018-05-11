@@ -10,10 +10,14 @@ db_settitle libmkl-rt/title
 db_input critical libmkl-rt/use-as-default-blas-lapack || true
 db_go
 
-# select the exact symlinks that should point to MKL
-db_subst libmkl-rt/exact-so-3-selections DEB_HOST_MULTIARCH @DEB_HOST_MULTIARCH@
-db_input high libmkl-rt/exact-so-3-selections || true
-db_go
+# select the exact symlinks that should point to MKL. This won't pop up
+# if the user rejects to use MKL as default BLAS/LAPACK.
+db_get libmkl-rt/use-as-default-blas-lapack
+if [ "$RET" = "true" ]; then
+  db_subst libmkl-rt/exact-so-3-selections DEB_HOST_MULTIARCH @DEB_HOST_MULTIARCH@
+  db_input high libmkl-rt/exact-so-3-selections || true
+  db_go
+fi
 
 #DEBHELPER#
 
