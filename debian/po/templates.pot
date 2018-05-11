@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: intel-mkl\n"
 "Report-Msgid-Bugs-To: intel-mkl@packages.debian.org\n"
-"POT-Creation-Date: 2018-04-30 03:09+0000\n"
+"POT-Creation-Date: 2018-05-11 13:17+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -64,4 +64,17 @@ msgstr ""
 msgid ""
 "If you don't know what MKL is, or unwilling to set it as default, just "
 "choose the preset value or simply type Enter."
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../libmkl-rt.templates:3001
+msgid "Which of the following symbol links should point to MKL?"
+msgstr ""
+
+#. Type: multiselect
+#. Description
+#: ../libmkl-rt.templates:3001
+msgid ""
+"Typically the user may want to point both of them to MKL (libmkl_rt.so)."
 msgstr ""

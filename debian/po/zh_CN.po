@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: intel-mkl\n"
 "Report-Msgid-Bugs-To: intel-mkl@packages.debian.org\n"
-"POT-Creation-Date: 2018-04-30 03:09+0000\n"
+"POT-Creation-Date: 2018-05-11 13:17+0000\n"
 "PO-Revision-Date: 2018-04-29 02:35:0000\n"
 "Last-Translator: Mo Zhou <cdluminate@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -74,11 +74,16 @@ msgstr ""
 "如果您完全不知道 MKL 是什么，或者不希望将其设置为默认，那么就选择预设值，\n"
 "或者说直接按回车键。"
 
-#~ msgid ""
-#~ "However, MKL itself is PROPRIETARY and there is potential license "
-#~ "violation if this package silently sets it as the default BLAS/LAPACK "
-#~ "implementation. So you have to make a choice here."
-#~ msgstr ""
-#~ "然而，MKL 本身是专有软件，如果本软件包擅自将其设置为默认的 BLAS/LAPACK 实"
-#~ "现，\n"
-#~ "那将会带来潜在的违反某些许可证的可能性。因此在这里，您需要作出选择。"
+#. Type: multiselect
+#. Description
+#: ../libmkl-rt.templates:3001
+msgid "Which of the following symbol links should point to MKL?"
+msgstr "下列哪些符号链接应该指向 MKL ？"
+
+#. Type: multiselect
+#. Description
+#: ../libmkl-rt.templates:3001
+msgid ""
+"Typically the user may want to point both of them to MKL (libmkl_rt.so)."
+msgstr ""
+"典型的情况是用户希望使下列符号链接都指向 MKL (libmkl_rt.so)。"

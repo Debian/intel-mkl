@@ -1,4 +1,2 @@
 * [minor] should we conflict with the MKL packages came from Intel's APT channel?
-* [...] what if we rename mkl_msg.cat to mkl_msg.mo ? Will the blobs still be able
-  to find it?
-* [high] improve postinst as suggested by sebastian
+  I think there is no need to do that. Upstream .deb packages install stuff to /opt . There is no conflict.
