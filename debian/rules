@@ -32,7 +32,7 @@ extract-rpms:
 		done
 
 autogen:
-	find debian -type f -name '*.in' \! -name 'POTFILES.in' -exec \
+	find debian -type f,l -name '*.in' \! -name 'POTFILES.in' -exec \
 		python3 debian/placeholder.py '{}' \;
 	chmod +x debian/libmkl-rt.postinst debian/libmkl-rt.prerm
 	chmod +x debian/libmkl-rt.config   debian/libmkl-dev.config
