@@ -212,22 +212,19 @@ Package: libmkl-dev
 Section: non-free/libdevel
 Architecture: amd64 i386
 Multi-Arch: foreign
-Pre-depends: libblas-dev | libblas.so,
-             liblapack-dev | liblapack.so,
-             libmkl-rt            (= ${binary:Version}),
 Depends: ${shlibs:Depends},
          ${misc:Depends},
+         libmkl-rt                (= ${binary:Version}),
          libmkl-interface-dev     (= ${binary:Version}),
          libmkl-threading-dev     (= ${binary:Version}),
          libmkl-computational-dev (= ${binary:Version}),
          libmkl-amd64-dev [amd64],
          libmkl-i386-dev [i386],
          pkg-config,
-# Similar to libmkl-rt package,
-# we should depend on libblas.so and liblapack.so for a free alternatives,
-# but the two virtual packages are "Provided" by this package ...
-# Well, let's simply pull openblas.
-         libopenblas-dev,
+         libblas-dev | libblas.so,
+         liblapack-dev | liblapack.so,
+Enhances: libblas.so,
+          liblapack.so,
 Recommends: intel-mkl-doc         (= ${source:Version}),
 Description: Intel® Math Kernel Library (Intel® MKL) (Dev)
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
@@ -340,20 +337,18 @@ Package: libmkl-rt
 Section: non-free/libs
 Architecture: amd64 i386
 Multi-Arch: same
-Pre-Depends: libblas3 | libblas.so.3,
-             liblapack3 | liblapack.so.3,
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          debconf,
-# we should depend on libblas.so.3 and liblapack.so.3 for a free alternatives,
-# but the two virtual packages are "Provided" by this package ...
-# Well, let's simply pull openblas.
-         libopenblas-base,
 # This library automatically selects shared objects from the three layers
          libmkl-meta-interface (= ${binary:Version}),
          libmkl-meta-threading (= ${binary:Version}),
          libmkl-meta-computational (= ${binary:Version}),
          libmkl-locale (= ${binary:Version}),
+         libblas3 | libblas.so.3,
+         liblapack3 | liblapack.so.3,
+Enhances: libblas.so.3,
+          liblapack.so.3,
 Description: Intel® MKL: Single Dynamic Library (SDL)
  Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
  optimized, extensively threaded routines for applications that require
