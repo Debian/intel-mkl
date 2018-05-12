@@ -311,7 +311,6 @@ if __name__ == '__main__':
     # -- these wrapper (interfaces/*) files relys on MKLROOT. We already broke
     #    upstream directory structure, rendering the these files hard to use.
     _, allfiles = eGrep(allfiles, '.*/linux/mkl/interfaces/.*')
-    # -- we have already /licensing/
 
     # install specific files and filter the list
     allfiles = installSharedObjects(allfiles)
@@ -323,20 +322,16 @@ if __name__ == '__main__':
     allfiles = installExamples(allfiles)
     allfiles = installBenchmarks(allfiles)
 
-    # install misc files and filter the list
-    #allfiles = installMisc(allfiles, verbose=dh_verbose)
-
-    # install the locale file
-
-    print(f'{len(allfiles)} / {num_allfiles} Files left uninstalled.')
-
     installDebianSpecific(host_arch, host_multiarch)
 
     # just like what dh-missing --list-missing does.
+    print(f'{len(allfiles)} / {num_allfiles} Files left uninstalled.')
     if dhVerbose():
         for f in allfiles: print('missing', '<><><>', f)
+    # notes about missing files:
+    #  - /licensing/* not installed. They are in copyright.
+    #  - the shell scripts for compiler variables are ignored. They are
+    #    somewhat useless if we don't retain upstream directory structure.
 
-    # the license files, the shell scripts for compiler variables are ignored.
-
-    # do the lintian stuff
+    # do the lintian overridding
     overrideLintian()
