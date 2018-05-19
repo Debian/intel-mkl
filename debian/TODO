@@ -1,2 +1,9 @@
-* [minor] should we conflict with the MKL packages came from Intel's APT channel?
-  I think there is no need to do that. Upstream .deb packages install stuff to /opt . There is no conflict.
+* [minor] should we conflict with the MKL packages came from Intel's APT
+  channel? I think there is no need to do that. Upstream .deb packages
+  install stuff to /opt . There is no conflict.
+
+* remove multiarch triplet from debconf options. Once selected, it works
+  for all architectures.
+
+* there is still a corner case where there is only MKL as the only
+  multiarch libblas.so.3 provider.
