@@ -290,10 +290,11 @@ def overrideLintian() -> None:
 
 if __name__ == '__main__':
 
+    # The two variables can be overriden in d/rules or by environment
+    # variables, for debugging i386 build under amd64 without any
+    # cross build tooling.
     host_arch = getDpkgArchitecture('DEB_HOST_ARCH')
     host_multiarch = getDpkgArchitecture('DEB_HOST_MULTIARCH')
-    # No need to change the following line if overridden in rules.
-    #host_arch, host_multiarch = 'i386', 'i386-linux-gnu'  # DEBUG for i386
 
     allfiles = sorted(glob.glob('opt/**', recursive=True))
     num_allfiles = len(allfiles)
