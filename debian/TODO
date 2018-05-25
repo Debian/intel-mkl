@@ -7,3 +7,7 @@
 
 * there is still a corner case where there is only MKL as the only
   multiarch libblas.so.3 provider.
+
+* [important] merge the pkg-config files into the header package. The
+  common headers won't conflict as long as they have the same checksum
+  as that from another architecture.
