@@ -13,3 +13,5 @@
   as that from another architecture.
 
 * replace debian/placeholder.py with find+sed
+
+* [important] move headers out from directory /usr/include/mkl, to /usr/include
