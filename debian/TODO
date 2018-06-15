@@ -1,6 +1,19 @@
-* [minor] should we conflict with the MKL packages came from Intel's APT
+* [wontfix] should we conflict with the MKL packages came from Intel's APT
   channel? I think there is no need to do that. Upstream .deb packages
   install stuff to /opt . There is no conflict.
+
+* [wontfix] move headers out from directory /usr/include/mkl, to /usr/include.
+  I think we'd better not move the headers to the public space. The MKL
+  library ships fftw3 header, which is installed at
+
+      /usr/include/mkl/fftw/fftw3.h
+
+  And the above location won't cause any confusion, compared to
+
+      /usr/include/fftw/fftw3.h  (from: libmkl-dev)
+      /usr/include/fftw3.h       (from: libfftw3-dev)
+
+  If we move the MKL headers out from a private directory.
 
 * remove multiarch triplet from debconf options. Once selected, it works
   for all architectures.
@@ -13,5 +26,3 @@
   as that from another architecture.
 
 * replace debian/placeholder.py with find+sed
-
-* [important] move headers out from directory /usr/include/mkl, to /usr/include
