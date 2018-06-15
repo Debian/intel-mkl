@@ -73,6 +73,8 @@ Description: Intel® Math Kernel Library (Intel® MKL)
  .
  This package pulls the basic set of development files and libraries of MKL
  in the present architecture. Cluster support is not included.
+ .
+ Note that MKL's performance on AMD CPUs is not guaranteed.
 
 Package: intel-mkl-cluster
 Section: non-free/metapackages

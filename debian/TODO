@@ -1,3 +1,6 @@
+* [cantfix] Performance on AMD CPUs.
+  MKL looks specific to Intel CPUs.
+
 * [wontfix] should we conflict with the MKL packages came from Intel's APT
   channel? I think there is no need to do that. Upstream .deb packages
   install stuff to /opt . There is no conflict.
@@ -26,3 +29,4 @@
   as that from another architecture.
 
 * replace debian/placeholder.py with find+sed
+
