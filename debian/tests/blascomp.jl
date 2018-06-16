@@ -6,7 +6,7 @@ const N1 = 65536  # N for level1 calls
 const N3 = 4096   # N for level3 calls
 const netlibblas = "/usr/lib/x86_64-linux-gnu/blas/libblas.so.3.8.0"
 const atlas      = "/usr/lib/x86_64-linux-gnu/atlas/libblas.so.3.10.3"
-const openblas   = "/usr/lib/x86_64-linux-gnu/libopenblas_haswellp-r0.2.20.so"
+const openblas   = "/usr/lib/x86_64-linux-gnu/libopenblasp-r0.2.20.so"
 const mkl        = "/usr/lib/x86_64-linux-gnu/libmkl_rt.so"
 
 
