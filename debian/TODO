@@ -27,6 +27,3 @@
 * [important] merge the pkg-config files into the header package. The
   common headers won't conflict as long as they have the same checksum
   as that from another architecture.
-
-* replace debian/placeholder.py with find+sed
-

@@ -13,10 +13,16 @@ MKL_ORIG_TARBALL = l_mkl_2018.3.222.tgz
 #export DEB_HOST_ARCH = i386
 #export DEB_HOST_MULTIARCH = i386-linux-gnu
 
+DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
+AUTOGEN_FILES       = $(patsubst %.in, %, $(wildcard debian/*.in))
+
+%:: %.in debian/rules
+	sed -e "s/@DEB_HOST_MULTIARCH@/$(DEB_HOST_MULTIARCH)/g" < $@.in > $@
 
 %:
 	dh $@
 
+.PHONY: checksum extract-rpms autogen
 checksum:
 	md5sum -c debian/intel-mkl.md5
 
@@ -28,9 +34,7 @@ extract-rpms: checksum
 		rpm2cpio $$rpmfile | cpio -idmv; \
 		done
 
-autogen: extract-rpms
-	find debian -type f,l -name '*.in' \! -name 'POTFILES.in' -exec \
-		python3 debian/placeholder.py '{}' \;
+autogen: extract-rpms $(AUTOGEN_FILES)
 	chmod +x debian/libmkl-rt.postinst  debian/libmkl-rt.prerm   debian/libmkl-rt.config
 	chmod +x debian/libmkl-dev.postinst debian/libmkl-dev.prerm  debian/libmkl-dev.config
 
