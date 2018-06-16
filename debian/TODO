@@ -17,13 +17,3 @@
       /usr/include/fftw3.h       (from: libfftw3-dev)
 
   If we move the MKL headers out from a private directory.
-
-* remove multiarch triplet from debconf options. Once selected, it works
-  for all architectures.
-
-* there is still a corner case where there is only MKL as the only
-  multiarch libblas.so.3 provider.
-
-* [important] merge the pkg-config files into the header package. The
-  common headers won't conflict as long as they have the same checksum
-  as that from another architecture.

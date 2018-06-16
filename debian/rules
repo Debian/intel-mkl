@@ -14,7 +14,7 @@ MKL_ORIG_TARBALL = l_mkl_2018.3.222.tgz
 #export DEB_HOST_MULTIARCH = i386-linux-gnu
 
 DEB_HOST_MULTIARCH ?= $(shell dpkg-architecture -qDEB_HOST_MULTIARCH)
-AUTOGEN_FILES       = $(patsubst %.in, %, $(wildcard debian/*.in))
+AUTOGEN_FILES       = $(patsubst %.in, %, $(wildcard debian/*.in debian/pkgconfig/*.in))
 
 %:: %.in debian/rules
 	sed -e "s/@DEB_HOST_MULTIARCH@/$(DEB_HOST_MULTIARCH)/g" < $@.in > $@

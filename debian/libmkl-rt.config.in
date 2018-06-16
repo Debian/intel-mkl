@@ -14,7 +14,6 @@ db_go
 # if the user rejects to use MKL as default BLAS/LAPACK.
 db_get libmkl-rt/use-as-default-blas-lapack
 if [ "$RET" = "true" ]; then
-  db_subst libmkl-rt/exact-so-3-selections DEB_HOST_MULTIARCH @DEB_HOST_MULTIARCH@
   db_input high libmkl-rt/exact-so-3-selections || true
   db_go
 fi

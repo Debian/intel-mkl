@@ -230,7 +230,7 @@ def installDebianSpecific(deb_host_arch: str, deb_host_multiarch: str) -> None:
     install debian specific files that come from debian/
     '''
     dest = f'/usr/lib/{deb_host_multiarch}/pkgconfig/'
-    installFile('debian/pkgconfig/*.pc', f'libmkl-{deb_host_arch}-dev', dest)
+    installFile('debian/pkgconfig/*.pc', f'libmkl-dev', dest)
 
 
 def _override(package: str, overrides: List[str]) -> None:

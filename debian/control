@@ -215,18 +215,18 @@ Description: Intel® Math Kernel Library (Intel® MKL) (Full Version Dev)
 Package: libmkl-dev
 Section: non-free/libdevel
 Architecture: amd64 i386
-Multi-Arch: foreign
+Multi-Arch: same
 Depends: ${shlibs:Depends},
          ${misc:Depends},
          libmkl-rt                (= ${binary:Version}),
          libmkl-interface-dev     (= ${binary:Version}),
          libmkl-threading-dev     (= ${binary:Version}),
          libmkl-computational-dev (= ${binary:Version}),
-         libmkl-amd64-dev [amd64],
-         libmkl-i386-dev [i386],
          pkg-config,
-         libblas-dev | libblas.so,
-         liblapack-dev | liblapack.so,
+         libblas-dev:amd64 | libblas.so:amd64 [amd64],
+         libblas-dev:i386 | libblas.so:i386 [i386],
+         liblapack-dev:amd64 | liblapack.so:amd64 [amd64],
+         liblapack-dev:i386 | liblapack.so:i386 [i386],
          libomp-dev,
 Enhances: libblas.so,
           liblapack.so,
@@ -240,32 +240,6 @@ Description: Intel® Math Kernel Library (Intel® MKL) (Dev)
  reference a C interface.
  .
  This package pulls the headers of MKL.
-
-Package: libmkl-amd64-dev
-Section: non-free/libdevel
-Architecture: amd64
-Multi-Arch: same
-Depends: ${misc:Depends},
-         libmkl-meta-interface (= ${binary:Version}),
-Description: Intel® Math Kernel Library (Intel® MKL) (Pkgconfig)
- Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
- optimized, extensively threaded routines for applications that require
- maximum performance.
- .
- This package ships the pkgconfig files for amd64.
-
-Package: libmkl-i386-dev
-Section: non-free/libdevel
-Architecture: i386
-Multi-Arch: same
-Depends: ${misc:Depends},
-         libmkl-meta-interface (= ${binary:Version}),
-Description: Intel® Math Kernel Library (Intel® MKL) (Pkgconfig)
- Intel® Math Kernel Library (Intel® MKL) is a computing math library of highly
- optimized, extensively threaded routines for applications that require
- maximum performance.
- .
- This package ships the pkgconfig files for i386.
 
 Package: libmkl-interface-dev
 Section: non-free/libdevel
@@ -350,8 +324,10 @@ Depends: ${shlibs:Depends},
          libmkl-meta-threading (= ${binary:Version}),
          libmkl-meta-computational (= ${binary:Version}),
          libmkl-locale (= ${binary:Version}),
-         libblas3 | libblas.so.3,
-         liblapack3 | liblapack.so.3,
+         libblas3:amd64 | libblas.so.3:amd64 [amd64],
+         liblapack3:amd64 | liblapack.so.3:amd64 [amd64],
+         libblas3:i386 | libblas.so.3:i386 [i386],
+         liblapack3:i386 | liblapack.so.3:i386 [i386],
          libomp5,
 Enhances: libblas.so.3,
           liblapack.so.3,
