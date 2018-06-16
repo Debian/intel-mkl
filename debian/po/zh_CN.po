@@ -77,7 +77,6 @@ msgstr ""
 #. Type: multiselect
 #. Description
 #: ../libmkl-rt.templates:3001
-#| msgid "Which of the following symbol links should point to MKL?"
 msgid "Which of the these alternatives should point to MKL?"
 msgstr "下列哪些可替代项应该指向 MKL ？"
 
@@ -89,8 +88,8 @@ msgid ""
 "applies to all available architectures, and the related development packages "
 "will follow the same selection."
 msgstr ""
-"请选择您希望指向 MKL 的可替代项。这里作出的选择将会被应用到所有可用架构。"
-"同时，相应的开发包也会跟随同样的选择。"
+"请选择您希望指向 MKL 的可替代项。这里作出的选择将会被应用到所有可用架构。同"
+"时，相应的开发包也会跟随同样的选择。"
 
 #. Type: multiselect
 #. Description
@@ -99,5 +98,5 @@ msgid ""
 "Typically the user may want to point both BLAS/LAPACK to MKL (libmkl_rt.so). "
 "Type Enter if you are not sure what to select."
 msgstr ""
-"典型的情况是用户可能希望令 BLAS/LAPACK 都指向 MKL (libmkl_rt.so)。"
-"如果您不确定如何选择，请直接按 Enter 键。"
+"典型的情况是用户可能希望令 BLAS/LAPACK 都指向 MKL (libmkl_rt.so)。如果您不确"
+"定如何选择，请直接按 Enter 键。"
