@@ -28,13 +28,13 @@ extract-rpms:
 		rpm2cpio $$rpmfile | cpio -idmv; \
 		done
 
-autogen:
+autogen: extract-rpms
 	find debian -type f,l -name '*.in' \! -name 'POTFILES.in' -exec \
 		python3 debian/placeholder.py '{}' \;
 	chmod +x debian/libmkl-rt.postinst  debian/libmkl-rt.prerm   debian/libmkl-rt.config
 	chmod +x debian/libmkl-dev.postinst debian/libmkl-dev.prerm  debian/libmkl-dev.config
 
-override_dh_auto_configure: checksum extract-rpms autogen
+override_dh_auto_configure: checksum autogen
 	python3 debian/control.py  # Generate install files and lintian overrides
 
 	# deal with embedded libjs-jquery
