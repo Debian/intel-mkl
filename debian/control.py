@@ -146,7 +146,7 @@ def installIncludes(filelist: List[str],
     Print ignored files when verbose is set.
     '''
     _, rest = eGrep(filelist, '.*/linux/mkl/include/.*')
-    incs = 'opt/intel/compilers_and_libraries_2018.2.199/linux/mkl/include/*'
+    incs = 'opt/intel/compilers_and_libraries_*/linux/mkl/include/*'
     installFile(incs, 'libmkl-dev', 'usr/include/mkl/')
     return rest
 
