@@ -34,6 +34,7 @@ if [ "$RET" = "true" ]; then
   # When user says "yes", we point the symlinks to MKL, and set the
   # alternative in manual mode.
   echo "Setting MKL as default BLAS/LAPACK implementation as requested." 1>&2
+  db_get libmkl-rt/exact-so-3-selections
 
   if (echo "$RET" | grep "libblas.so" 2>&1 1>/dev/null); then
   update-alternatives --set libblas.so-@DEB_HOST_MULTIARCH@ \
