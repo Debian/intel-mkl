@@ -7,7 +7,7 @@
 # pile of *.install files. Here all the *.install files are auto-generated
 # from python script debian/control.py .
 
-MKL_ORIG_TARBALL = l_mkl_2018.2.199.tgz
+MKL_ORIG_TARBALL = l_mkl_2018.3.222.tgz
 
 # debugging i386 builds on amd64. [not formal cross build but dirty hack]
 #export DEB_HOST_ARCH = i386
@@ -19,7 +19,6 @@ MKL_ORIG_TARBALL = l_mkl_2018.2.199.tgz
 
 checksum:
 	md5sum -c debian/intel-mkl.md5
-	sha512sum -c debian/intel-mkl.sha512
 
 extract-rpms:
 	#https://www.centos.org/docs/5/html/Deployment_Guide-en-US/s1-check-rpm-sig.html

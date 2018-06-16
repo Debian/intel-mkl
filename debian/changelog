@@ -1,6 +1,6 @@
-intel-mkl (2018.2.199-1) experimental; urgency=low
+intel-mkl (2018.3.222-1) unstable; urgency=low
 
   * Initial release. (Closes: #895881)
-  * Thanks for Sébastien Villemot's helpful advice.
+  * Many thanks to Sébastien Villemot's for helpful advices.
 
  -- Mo Zhou <cdluminate@gmail.com>  Sat, 12 May 2018 02:39:36 +0000
