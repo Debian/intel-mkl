@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: intel-mkl\n"
 "Report-Msgid-Bugs-To: intel-mkl@packages.debian.org\n"
-"POT-Creation-Date: 2018-05-11 13:17+0000\n"
+"POT-Creation-Date: 2018-06-16 10:31+0000\n"
 "PO-Revision-Date: 2018-04-29 02:35:0000\n"
 "Last-Translator: Mo Zhou <cdluminate@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -77,13 +77,27 @@ msgstr ""
 #. Type: multiselect
 #. Description
 #: ../libmkl-rt.templates:3001
-msgid "Which of the following symbol links should point to MKL?"
-msgstr "下列哪些符号链接应该指向 MKL ？"
+#| msgid "Which of the following symbol links should point to MKL?"
+msgid "Which of the these alternatives should point to MKL?"
+msgstr "下列哪些可替代项应该指向 MKL ？"
 
 #. Type: multiselect
 #. Description
 #: ../libmkl-rt.templates:3001
 msgid ""
-"Typically the user may want to point both of them to MKL (libmkl_rt.so)."
+"Please select the alternatives that should point to MKL. The selection "
+"applies to all available architectures, and the related development packages "
+"will follow the same selection."
 msgstr ""
-"典型的情况是用户希望使下列符号链接都指向 MKL (libmkl_rt.so)。"
+"请选择您希望指向 MKL 的可替代项。这里作出的选择将会被应用到所有可用架构。"
+"同时，相应的开发包也会跟随同样的选择。"
+
+#. Type: multiselect
+#. Description
+#: ../libmkl-rt.templates:3001
+msgid ""
+"Typically the user may want to point both BLAS/LAPACK to MKL (libmkl_rt.so). "
+"Type Enter if you are not sure what to select."
+msgstr ""
+"典型的情况是用户可能希望令 BLAS/LAPACK 都指向 MKL (libmkl_rt.so)。"
+"如果您不确定如何选择，请直接按 Enter 键。"
