@@ -20,7 +20,7 @@ MKL_ORIG_TARBALL = l_mkl_2018.3.222.tgz
 checksum:
 	md5sum -c debian/intel-mkl.md5
 
-extract-rpms:
+extract-rpms: checksum
 	#https://www.centos.org/docs/5/html/Deployment_Guide-en-US/s1-check-rpm-sig.html
 	# FIXME: how to verify rpm's signature with upstream public key?
 	set -e; for rpmfile in $$(find rpm -type f -name '*.rpm'); do \
@@ -34,7 +34,7 @@ autogen: extract-rpms
 	chmod +x debian/libmkl-rt.postinst  debian/libmkl-rt.prerm   debian/libmkl-rt.config
 	chmod +x debian/libmkl-dev.postinst debian/libmkl-dev.prerm  debian/libmkl-dev.config
 
-override_dh_auto_configure: checksum autogen
+override_dh_auto_configure: autogen
 	python3 debian/control.py  # Generate install files and lintian overrides
 
 	# deal with embedded libjs-jquery
